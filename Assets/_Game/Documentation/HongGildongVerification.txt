@@ -1,0 +1,4 @@
+PASS: prefab meshes/materials persist; original input/motor/aim remain; walk changes leg pose; strafe evaluated; returns to idle.
+Meshes: 82
+Triangles: 9271
+No live keyboard/mouse or standalone build verification in this batch.
