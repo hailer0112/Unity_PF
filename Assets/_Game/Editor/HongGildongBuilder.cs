@@ -44,9 +44,10 @@ namespace FairyTaleRecovery.Editor
             Directory.CreateDirectory(Art + "/Materials");
             AssetDatabase.Refresh();
             materials.Clear(); meshIndex = 0;
-            Mat("Indigo", "#142C49"); Mat("Teal", "#287E82"); Mat("Ivory", "#E7D9B7");
-            Mat("Crimson", "#B72F43"); Mat("Skin", "#DDA77B"); Mat("SkinShadow", "#B67E5D");
-            Mat("Hair", "#17202C"); Mat("Leather", "#29333E"); Mat("Gold", "#CEAA62", 0.65f);
+            Mat("Indigo", "#192447"); Mat("Teal", "#287E82"); Mat("Ivory", "#EEE4D2");
+            Mat("Straw", "#BC955D"); Mat("HatBand", "#5B3635"); Mat("Wrap", "#D7CCB8");
+            Mat("Crimson", "#922B3C"); Mat("Skin", "#DDA77B"); Mat("SkinShadow", "#B67E5D");
+            Mat("Hair", "#17202C"); Mat("Leather", "#4B352C"); Mat("Gold", "#C59B4B", 0.35f);
             Mat("Steel", "#B7D8E1", 0.8f); Mat("Edge", "#EDF4E9", 0.7f); Mat("Eye", "#151B25");
             GameObject root = new GameObject("HongGildongVisual");
             try
@@ -169,11 +170,14 @@ namespace FairyTaleRecovery.Editor
             Transform chest = Joint("Chest", hips, new Vector3(0f,.14f,0f)); motion.chest = chest;
             Profile("TailoredCoat", chest, Vector3.zero,
                 new[]{new Vector3(.24f,-.11f,.16f), new Vector3(.27f,.12f,.18f), new Vector3(.34f,.34f,.17f),new Vector3(.23f,.43f,.13f)}, "Indigo", 16);
+            // Gold shoulder accents add a bold silhouette readable at a top-down angle.
+            Strip("LeftShoulderTrim", chest, new Vector3(-.31f,.28f,.16f), new Vector3(-.15f,.38f,.19f), .032f, "Gold");
+            Strip("RightShoulderTrim", chest, new Vector3(.31f,.28f,.16f), new Vector3(.15f,.38f,.19f), .032f, "Gold");
             // Two overlapping diagonal collars, made as thick cloth strips.
             Cloth("InnerShirt",chest,new[]{new Vector3(-.11f,.43f,.235f),new Vector3(.11f,.43f,.235f),new Vector3(0f,.23f,.235f)},"Ivory");
             Strip("InnerCrossCollar", chest, new Vector3(-.13f,.43f,.24f), new Vector3(0f,.23f,.24f), .065f, "Ivory");
             Strip("OuterCrossCollar", chest, new Vector3(.13f,.43f,.25f), new Vector3(-.16f,.025f,.25f), .075f, "Ivory");
-            Strip("TealLapel", chest, new Vector3(.185f,.39f,.245f), new Vector3(-.12f,-.05f,.245f), .03f, "Teal");
+            Strip("GoldenLapel", chest, new Vector3(.185f,.39f,.245f), new Vector3(-.12f,-.05f,.245f), .03f, "Gold");
             Shape("Sash", hips, new Vector3(0f,.02f,.005f), new Vector3(.29f,.065f,.193f), "Crimson");
             Shape("SashKnot", hips, new Vector3(-.16f,.02f,.204f), new Vector3(.07f,.05f,.045f), "Gold");
             Strip("BeltTailA", hips, new Vector3(-.16f,-.01f,.21f), new Vector3(-.24f,-.38f,.23f), .065f,"Crimson");
@@ -184,21 +188,21 @@ namespace FairyTaleRecovery.Editor
                 Transform thigh = Joint(prefix+"Thigh", hips, new Vector3(side*.155f,-.06f,0f));
                 Profile(prefix+"Trouser", thigh, Vector3.zero, new[]{new Vector3(.13f,0f,.14f),new Vector3(.155f,-.19f,.145f),new Vector3(.10f,-.37f,.10f)},"Ivory",12);
                 Transform shin = Joint(prefix+"Shin", thigh, new Vector3(0f,-.37f,0f));
-                Profile(prefix+"Boot", shin, Vector3.zero,new[]{new Vector3(.10f,.015f,.10f),new Vector3(.102f,-.19f,.105f),new Vector3(.115f,-.37f,.12f)},"Leather",12);
+                Profile(prefix+"Boot", shin, Vector3.zero,new[]{new Vector3(.10f,.015f,.10f),new Vector3(.102f,-.19f,.105f),new Vector3(.115f,-.37f,.12f)},"Wrap",12);
                 Shape(prefix+"BootFoot",shin,new Vector3(0f,-.37f,.065f),new Vector3(.117f,.07f,.20f),"Leather");
                 Shape(prefix+"Sole",shin,new Vector3(0f,-.422f,.06f),new Vector3(.12f,.025f,.203f),"Hair");
-                Shape(prefix+"BootCuff",shin,new Vector3(0f,-.035f,0f),new Vector3(.109f,.035f,.11f),"Teal");
+                Shape(prefix+"BootCuff",shin,new Vector3(0f,-.035f,0f),new Vector3(.109f,.035f,.11f),"Wrap");
                 for(int band=0;band<3;band++) Strip(prefix+"Lace"+band,shin,new Vector3(-.065f,-.10f-band*.065f,.104f),new Vector3(.065f,-.13f-band*.065f,.104f),.014f,"Gold");
                 Transform coat = Joint(prefix+"CoatTail",hips,new Vector3(side*.14f,-.035f,-.04f));
                 Cloth(prefix+"SplitCoat",coat,new[]{new Vector3(side*-.05f,0f,.15f),new Vector3(side*.15f,0f,.05f),new Vector3(side*.22f,-.43f,.04f),new Vector3(side*-.03f,-.38f,.17f)},"Indigo");
-                Strip(prefix+"CoatTrim",coat,new Vector3(side*.22f,-.43f,.045f),new Vector3(side*-.03f,-.38f,.175f),.035f,"Teal");
+                Strip(prefix+"CoatTrim",coat,new Vector3(side*.22f,-.43f,.045f),new Vector3(side*-.03f,-.38f,.175f),.035f,"Gold");
                 Cloth(prefix+"BackCoat",coat,new[]{new Vector3(-side*.12f,0f,-.14f),new Vector3(side*.13f,0f,-.13f),new Vector3(side*.19f,-.43f,-.18f),new Vector3(-side*.115f,-.40f,-.20f)},"Indigo");
-                Strip(prefix+"BackHem",coat,new Vector3(side*.19f,-.43f,-.181f),new Vector3(-side*.115f,-.40f,-.201f),.03f,"Teal");
+                Strip(prefix+"BackHem",coat,new Vector3(side*.19f,-.43f,-.181f),new Vector3(-side*.115f,-.40f,-.201f),.03f,"Gold");
                 Transform arm=Joint(prefix+"UpperArm",chest,new Vector3(side*.29f,.29f,0f));
                 Profile(prefix+"Sleeve",arm,Vector3.zero,new[]{new Vector3(.145f,.03f,.15f),new Vector3(.17f,-.14f,.145f),new Vector3(.12f,-.285f,.12f)},"Indigo",12);
                 Transform forearm=Joint(prefix+"Forearm",arm,new Vector3(0f,-.28f,0f));
                 Profile(prefix+"InnerSleeve",forearm,Vector3.zero,new[]{new Vector3(.113f,.02f,.112f),new Vector3(.09f,-.18f,.09f)},"Ivory",12);
-                Shape(prefix+"Bracer",forearm,new Vector3(0f,-.17f,0f),new Vector3(.095f,.08f,.09f),"Leather");
+                Shape(prefix+"Bracer",forearm,new Vector3(0f,-.17f,0f),new Vector3(.095f,.08f,.09f),"Wrap");
                 Shape(prefix+"BracerEdge",forearm,new Vector3(0f,-.12f,0f),new Vector3(.10f,.015f,.095f),"Gold");
                 Transform hand=Joint(prefix+"Hand",forearm,new Vector3(0f,-.285f,0f));
                 Shape(prefix+"Palm",hand,Vector3.zero,new Vector3(.075f,.085f,.06f),"Skin");
@@ -221,7 +225,12 @@ namespace FairyTaleRecovery.Editor
             Strip("Mouth",head,new Vector3(-.044f,-.052f,.128f),new Vector3(.044f,-.052f,.128f),.009f,"SkinShadow");
             Profile("HairCap",head,new Vector3(0f,.01f,-.025f),new[]{new Vector3(.17f,.13f,.15f),new Vector3(.182f,.22f,.16f),new Vector3(.13f,.30f,.12f),new Vector3(.02f,.33f,.02f)},"Hair",16);
             Shape("TopKnot",head,new Vector3(0f,.34f,-.02f),new Vector3(.10f,.09f,.10f),"Hair");
-            Profile("Headband",head,new Vector3(0f,0f,-.01f),new[]{new Vector3(.18f,.15f,.155f),new Vector3(.181f,.20f,.157f)},"Crimson",20);
+            // Low-profile angular straw hat: readable from the raised game camera.
+            Profile("StrawHatBrim",head,Vector3.zero,new[]{new Vector3(.20f,.355f,.18f),new Vector3(.33f,.365f,.30f),new Vector3(.355f,.385f,.325f),new Vector3(.31f,.400f,.288f)},"Straw",24);
+            Profile("StrawHatCrown",head,Vector3.zero,new[]{new Vector3(.185f,.397f,.17f),new Vector3(.178f,.48f,.165f),new Vector3(.145f,.565f,.135f)},"Straw",20);
+            Profile("StrawHatBand",head,Vector3.zero,new[]{new Vector3(.187f,.408f,.174f),new Vector3(.183f,.447f,.170f)},"HatBand",20);
+            // Cloth head wrap beneath a broad straw hat, based on the costume reference.
+            Profile("Headband",head,new Vector3(0f,0f,-.01f),new[]{new Vector3(.18f,.15f,.155f),new Vector3(.181f,.20f,.157f)},"Wrap",20);
             Shape("ForeheadSeal",head,new Vector3(0f,.177f,.154f),new Vector3(.035f,.025f,.012f),"Gold");
             // Asymmetric layered bangs keep the face visible from a three-quarter view.
             Cloth("BangLeft",head,new[]{new Vector3(-.15f,.255f,.105f),new Vector3(-.015f,.285f,.15f),new Vector3(-.09f,.13f,.17f)},"Hair");
@@ -229,16 +238,16 @@ namespace FairyTaleRecovery.Editor
             Transform pony=Joint("Ponytail",head,new Vector3(0f,.23f,-.14f));motion.ponytail=pony;
             Profile("TiedHair",pony,Vector3.zero,new[]{new Vector3(.07f,0f,.065f),new Vector3(.09f,-.14f,.07f),new Vector3(.055f,-.32f,.05f),new Vector3(.008f,-.40f,.01f)},"Hair",12);
             Transform scarf=Joint("HeadbandTails",head,new Vector3(.015f,.17f,-.17f));motion.scarf=scarf;
-            Strip("RibbonA",scarf,Vector3.zero,new Vector3(-.12f,-.35f,-.08f),.055f,"Crimson");
-            Strip("RibbonB",scarf,new Vector3(.025f,0f,0f),new Vector3(.15f,-.27f,-.10f),.04f,"Crimson");
+            Strip("RibbonA",scarf,Vector3.zero,new Vector3(-.12f,-.35f,-.08f),.055f,"Wrap");
+            Strip("RibbonB",scarf,new Vector3(.025f,0f,0f),new Vector3(.15f,-.27f,-.10f),.04f,"Wrap");
             Transform sheath=Joint("Scabbard",hips,new Vector3(-.31f,.02f,-.09f));
             sheath.localRotation=Quaternion.Euler(-18f,0f,-18f);
-            Profile("LacquerScabbard",sheath,Vector3.zero,new[]{new Vector3(.048f,.02f,.035f),new Vector3(.046f,-.55f,.033f),new Vector3(.02f,-.72f,.02f)},"Teal",8);
+            Profile("LacquerScabbard",sheath,Vector3.zero,new[]{new Vector3(.048f,.02f,.035f),new Vector3(.046f,-.55f,.033f),new Vector3(.02f,-.72f,.02f)},"Gold",8);
             Shape("ScabbardMouth",sheath,Vector3.zero,new Vector3(.06f,.035f,.045f),"Gold");
             Shape("ScabbardTip",sheath,new Vector3(0f,-.66f,0f),new Vector3(.037f,.06f,.03f),"Gold");
             // Agent insignia: a small closed-book clasp, not a borrowed character emblem.
             Shape("StorySeal",chest,new Vector3(-.21f,.23f,.167f),new Vector3(.047f,.055f,.02f),"Gold");
-            Strip("StorySealSpine",chest,new Vector3(-.21f,.18f,.19f),new Vector3(-.21f,.28f,.19f),.01f,"Teal");
+            Strip("StorySealSpine",chest,new Vector3(-.21f,.18f,.19f),new Vector3(-.21f,.28f,.19f),.01f,"Gold");
         }
 
         private static void Sword(Transform hand)
