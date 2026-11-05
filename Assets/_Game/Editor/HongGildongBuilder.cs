@@ -18,6 +18,7 @@ namespace FairyTaleRecovery.Editor
         private static int meshIndex;
 
         [MenuItem("Tools/Fairy Tale Recovery/Install Hong Gildong")]
+        [MenuItem("Tools/Fairy Tale Recovery/Apply Hong Gildong Redesign")]
         public static void Install()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
@@ -26,6 +27,9 @@ namespace FairyTaleRecovery.Editor
                 return;
             }
             EnsureAssets();
+            // Update the Player prefab too. Regenerating only the visual prefab previously
+            // made it hard to see a change when opening a fresh scene.
+            UpdatePlayerPrefab();
             // Never save a live/dirty scene behind the user's back. The prefab is updated
             // independently, and scene edits remain undoable until the user saves.
             var players = Object.FindObjectsByType<PlayerMotor>();
@@ -35,7 +39,7 @@ namespace FairyTaleRecovery.Editor
                 return;
             }
             foreach (var player in players) Attach(player.gameObject);
-            Debug.Log("Hong Gildong installed: original capsule/marker disabled, movement/aim unchanged. Save the scene to keep the replacement.");
+            Debug.Log("Hong Gildong redesign applied to Player prefab and current scene. Input/motor/aim unchanged. Save the scene to keep the replacement.");
         }
 
         public static void EnsureAssets()
@@ -130,7 +134,9 @@ namespace FairyTaleRecovery.Editor
                 if (child.name == "Visual" || child.name == "ForwardMarker")
                     child.gameObject.SetActive(false);
             }
-            if(existing!=null){existing.gameObject.SetActive(true);EditorSceneManager.MarkSceneDirty(player.scene);return;}
+            // Replace only the generated visual instance. Leave the Player root,
+            // input, aim, physics, and gameplay scripts exactly as they are.
+            if(existing!=null) Undo.DestroyObjectImmediate(existing.gameObject);
             GameObject visual = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(Prefab), player.scene);
             Undo.RegisterCreatedObjectUndo(visual, "Install Hong Gildong");
             visual.transform.SetParent(player.transform, false);
@@ -150,13 +156,12 @@ namespace FairyTaleRecovery.Editor
             {
                 foreach(Transform child in player.transform)
                     if(child.name=="Visual"||child.name=="ForwardMarker")child.gameObject.SetActive(false);
-                if(player.transform.Find("HongGildongVisual")==null)
-                {
-                    GameObject visual=(GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(Prefab),player.scene);
-                    visual.transform.SetParent(player.transform,false);
-                    var cc=player.GetComponent<CharacterController>();
-                    visual.transform.localPosition=Vector3.up*(cc.center.y-cc.height*.5f);
-                }
+                Transform oldVisual=player.transform.Find("HongGildongVisual");
+                if(oldVisual!=null) Object.DestroyImmediate(oldVisual.gameObject);
+                GameObject visual=(GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(Prefab),player.scene);
+                visual.transform.SetParent(player.transform,false);
+                var cc=player.GetComponent<CharacterController>();
+                visual.transform.localPosition=Vector3.up*(cc!=null?cc.center.y-cc.height*.5f:-1f);
                 PrefabUtility.SaveAsPrefabAsset(player,playerPath);
             }
             finally {PrefabUtility.UnloadPrefabContents(player);}
