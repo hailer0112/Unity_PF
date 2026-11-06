@@ -130,3 +130,71 @@ Editor/EnemyHealthBarBuilder.cs는 프리팹 생성 도구, Editor/EnemyHealthBa
 실제 Unity6000.6.0f1 Play 모드 검사14개 통과(ENEMY_BAR_TEST_PASSED:14): 초기숨김,25피해75%,다른적무영향,3초이전표시,재피격50%,기존기한이후표시유지,카메라방향정렬,머리위위치,두번째적별도75%,첫적시간만료숨김,두번째적독립타이머,치명피해즉시숨김,적/카메라이동후중앙유지,표시중사망숨김.
 게임카메라 렌더 enemy-hp-bars.png에서 서로다른 비율의 바가 독립표시되는 것을 확인. 테스트는 ReceiveDamage를 직접 호출하는 실제Play모드 검사이며 직접마우스공격을 시연한 검사는 아님. 임시복제 적은Play종료로제거됐다. 기존 공격/피격/사망/카메라/Idle1.5FPS 설정 변경 없음.
 수동확인: FirstClearing Play → 게접근후좌클릭1회(HP75/붉은게이지75%) →3초대기(숨김) →3초안에추가공격(타이머갱신) →총4회공격(사망즉시숨김). 프리팹복제로각각다른체력표시및카메라추적중머리위위치를확인한다.
+
+## 침식된 게 신하 추적 및 집게 내려찍기
+### 작업 시작 상태
+2026-11-06 Desktop/Github/Unity_PF에서 git fetch origin --prune 성공. main HEAD c6398f5, origin/main과 ahead/behind0/0, 작업 트리 깨끗함 확인. 기존 작업에 새 프로젝트 생성/강제 초기화/Push 없이 이어서 구현. 실제 설치 및 검증 Unity6000.6.0f1, 활성 파이프라인 Built-in이며 요청의6000.6.7f1/URP로 임의 전환하지 않음.
+
+### 구현 파일 및 설정
+- Scripts/CrabSoldierAI.cs: Idle→Chase→Windup→Slam→Recovery, Dead 상태. 감지8m, 공격시작1.8m, 이동속도2.5m/s, 준비.6초, 내려찍기/접촉판정.15초, 회복.7초, 피해15, 공격간격2초. 모든 값 Inspector 조정 가능. 기본 공격 영역 길이1.8m/폭1.1m, 전방 사각형 바닥 경고 표시. 공격 시작에 XZ 방향과 시작 시각 고정. nextAttack=시작+2로 관리하여1.45초 동작 시간을 추가 가산하지 않음.
+- 기존 활성 NavMesh/Agent가 없으므로 같은 몸통 크기의 CharacterController 이동. 기존 CapsuleCollider는 중복충돌 방지를 위해 비활성, 공격대상 Collider는 CharacterController로 유지. 벽 관통 방지. 장애물 뒤 공격은 RaycastAll 가림 검사로 막음. 복잡한 경로 우회/경사면 경로 탐색은 없음.
+- Scripts/CrabAttackVisual.cs: 기존 한 장 이미지의 오른손 큰집게가 보이는 화면 왼쪽 영역을 임시 분리하고 나머지를 세 조각으로 재조립. 원본 PNG/프레임/크기/팔레트는 변경하지 않음. 준비 중 집게영역 회전/상승, .6초에 빠른 내려찍기 포즈로 전환하여 바닥쪽 하강, 이어지는 .15초 접촉판정, .7초에 걸쳐 복귀. 완성된 도트 공격 프레임이 아니며 절단 경계/관복 일부 동반 움직임/방향별 신체 포즈 부족이 있는 임시 모션. 실제 공격 방향은 고정된 바닥 경고로 읽힌다.
+- Scripts/CrabSpriteAnimation.cs: ActionLocked 속성만 추가. 공격 중 Idle/Walk 프레임교체를 잠가 임시 공격조각과 충돌하지 않도록 함. Idle1.5FPS/Walk7FPS/피격/사망속도 유지. 루트 회전/좌우반전을 하지 않아 이동방향별 원본 스프라이트가 임의로 뒤집히지 않음. 후면 전용 이동 스프라이트는 없음.
+- Scripts/PlayerHealth.cs: 기존 플레이어 HP가 없어서 최대100/현재HP/피해 수신/사망 이벤트만 추가. HongGildong.IsInvulnerable이면 피해 무효. 사망 시 HongGildong 비활성화로 이동/공격/대시/마커 취소. 사망 뒤 추가피해 무시. 플레이어 HP HUD/리트라이/저장/완성된 플레이어 피격애니메이션은 추가하지 않음.
+- 게 피격은 기존 흔들림/색변화/HP바 유지하며 공격을 취소하지 않음. 공격조각은 원본 SpriteRenderer의 피격 색상을 반영하고, 움직임은 별도 자식영역에서 처리. 게 사망 이벤트는 즉시 공격/경고취소 및 기존 사망처리로 연결. 플레이어 사망도 다음 AI Update에서 추적/공격중지, 피해수신은 사망즉시거절.
+- Prefab CorruptedCrabSoldier.prefab에 AI/CharacterController 및 SpriteVisual/CrabAttackVisual 연결. FirstClearing의 Hong Gildong에 PlayerHealth 연결. Editor/CrabAISetup.cs는 생성/연결 도구, Editor/CrabAIVerification.cs는 요청파일이 있을 때만 실행하는 검증 도구.
+
+### 실제 Unity 검증과 한계
+Play 모드 검사23개 최종 재통과(CRAB_AI_TEST_PASSED:23, Logs/Editor.log). 실제 프레임 시간 경과로 감지/추적이동/Walk전환/벽앞정지를 확인. 공격 메서드와 경과타이머를 지정하는 검사로 준비중무피해, 방향고정및범위이탈회피, 실제 BeginDash 호출 후 무적피해무효, 접촉시15피해, 같은공격중복방지, 회복중이동금지, 회복완료, 시작기준2초간격, 공격중기존피격과HP바유지, 사망시경고/판정취소, 플레이어사망시조작/AI중지, 사망뒤추가피해무효를 확인했다.
+공격 전체를 직접 마우스로 회피하며 시연한 테스트와 구분한다. 준비모션은 실제 카메라 렌더 crab-ai-windup.png로 확인했으며 완성된 픽셀 공격애니메이션으로 보고하지 않는다. 전용 모션 아트 보강, 장애물 경로우회, 플레이어HP UI/재시작은 미구현 범위다.
+
+### Inspector 및 수동 테스트
+CrabSoldierAI의 Target은 비워도 Start에서 PlayerHealth 자동 탐색. Detection Range8 / Attack Range1.8 / Move Speed2.5 / Windup Time.6 / Active Time.15 / Recovery Time.7 / Attack Damage15 / Attack Interval2 / Hit Length1.8 / Hit Width1.1을 조정. PlayerHealth의 Max HP100과 Current HP를 Inspector에서 확인.
+1. FirstClearing Play, 8m 안에서 접근하는 게와 Walk 확인. 1.8m 안에서 이동중단/주황 바닥경고/집게들기 확인.
+2. 준비중 우클릭으로 경고 밖 이동: 피해없음. 정면에 남으면 접촉 시 HP100→85, 같은공격에 추가감소없음.
+3. 준비 후 .6초 부근 Space로 경고범위를 통과: 대시 무적 .2초 동안 피해없음. 대시 전체 .25초 중 마지막 .05초는 기존 규칙상 무적이 아님.
+4. 회복 .7초에는 이동/재공격없음. 공격시작간격은2초, 사거리 밖이면 다시추적.
+5. 테스트 Cube벽을 사이에 두면 추적관통과 벽너머피해가 없는지 정면/사선에서 확인. 자동 우회는 기대하지 않음.
+6. 공격준비중 게를 죽이면 경고/공격취소. 플레이어HP0이면 조작/추적/공격중단. 게HP바/피격흔들림/기존카메라/우클릭마커 회귀확인.
+7. 해당 테스트는 죽은 뒤 재시작UI가 없으므로 Play를 다시 시작해 반복한다. 스킬/보스/드롭/다른 몬스터/연속공격은 추가하지 않았다.
+
+## 홍길동 Idle 시각 모션 추가
+정면 IdleFront/후면 IdleBack 각1장만 존재하고 Animator 없이 HongGildong.cs가 Walk/Attack/Dash Sprite를 교체함을 확인. 기존 AI작업 미커밋 변경을 보존하고 Idle만 추가했다.
+원본PNG/도트/비율/PPU52/ArtworkScale.46/Point필터/무압축 그대로 유지. 새전신이미지/4~6장프레임은 생성하지 않았다. HongGildongIdleVisual.cs는 Artwork 아래 런타임 Idle Motion Surface를 만들고 원본텍스처의UV를그대로쓰는메시에서만호흡/검쪽/옷자락/삿갓부위를미세변형한다. 하단20%정점은고정, 루트/부모Transform/Collider는애니메이션으로움직이지않음. 연속메시기반임시모션이며 완성된수작업도트프레임애니메이션이아니다. 머리끈/손/옷자락을독립리깅한것도아니므로 세부부위는대략적인높이/위치마스크기준이다.
+HongGildong.cs에는 목적지보유여부 읽기속성 HasMoveDestination만 추가. 이동/공격/대시중이거나사망/비활성상태면새시각표시를숨기고기존SpriteRenderer로즉시복귀. 정지상태와기존IdleSprite일때만활성. 정면/후면원본과flipX를반영. 상태종료후Idle주기를0부터시작한다.
+FirstClearing의 Hong Gildong/Artwork에 HongGildongIdleVisual 연결. Inspector Loop Duration1.5초, Strength1, Breath Pixels.85, Cloth Pixels.6, Sword Pixels.35, Hat Pixels.15. 픽셀단위는원본픽셀기준미세이동량이다. 강도를0으로하면움직임을끄고원본표시를유지할수있다. Collider/사거리/공격판정/이동속도/대시2m/원본게AI/HP바는변경하지않았다.
+실제 Unity6000.6.0f1 Play 모드 검사14개통과(HONG_IDLE_TEST_PASSED:14). 정지Idle활성,1.5초주기,하단정점고정및상체변화,루프끝점연결,루트XZ및스케일유지,목적지지정즉시Idle중단,실제이동중Idle미재생,공격시기존렌더러/회복후복귀,대시시기존렌더러/종료후복귀,후면/flipX반영,Collider높이.72/반지름.17유지,비활성시Idle렌더링해제확인. 검사동안적AI만Play모드에서비활성화하여전투간섭을제외했고종료후원래씬으로복원됨. 입력은메서드호출로시작한상태전환검사이며 직접마우스/키보드시연과구분한다.
+홍길동정면/후면PNG와meta의git diff 없음, 해시보존확인. 실제카메라렌더 hong-idle.png에서기존캐릭터모습/크기/머티리얼표시확인. 움직임자연스러움/머리끈미세움직임/도트가장자리의서브픽셀떨림은직접Play에서추가확인필요.
+수동테스트: Play에서정지1.5초반복확인 →우클릭이동(Idle중단) →도착후복귀 →좌클릭공격/종료복귀 →Space대시/종료복귀 →정면·후면과좌우방향전환확인. 강하거나약하면Artwork컴포넌트의Strength/LoopDuration부터조절. Editor/HongIdleSetup.cs, Editor/HongIdleVerification.cs는설정/검증도구이다. QWER/다른기능은추가하지않았다.
+
+## 게 신하 충전형 바닥 공격 경고
+현재 코드 확인: 준비 .6초/접촉판정 .15초/회복 .7초, 길이1.8×폭1.1m의 전방직사각형, LineRenderer4점 경고선. 기존 선색상/너비/모양 및 TryHit의OverlapBox/피해15/대시무적/공격방향고정/공격간격은변경하지않음.
+신규 Scripts/ChargedAttackWarning.cs: 기존LineRenderer에연결하는재사용컴포넌트. 원점과방향을Begin에서고정하고직사각형Mesh의길이만0→전체길이로늘려채운다. FillColor기본(0.9,.025,.04,.28), GroundLift .001(기존선기준추가높이), SortingOrder1. 캐릭터스프라이트보다뒤에그리며ZWriteOff/알파블렌딩으로표시.
+CrabSoldierAI.cs: 같은elapsed=Time.time-attackStarted와windupTime으로SetProgress를호출. .15/.30/.45/.60초에25/50/75/100%. 별도타이머없음. 준비시간전에는최대.99999로제한. 기존contact=windupTime과같은Tick에서100%와피해검사시작. 기존 .15초 판정구간에는100%를유지하고회복진입시기존선과함께숨김. 단한번의피해성공시점이아니라기존접촉판정창시작과동기화한다.
+CancelAttack/사망/플레이어사망/AI비활성화/공격상태비정상탈출에서채우기와선제거. 다음Begin은항상0부터시작. 기존피격은공격을취소하지않는규칙을유지했고새경직은추가하지않았다.
+UI/GroundWarningFill.shader 및 .mat 추가: Unlit 투명셰이더, Built-in Always/URP SRPDefaultUnlit 패스제공. 실제프로젝트는Built-in활성이고Unity6000.6.0f1에서검증. URP파이프라인전환실행검사는미수행. 프로젝트파이프라인임의변경없음.
+Prefab CorruptedCrabSoldier에ChargedAttackWarning과머티리얼연결. 현재열린씬에미저장표시가있어씬을저장하거나덮어쓰지않음. Editor/ChargedWarningSetup.cs는연결도구, ChargedWarningVerification.cs는요청파일이있을때만실행하는Play모드검증도구.
+실제Play모드검사21개통과(CHARGED_WARNING_TEST_PASSED:21). 기존타이밍/직사각형크기유지,시작0%,셰이더컴파일,25/50/75%진행률과면길이,플레이어이동중원점/방향고정,판정전100%와피해금지,100%와피해시작동일Tick,중복피해없음,판정구간후제거,명시취소/재공격초기화,준비시간1.2초변경시자동보정,비정상상태이탈정리,실제대시무적,게/플레이어사망취소확인. 공격경과시간을지정해검사한Play모드검증이며전체전투를직접입력시연한것은아님.
+50%시점실제카메라렌더 charged-warning.png에서절반길이의붉은반투명면과기존선/캐릭터앞뒤표시확인. 원본아트/HP바/홍길동Idle/Walk/게AI/피격/사망데이터는유지.
+Inspector: 게루트 > ChargedAttackWarning > Fill Color의알파로투명도, Ground Lift로지면겹침, Sorting Order로그리기순서를조정. CrabSoldierAI > Windup Time을바꾸면충전시간도함께변함. Fill Material은연결완료. 같은직사각형공격을가진다른몬스터는BindOutline/Begin/SetProgress/Hide로재사용가능하며다른형태의공격Mesh는이번범위밖이다.
+수동테스트: Play→게접근→0.6초동안원점에서앞으로차오르는지확인→공격순간가득찬후.15초판정종료시제거확인→준비중사망/플레이어사망시즉시제거→다음공격0%재시작→Windup Time1.2로시험후원복→대시무적/범위이탈회귀확인. 새로운패턴/몬스터/피해판정변경없음.
+
+## 집게팔 분리 현상 원인 및 어깨 연결 보정
+원인: 평소 단일 Sprite, 공격 중 코드에서 몸통3조각/집게1조각으로 임시분할. Animator/위치회전키프레임자산은없음. 오른집게의정규화Pivot(1,.73)은 잘린조각의손목쪽이었고,회전외에상승 .18×sprite높이/하강 .24×sprite높이를집게조각에만독립적용하여몸통과연결점을유지할수없었다. 모든조각SortingOrder가같아절단경계도가려지지않았다. 새전체공격스프라이트로교체하는구조가아니며 Begin시현재Idle/Walk원본을잘라사용했다.
+수정파일 Scripts/CrabAttackVisual.cs. 기존분할/원본이미지를유지하면서 SpriteVisual아래 Right Shoulder Joint를추가. 어깨정규화좌표 Shoulder Anchor(.36,.69)를회전축으로고정하고집게조각을자식으로연결. 팔의상대위치/Scale은준비·타격·회복내내고정하고독립상승/하강위치키처리를제거했다. 각도곡선 -115도들기/18도내려찍기/0도회복과기존windup/slam/recovery매개변수는유지.
+원본텍스처의어깨근처영역(x.25~.47,y.56~.78)을작은 Shoulder Overlap 조각으로중첩하여관절틈을가림. 집게는원본SortingOrder-1, 고정몸통은원본Order, 어깨겹침은원본Order+1. 원본도트/색상/비율/머리/다리/전체몸통재제작없음. 피격색상을어깨겹침에도동일반영. End에서임시조각을즉시숨겨같은프레임에이전조각이남아보이는문제도방지.
+아트는여전히한장원본을잘라움직이는임시모션으로팔부분일부옷감움직임/관절의딱딱한꺾임은한계. 추가로자연스러운관절움직임이필요하면향후공격전용전체프레임또는별도어깨/상완/집게아트제작이대안이며이번에는새이미지를생성하지않았다.
+검증도구 Editor/CrabAIVerification.cs에관절부모/겹침Sorting/준비·타격·회복9개시점의어깨고정·팔상대위치·Scale보존·회복후0도복귀검사를추가. 최초검증도구가공개Pose메서드를비공개검색으로호출해실패했으나도구호출범위를수정후실제Unity6000.6.0f1 Play모드35개최종통과(CRAB_AI_TEST_PASSED:35). 실제추적/Walk/충돌,공격타이밍/범위이탈/대시무적/중복피해/HP바/사망취소검사도포함. 공격시간은메서드로지정한상태검사이며직접입력전투시연은별도이다.
+준비.59초/타격.6초/회복1.1초의실제게임카메라렌더(crab-arm-windup.png,crab-arm-impact.png,crab-arm-recovery.png)를확인하여팔과몸통사이에기존처럼떠있는틈이생기지않는것을확인. AI/ChargedAttackWarning/MonsterHealth의SHA256이작업전과동일함을확인. 피해판정및충전게이지타이밍은변경하지않음. 열린씬의미저장변경은저장하거나덮어쓰지않았다.
+Inspector: SpriteVisual > CrabAttackVisual > Shoulder Anchor는원본Sprite사각형의좌하단기준정규화좌표. 기본값(.36,.69)으로연결완료하며외형이미지를바꾸지않는한추가설정불필요.
+수동테스트: Play에서게공격유도 → 준비중큰집게와어깨사이틈확인 → .6초충전완료/타격시연결및피해타이밍확인 → .7초회복후기본자세확인 → 다시추적할때Idle/Walk복귀확인 → 공격준비중피격및사망시겹침조각잔류없는지/HP바정상인지확인. 정상속도와Pause후Step에서각시점도확인한다.
+
+## 공격 팔이 몸통에 가려져 잘려 보이는 문제 추가 보정
+현재 구조: Idle/Walk는단일SpriteRenderer, 공격때만코드가몸통3조각+오른집게1조각과어깨덮개를임시생성. Animator/공격전용전체프레임없음. SortingGroup없음을실제Play모드에서확인.
+분석결과 이전보정의집게Order=몸통-1과넓은어깨덮개(.22×.22 원본비율)가집게안쪽을가리는것이주원인이었다. 어깨고정축자체는유지되었으나내려찍기18도에서팔이몸통안쪽으로들어왔다. 추가근접렌더에서원본Sprite자체손상이아니라잘라내기하단y.28이집게끝보다높아서집게끝조각이고정몸통쪽에남는문제도확인했다.
+게임코드수정은 Scripts/CrabAttackVisual.cs만. ShoulderAnchor(.36,.69)→(.32,.69)로조금바깥보정. 집게Order몸통-1→몸통+1(공격파츠존재중에만),어깨덮개몸통+2. 덮개영역 x.26~.40/y.61~.75로축소하여집게전체를덮지않고관절만겹치게함. 내려찍기각도18→5도로안쪽묻힘완화,준비-115도와회복0도유지. 분할하단y.28→.16으로집게끝까지이동팔영역에포함하여고정위치에끝조각이남지않도록수정. 원본PNG/PPU/Scale/머리·다리·몸통그림재제작없음.
+Idle/Walk는이임시파츠를사용하지않으며End에서기존단일렌더러/애니메이션으로복귀한다. 피격색상과어깨고정/사망정리는기존대로유지. AI/ChargedAttackWarning/MonsterHealth의작업전후SHA256동일확인으로공격시점·피해범위·충전·HP가변경되지않았음을확인했다. 열린미저장씬은저장/덮어쓰기하지않았다.
+실제Unity6000.6.0f1 Play모드최종39검사통과(CRAB_AI_TEST_PASSED:39). 기존추적/Walk/충돌/공격/대시무적/HP바/사망검사에공격팔이몸통앞인지,덮개크기,SortingGroup없음,집게하단포함,9개시점어깨위치/팔상대위치/Scale불변,회복0도복귀검사추가. 검증도구 Editor/CrabAIVerification.cs에근접렌더추가. 실제카메라준비.59/타격.6/회복1.1초의 crab-arm-*-close.png 및일반화면렌더를확인하여가려짐/남는집게끝조각이해소된것확인. 직접입력으로전체전투를시연한검사와는구분한다.
+한계: 단일Idle/Walk이미지를사각형으로잘라회전시키는임시방식이므로관절의딱딱한꺾임/회전시연결부겹침은남는다. 최소수정으로이번가림과집게끝잔류문제는완화/해소했지만전용Attack아트품질을완성했다고보고하지않는다. 추가자연스러움이필요하면Idle/Walk/Hit/Death와HP/AI는유지하고Attack만원본픽셀밀도·비율에맞춘전체프레임으로교체하는것이대안이다. 이번에는새전체프레임/전신파츠를제작하지않음.
+확인설정: SpriteVisual > CrabAttackVisual > ShoulderAnchor(.32,.69) 기본. 실제공격중생성되는 Attached Right Claw는몸통보다앞,ShoulderOverlap은관절위만덮는순서. 별도SortingGroup추가불필요.
+수동테스트: Play에서게공격유도 → 준비중팔과어깨연결확인 → Pause/Step으로충전100%/타격순간팔안쪽과끝까지보이는지확인 → .7초회복뒤원래자세확인 → 이동/피격/사망전환에임시파츠잔류없는지확인. 공격속도/충전/피해가이전과같은지도함께확인.

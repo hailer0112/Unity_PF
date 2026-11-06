@@ -508,6 +508,7 @@ GameObject:
   - component: {fileID: 251033140}
   - component: {fileID: 251033139}
   - component: {fileID: 251033138}
+  - component: {fileID: 251033141}
   m_Layer: 2
   m_Name: Hong Gildong
   m_TagString: Untagged
@@ -612,6 +613,20 @@ Transform:
   - {fileID: 177920515}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &251033141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251033137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c646c0b03af29b4a80f24a391ae3f95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Storybook.PlayerHealth
+  maxHP: 100
+  currentHP: 0
 --- !u!1 &520503969
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,6 +637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 520503971}
   - component: {fileID: 520503970}
+  - component: {fileID: 520503972}
   m_Layer: 0
   m_Name: Artwork
   m_TagString: Untagged
@@ -704,6 +720,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 251033140}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &520503972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 520503969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 434902cfb8c845d4d8610e644d90342e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Storybook.HongGildongIdleVisual
+  player: {fileID: 251033138}
+  body: {fileID: 520503970}
+  idleFront: {fileID: 21300000, guid: cdc3935f4f638614da72a4f26ebe9cca, type: 3}
+  idleBack: {fileID: 21300000, guid: 4379c2b41d95cfb43943436a09126a21, type: 3}
+  loopDuration: 1.5
+  strength: 1
+  breathPixels: 0.85
+  clothPixels: 0.6
+  swordPixels: 0.35
+  hatPixels: 0.15
 --- !u!1 &991145927
 GameObject:
   m_ObjectHideFlags: 0

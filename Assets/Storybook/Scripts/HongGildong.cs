@@ -46,6 +46,7 @@ namespace Storybook
         readonly HashSet<AttackTarget> hitThisSwing = new HashSet<AttackTarget>();
         float SweepSign => attackLeft == attackBack ? -1f : 1f;
         public bool Attacking => attackTime < RecoveryEnd;
+        public bool HasMoveDestination => destination.HasValue;
         public bool IsDashing => dashTimeLeft > 0f;
         public bool IsInvulnerable => isActiveAndEnabled && Time.timeAsDouble < invulnerableUntil;
 

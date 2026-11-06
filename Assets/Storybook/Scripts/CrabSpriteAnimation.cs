@@ -12,6 +12,7 @@ namespace Storybook
         Vector3 previousPosition;
         float clock;
         bool wasWalking;
+        public bool ActionLocked { get; set; }
         void Awake() { body=GetComponent<SpriteRenderer>();health=GetComponentInParent<MonsterHealth>(); }
         void OnEnable() { previousPosition=transform.root.position;clock=0; }
         void LateUpdate()
@@ -19,7 +20,7 @@ namespace Storybook
             Vector3 position=transform.root.position;
             float speed=Vector3.ProjectOnPlane(position-previousPosition,Vector3.up).magnitude / Mathf.Max(Time.deltaTime,.0001f);
             previousPosition=position;
-            if (health!=null && health.IsDead) return;
+            if ((health!=null && health.IsDead) || ActionLocked) return;
             bool walking=previewWalk || speed>.05f;
             if (walking!=wasWalking) clock=0;
             wasWalking=walking;
