@@ -2,11 +2,13 @@ using UnityEngine;
 
 namespace Storybook
 {
-    public sealed class StrawTarget : MonoBehaviour
+    public sealed class StrawTarget : AttackTarget
     {
         [SerializeField] SpriteRenderer body;
         float hitTime = 1f;
         public int HitCount { get; private set; }
+
+        public override void ReceiveDamage(float damage) { if (damage > 0) TakeHit(); }
 
         public void TakeHit() { HitCount++; hitTime = 0f; }
 

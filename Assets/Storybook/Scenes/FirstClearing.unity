@@ -420,7 +420,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 201395515}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.4226183, y: -0, z: -0, w: 0.9063078}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -541,7 +541,6 @@ MonoBehaviour:
   - {fileID: 21300012, guid: 0993acb237b54f80a29cade95ac7db36, type: 3}
   - {fileID: 21300014, guid: 0993acb237b54f80a29cade95ac7db36, type: 3}
   - {fileID: 21300016, guid: 0993acb237b54f80a29cade95ac7db36, type: 3}
-  bladeTrail: {fileID: 177920514}
   walkFront:
   - {fileID: 21300002, guid: e1896699202541ad9eb6501c017ac401, type: 3}
   - {fileID: 21300004, guid: e1896699202541ad9eb6501c017ac401, type: 3}
@@ -552,18 +551,25 @@ MonoBehaviour:
   - {fileID: 21300012, guid: e1896699202541ad9eb6501c017ac401, type: 3}
   - {fileID: 21300014, guid: e1896699202541ad9eb6501c017ac401, type: 3}
   - {fileID: 21300016, guid: e1896699202541ad9eb6501c017ac401, type: 3}
+  bladeTrail: {fileID: 177920514}
   walkSpeed: 1.8
-  dashDistance: 3
+  reach: 1.7
+  attackDamage: 25
+  halfArc: 68
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 1
+  dashDistance: 2
   dashDuration: 0.25
   invulnerabilityDuration: 0.2
   dashCooldown: 2
   dashFront: {fileID: 21300000, guid: 4f74f5d8182aeb44a82c8297a071a161, type: 3}
   dashBack: {fileID: 21300000, guid: 8fe80058d7f815a48a7b819b2c93ae5b, type: 3}
-  reach: 1.7
-  halfArc: 68
-  targetMask:
-    serializedVersion: 2
-    m_Bits: 1
+  markerRadius: 0.22
+  markerWidth: 0.035
+  markerHeight: 0.025
+  markerColor: {r: 0.25, g: 1, b: 0.65, a: 0.9}
+  markerMaterial: {fileID: 0}
 --- !u!143 &251033139
 CharacterController:
   m_ObjectHideFlags: 0
@@ -691,7 +697,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 520503969}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.4226183, y: -0, z: -0, w: 0.9063078}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.46, y: 0.46, z: 0.46}
   m_ConstrainProportionsScale: 0
@@ -875,13 +881,70 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1094388133}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.4226183, y: -0, z: -0, w: 0.9063078}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1632540918}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1317223846
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1865553744066951983, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865553744066951983, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865553744066951983, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865553744066951983, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865553744066951983, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865553744066951983, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865553744066951983, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865553744066951983, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865553744066951983, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1865553744066951983, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5314569323724306231, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+      propertyPath: m_Name
+      value: CorruptedCrabSoldier
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
 --- !u!1 &1632540915
 GameObject:
   m_ObjectHideFlags: 0
@@ -1006,7 +1069,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4.5
+  orthographic size: 2.6
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1034,6 +1097,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3920ffc617b6574a88bca52e5a04357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.ClearingCamera
+  followTarget: {fileID: 251033140}
+  verticalSize: 2.6
+  minimumHalfWidth: 3.9
+  followSmoothTime: 0.12
+  offset: {x: 0, y: 10, z: -8.391}
+  lookAhead: {x: 0, y: 0, z: 0.25}
 --- !u!81 &1728389241
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1050,8 +1119,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1728389238}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.309017, y: 0, z: 0, w: 0.95105654}
-  m_LocalPosition: {x: -0, y: 9.404565, z: -12.944272}
+  m_LocalRotation: {x: 0.4226183, y: 0, z: 0, w: 0.9063078}
+  m_LocalPosition: {x: -0.85, y: 10, z: -8.741}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1067,3 +1136,4 @@ SceneRoots:
   - {fileID: 251033140}
   - {fileID: 1632540918}
   - {fileID: 220747097}
+  - {fileID: 1317223846}

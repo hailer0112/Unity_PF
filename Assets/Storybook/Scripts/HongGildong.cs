@@ -15,14 +15,21 @@ namespace Storybook
         [SerializeField] LineRenderer bladeTrail;
         [SerializeField, Min(.1f)] float walkSpeed = 1.8f;
         [SerializeField] float reach = 1.7f;
+        [SerializeField, Min(0)] float attackDamage = 25f;
         [SerializeField] float halfArc = 68f;
         [SerializeField] LayerMask targetMask;
         [Header("Dash")]
-        [SerializeField, Min(.01f)] float dashDistance = 3f;
+        [SerializeField, Min(.01f)] float dashDistance = 2f;
         [SerializeField, Min(.01f)] float dashDuration = .25f;
         [SerializeField, Min(0f)] float invulnerabilityDuration = .2f;
         [SerializeField, Min(0f)] float dashCooldown = 2f;
         [SerializeField] Sprite dashFront, dashBack;
+        [Header("Move Marker")]
+        [SerializeField, Min(.01f)] float markerRadius = .22f;
+        [SerializeField, Min(.001f)] float markerWidth = .035f;
+        [SerializeField, Min(.001f)] float markerHeight = .025f;
+        [SerializeField] Color markerColor = new Color(.25f, 1f, .65f, .9f);
+        [SerializeField] Material markerMaterial;
 
         const float Windup = .12f, ContactEnd = .29f, RecoveryEnd = .42f;
         CharacterController controller;
@@ -30,12 +37,13 @@ namespace Storybook
         Vector3 facing = new Vector3(.8f, 0f, -.6f), slashDirection;
         const float WalkCycleDistance = 1.3f, ArrivalTolerance = .015f;
         Vector3? destination;
+        LineRenderer moveMarker;
         Vector3 dashDirection;
         float dashTimeLeft;
         double invulnerableUntil, dashReadyAt;
         float attackTime = RecoveryEnd, gaitPhase;
         bool back, left, attackBack, attackLeft;
-        readonly HashSet<StrawTarget> hitThisSwing = new HashSet<StrawTarget>();
+        readonly HashSet<AttackTarget> hitThisSwing = new HashSet<AttackTarget>();
         float SweepSign => attackLeft == attackBack ? -1f : 1f;
         public bool Attacking => attackTime < RecoveryEnd;
         public bool IsDashing => dashTimeLeft > 0f;
@@ -48,25 +56,31 @@ namespace Storybook
             point = new InputAction("Aim", InputActionType.PassThrough, "<Mouse>/position");
             strike = new InputAction("Slash", InputActionType.Button, "<Mouse>/leftButton");
             dash = new InputAction("Dash", InputActionType.Button, "<Keyboard>/space");
+            CreateMoveMarker();
         }
 
         void OnEnable() { move.Enable(); point.Enable(); strike.Enable(); dash.Enable(); }
         void OnDisable()
         {
             move.Disable(); point.Disable(); strike.Disable(); dash.Disable();
-            destination = null;
+            PrepareForAction();
             dashTimeLeft = gaitPhase = 0f;
             invulnerableUntil = 0;
             attackTime = RecoveryEnd;
             bladeTrail.enabled = false;
         }
-        void OnDestroy() { move.Dispose(); point.Dispose(); strike.Dispose(); dash.Dispose(); }
+        void OnDestroy()
+        {
+            move.Dispose(); point.Dispose(); strike.Dispose(); dash.Dispose();
+            if (moveMarker != null) Destroy(moveMarker.gameObject);
+        }
 
         void Update()
         {
             Vector2 cursor = point.ReadValue<Vector2>();
-            if (move.WasPressedThisFrame() && TryGroundPoint(cursor, out Vector3 goal))
-                destination = InsideClearing(goal);
+            // Actions own movement until they finish; clicks during them are not queued.
+            if (!IsDashing && !Attacking && move.WasPressedThisFrame() && TryGroundPoint(cursor, out Vector3 goal))
+                SetDestination(goal);
             if (!IsDashing && !Attacking && dash.WasPressedThisFrame() && Time.timeAsDouble >= dashReadyAt)
                 BeginDash(cursor);
             if (IsDashing)
@@ -76,12 +90,12 @@ namespace Storybook
                 body.sprite = back ? dashBack : dashFront;
                 return;
             }
-            Vector3 offset = RemainingWalk();
+            if (!Attacking && strike.WasPressedThisFrame()) BeginSwing(cursor);
+            Vector3 offset = Attacking ? Vector3.zero : RemainingWalk();
             if (offset.sqrMagnitude > 0f) Face(offset.normalized);
-            float step = walkSpeed * (Attacking ? .48f : 1f) * Time.deltaTime;
+            float step = walkSpeed * Time.deltaTime;
             MoveOnGround(Vector3.ClampMagnitude(offset, step));
             ClearReachedDestination();
-            if (!Attacking && strike.WasPressedThisFrame()) BeginSwing(cursor);
             if (Attacking)
             {
                 float previousTime = attackTime;
@@ -111,9 +125,51 @@ namespace Storybook
         Vector3 RemainingWalk() => destination.HasValue
             ? Vector3.ProjectOnPlane(destination.Value - transform.position, Vector3.up) : Vector3.zero;
 
+        // Future skills call this on successful activation. A travelling skill can
+        // explicitly preserve its destination and control its own action movement.
+        public void PrepareForAction(bool preserveDestination = false)
+        {
+            if (preserveDestination) return;
+            destination = null;
+            gaitPhase = 0f;
+            if (moveMarker != null) moveMarker.enabled = false;
+        }
+
+        void SetDestination(Vector3 goal)
+        {
+            destination = InsideClearing(goal);
+            moveMarker.transform.position = destination.Value + Vector3.up * markerHeight;
+            moveMarker.enabled = true;
+            ClearReachedDestination();
+        }
+
+        void CreateMoveMarker()
+        {
+            // Independent of the player transform so it stays on the ground.
+            GameObject marker = new GameObject("Move Destination Marker");
+            marker.layer = LayerMask.NameToLayer("Ignore Raycast");
+            moveMarker = marker.AddComponent<LineRenderer>();
+            moveMarker.useWorldSpace = false;
+            moveMarker.loop = true;
+            moveMarker.positionCount = 48;
+            moveMarker.alignment = LineAlignment.TransformZ;
+            marker.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
+            moveMarker.sharedMaterial = markerMaterial != null ? markerMaterial : bladeTrail.sharedMaterial;
+            moveMarker.startColor = moveMarker.endColor = markerColor;
+            moveMarker.startWidth = moveMarker.endWidth = markerWidth;
+            moveMarker.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            moveMarker.receiveShadows = false;
+            for (int i = 0; i < moveMarker.positionCount; i++)
+            {
+                float angle = i * Mathf.PI * 2f / moveMarker.positionCount;
+                moveMarker.SetPosition(i, new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0f) * markerRadius);
+            }
+            moveMarker.enabled = false;
+        }
+
         void ClearReachedDestination()
         {
-            if (RemainingWalk().sqrMagnitude <= ArrivalTolerance * ArrivalTolerance) destination = null;
+            if (RemainingWalk().sqrMagnitude <= ArrivalTolerance * ArrivalTolerance) PrepareForAction();
         }
 
         void Face(Vector3 direction)
@@ -131,38 +187,29 @@ namespace Storybook
 
         void BeginDash(Vector2 cursor)
         {
-            Vector3 direction = Vector3.ProjectOnPlane(controller.velocity, Vector3.up);
-            if (!destination.HasValue || direction.sqrMagnitude < .01f)
-            {
-                if (!TryGroundPoint(cursor, out Vector3 ground)) return;
-                direction = Vector3.ProjectOnPlane(ground - transform.position, Vector3.up);
-                if (direction.sqrMagnitude < .0025f) direction = facing;
-            }
+            if (!TryGroundPoint(cursor, out Vector3 ground)) return;
+            Vector3 direction = Vector3.ProjectOnPlane(ground - transform.position, Vector3.up);
+            if (direction.sqrMagnitude < .0025f)
+                direction = Vector3.ProjectOnPlane(facing, Vector3.up);
+            if (direction.sqrMagnitude < .0025f) direction = Vector3.forward;
             dashDirection = direction.normalized;
             Face(dashDirection);
             gaitPhase = 0f;
             dashTimeLeft = dashDuration;
             invulnerableUntil = Time.timeAsDouble + invulnerabilityDuration;
             dashReadyAt = Time.timeAsDouble + dashCooldown;
+            PrepareForAction();
         }
 
         void MoveDash()
         {
             float dt = Mathf.Min(Time.deltaTime, dashTimeLeft);
             float step = dashDistance * (dt / dashDuration);
-            Vector3 toGoal = RemainingWalk();
-            // A replacement goal off the dash line waits for normal movement to resume.
-            float along = Vector3.Dot(toGoal, dashDirection);
-            if (destination.HasValue && along >= 0f && (toGoal - dashDirection * along).sqrMagnitude <= ArrivalTolerance * ArrivalTolerance)
-                step = Mathf.Min(step, along);
-
             Vector3 before = transform.position;
             CollisionFlags flags = MoveOnGround(dashDirection * step);
             float travelled = Vector3.Dot(transform.position - before, dashDirection);
-            bool reachedGoal = destination.HasValue && RemainingWalk().sqrMagnitude <= ArrivalTolerance * ArrivalTolerance;
-            if (reachedGoal) destination = null;
             bool blocked = (flags & CollisionFlags.Sides) != 0 || travelled + .001f < step;
-            dashTimeLeft = reachedGoal || blocked ? 0f : Mathf.Max(0f, dashTimeLeft - dt);
+            dashTimeLeft = blocked ? 0f : Mathf.Max(0f, dashTimeLeft - dt);
         }
 
         void BeginSwing(Vector2 cursor)
@@ -173,6 +220,7 @@ namespace Storybook
             Vector3 aim = Physics.Raycast(ray, out RaycastHit hit, 100f, targetMask)
                 ? hit.collider.transform.position : ray.GetPoint(distance);
             Vector3 offset = Vector3.ProjectOnPlane(aim - transform.position, Vector3.up);
+            PrepareForAction();
             slashDirection = offset.sqrMagnitude > .0025f ? offset.normalized : facing;
             attackBack = Mathf.Abs(slashDirection.z) > .08f ? slashDirection.z > 0f : back;
             attackLeft = Mathf.Abs(slashDirection.x) > .08f ? slashDirection.x < 0f : left;
@@ -210,11 +258,11 @@ namespace Storybook
         {
             foreach (Collider other in Physics.OverlapSphere(transform.position + Vector3.up * .45f, reach + .45f, targetMask))
             {
-                if (!other.TryGetComponent(out StrawTarget target)) continue;
+                AttackTarget target = other.GetComponentInParent<AttackTarget>(); if (target == null || !target.CanTakeDamage) continue;
                 Vector3 offset = Vector3.ProjectOnPlane(other.transform.position - transform.position, Vector3.up);
                 float angle = SweepSign * Vector3.SignedAngle(slashDirection, offset, Vector3.up);
                 if (offset.sqrMagnitude <= reach * reach && angle >= start && angle <= end && hitThisSwing.Add(target))
-                    target.TakeHit();
+                    target.ReceiveDamage(attackDamage);
             }
         }
 
