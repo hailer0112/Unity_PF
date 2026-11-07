@@ -5,25 +5,35 @@ using UnityEngine.InputSystem;
 namespace Storybook
 {
     [RequireComponent(typeof(CharacterController))]
-    public sealed class HongGildong : MonoBehaviour
+    public sealed partial class HongGildong : MonoBehaviour
     {
         [SerializeField] Camera fieldCamera;
         [SerializeField] SpriteRenderer body;
+        [SerializeField] float artworkGroundOffset = .02f;
         [SerializeField] Sprite idleFront, idleBack;
         [SerializeField] Sprite[] swingFront, swingBack;
         [SerializeField] Sprite[] walkFront, walkBack;
+        [SerializeField] Sprite[] runFront, runBack;
         [SerializeField] LineRenderer bladeTrail;
         [SerializeField, Min(.1f)] float walkSpeed = 1.8f;
         [SerializeField] float reach = 1.7f;
         [SerializeField, Min(0)] float attackDamage = 25f;
         [SerializeField] float halfArc = 68f;
         [SerializeField] LayerMask targetMask;
+        [SerializeField] Rect movementBounds = Rect.MinMaxRect(-5.3f, -5.3f, 5.3f, 3.65f);
         [Header("Dash")]
         [SerializeField, Min(.01f)] float dashDistance = 2f;
         [SerializeField, Min(.01f)] float dashDuration = .25f;
         [SerializeField, Min(0f)] float invulnerabilityDuration = .2f;
         [SerializeField, Min(0f)] float dashCooldown = 2f;
         [SerializeField] Sprite dashFront, dashBack;
+        [Header("Q - Azure Slash")]
+        [SerializeField, Min(.01f)] float azureSlashRange = 6f;
+        [SerializeField, Min(.01f)] float azureSlashSpeed = 12f;
+        [SerializeField, Min(.01f)] float azureSlashWidth = 1.5f;
+        [SerializeField, Min(0f)] float azureSlashDamageMultiplier = 2f;
+        [SerializeField, Min(0f)] float azureSlashCooldown = 5f;
+        [SerializeField, Min(0f)] float azureSlashCastTime = .3f;
         [Header("Move Marker")]
         [SerializeField, Min(.01f)] float markerRadius = .22f;
         [SerializeField, Min(.001f)] float markerWidth = .035f;
@@ -33,19 +43,22 @@ namespace Storybook
 
         const float Windup = .12f, ContactEnd = .29f, RecoveryEnd = .42f;
         CharacterController controller;
-        InputAction move, point, strike, dash;
+        InputAction move, point, strike, dash, azureSlash;
         Vector3 facing = new Vector3(.8f, 0f, -.6f), slashDirection;
-        const float WalkCycleDistance = 1.3f, ArrivalTolerance = .015f;
+        const float WalkCycleDistance = 1.3f, RunCycleDistance = 1.7f, ArrivalTolerance = .015f;
         Vector3? destination;
         LineRenderer moveMarker;
         Vector3 dashDirection;
         float dashTimeLeft;
         double invulnerableUntil, dashReadyAt;
         float attackTime = RecoveryEnd, gaitPhase;
+        double azureSlashStartedAt, azureSlashReadyAt;
+        Vector3 azureSlashDirection;
         bool back, left, attackBack, attackLeft;
         readonly HashSet<AttackTarget> hitThisSwing = new HashSet<AttackTarget>();
         float SweepSign => attackLeft == attackBack ? -1f : 1f;
         public bool Attacking => attackTime < RecoveryEnd;
+        public bool IsCastingAzureSlash { get; private set; }
         public bool HasMoveDestination => destination.HasValue;
         public bool IsDashing => dashTimeLeft > 0f;
         public bool IsInvulnerable => isActiveAndEnabled && Time.timeAsDouble < invulnerableUntil;
@@ -57,13 +70,24 @@ namespace Storybook
             point = new InputAction("Aim", InputActionType.PassThrough, "<Mouse>/position");
             strike = new InputAction("Slash", InputActionType.Button, "<Mouse>/leftButton");
             dash = new InputAction("Dash", InputActionType.Button, "<Keyboard>/space");
+            azureSlash = new InputAction("Azure Slash", InputActionType.Button, "<Keyboard>/q");
+            InitializeCloneSlashInput();
+            InitializeWindstepInput();
+            swordTyphoonInput = new InputAction("Sword Typhoon", InputActionType.Button, "<Keyboard>/r");
             CreateMoveMarker();
         }
 
-        void OnEnable() { move.Enable(); point.Enable(); strike.Enable(); dash.Enable(); }
+        void OnEnable() { move.Enable(); point.Enable(); strike.Enable(); dash.Enable(); azureSlash.Enable(); cloneSlashInput.Enable(); windstepInput.Enable(); swordTyphoonInput.Enable(); }
         void OnDisable()
         {
-            move.Disable(); point.Disable(); strike.Disable(); dash.Disable();
+            move.Disable(); point.Disable(); strike.Disable(); dash.Disable(); azureSlash.Disable();
+            cloneSlashInput.Disable();
+            windstepInput.Disable();
+            swordTyphoonInput.Disable();
+            CancelSwordTyphoon();
+            ClearWindstep();
+            CancelCloneSlash();
+            IsCastingAzureSlash = false;
             PrepareForAction();
             dashTimeLeft = gaitPhase = 0f;
             invulnerableUntil = 0;
@@ -72,13 +96,35 @@ namespace Storybook
         }
         void OnDestroy()
         {
-            move.Dispose(); point.Dispose(); strike.Dispose(); dash.Dispose();
+            move.Dispose(); point.Dispose(); strike.Dispose(); dash.Dispose(); azureSlash.Dispose();
+            cloneSlashInput.Dispose();
+            windstepInput.Dispose();
+            swordTyphoonInput.Dispose();
             if (moveMarker != null) Destroy(moveMarker.gameObject);
         }
 
         void Update()
         {
             Vector2 cursor = point.ReadValue<Vector2>();
+            if (swordTyphoonInput.WasPressedThisFrame()) BeginSwordTyphoon(cursor);
+            UpdateWindstep();
+            if (IsCastingSwordTyphoon)
+            {
+                UpdateSwordTyphoon();
+                return;
+            }
+            if (IsCastingCloneSlash)
+            {
+                UpdateCloneSlash();
+                return;
+            }
+
+            if (IsCastingAzureSlash)
+            {
+                UpdateAzureSlash();
+                return;
+            }
+
             // Actions own movement until they finish; clicks during them are not queued.
             if (!IsDashing && !Attacking && move.WasPressedThisFrame() && TryGroundPoint(cursor, out Vector3 goal))
                 SetDestination(goal);
@@ -91,10 +137,22 @@ namespace Storybook
                 body.sprite = back ? dashBack : dashFront;
                 return;
             }
+            if (azureSlash.WasPressedThisFrame() && BeginAzureSlash(cursor))
+            {
+                UpdateAzureSlash();
+                return;
+            }
+
+            if (cloneSlashInput.WasPressedThisFrame() && BeginCloneSlash(cursor))
+            {
+                UpdateCloneSlash();
+                return;
+            }
+
             if (!Attacking && strike.WasPressedThisFrame()) BeginSwing(cursor);
             Vector3 offset = Attacking ? Vector3.zero : RemainingWalk();
             if (offset.sqrMagnitude > 0f) Face(offset.normalized);
-            float step = walkSpeed * Time.deltaTime;
+            float step = EffectiveWalkSpeed * Time.deltaTime;
             MoveOnGround(Vector3.ClampMagnitude(offset, step));
             ClearReachedDestination();
             if (Attacking)
@@ -107,11 +165,12 @@ namespace Storybook
             DrawTrail();
             body.flipX = Attacking ? attackLeft : left;
             body.sprite = Attacking ? SwingPose() : TravelPose();
-            body.transform.localPosition = Vector3.up * .02f;
+            body.transform.localPosition = Vector3.up * artworkGroundOffset;
         }
 
-        static Vector3 InsideClearing(Vector3 p) =>
-            new Vector3(Mathf.Clamp(p.x, -5.3f, 5.3f), p.y, Mathf.Clamp(p.z, -5.3f, 3.65f));
+        Vector3 InsideClearing(Vector3 p) =>
+            new Vector3(Mathf.Clamp(p.x, movementBounds.xMin, movementBounds.xMax), p.y,
+                Mathf.Clamp(p.z, movementBounds.yMin, movementBounds.yMax));
 
         bool TryGroundPoint(Vector2 cursor, out Vector3 ground)
         {
@@ -213,6 +272,40 @@ namespace Storybook
             dashTimeLeft = blocked ? 0f : Mathf.Max(0f, dashTimeLeft - dt);
         }
 
+        bool BeginAzureSlash(Vector2 cursor)
+        {
+            if (IsCastingCloneSlash || IsCastingAzureSlash || IsDashing || Attacking || Time.timeAsDouble < azureSlashReadyAt ||
+                !TryGroundPoint(cursor, out Vector3 ground))
+                return false;
+
+            Vector3 direction = Vector3.ProjectOnPlane(ground - transform.position, Vector3.up);
+            azureSlashDirection = direction.sqrMagnitude > .0025f ? direction.normalized : facing.normalized;
+            PrepareForAction();
+            Face(azureSlashDirection);
+            azureSlashStartedAt = Time.timeAsDouble;
+            azureSlashReadyAt = azureSlashStartedAt + azureSlashCooldown;
+            IsCastingAzureSlash = true;
+            bladeTrail.enabled = false;
+            return true;
+        }
+
+        void UpdateAzureSlash()
+        {
+            MoveOnGround(Vector3.zero);
+            float elapsed = (float)(Time.timeAsDouble - azureSlashStartedAt);
+            Sprite[] frames = back ? swingBack : swingFront;
+            float progress = azureSlashCastTime > 0f ? elapsed / azureSlashCastTime : 1f;
+            body.flipX = left;
+            body.sprite = frames[Mathf.Clamp((int)(progress * frames.Length), 0, frames.Length - 1)];
+            body.transform.localPosition = Vector3.up * artworkGroundOffset;
+
+            if (elapsed < azureSlashCastTime) return;
+
+            IsCastingAzureSlash = false;
+            AzureSlashProjectile.Launch(transform, azureSlashDirection, azureSlashRange, azureSlashSpeed,
+                azureSlashWidth, attackDamage * azureSlashDamageMultiplier, targetMask);
+        }
+
         void BeginSwing(Vector2 cursor)
         {
             if (!fieldCamera.pixelRect.Contains(cursor)) return;
@@ -248,8 +341,19 @@ namespace Storybook
                 return back ? idleBack : idleFront;
             }
             Sprite[] frames = back ? walkBack : walkFront;
+            float cycleDistance = WalkCycleDistance;
+            if (IsWindstepActive)
+            {
+                Sprite[] runFrames = back ? runBack : runFront;
+                if (runFrames != null && runFrames.Length > 0)
+                {
+                    frames = runFrames;
+                    cycleDistance = RunCycleDistance;
+                }
+            }
+
             float distance = velocity.magnitude * Time.deltaTime;
-            gaitPhase = Mathf.Repeat(gaitPhase + distance / WalkCycleDistance, 1f);
+            gaitPhase = Mathf.Repeat(gaitPhase + distance / cycleDistance, 1f);
             return frames[Mathf.Min((int)(gaitPhase * frames.Length), frames.Length - 1)];
         }
 

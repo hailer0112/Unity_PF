@@ -55,7 +55,7 @@ namespace Storybook
         }
         void LateUpdate()
         {
-            bool eligible=player!=null && player.isActiveAndEnabled && !player.Attacking && !player.IsDashing && !player.HasMoveDestination
+            bool eligible=player!=null && player.isActiveAndEnabled && !player.Attacking && !player.IsCastingAzureSlash && !player.IsCastingCloneSlash && !player.IsCastingSwordTyphoon && !player.IsDashing && !player.HasMoveDestination
                 && body.gameObject.activeInHierarchy && (body.sprite==idleFront || body.sprite==idleBack);
             if(!eligible || (!rendering && !body.enabled)){Stop();return;}
             if(source!=body.sprite)Build(body.sprite);

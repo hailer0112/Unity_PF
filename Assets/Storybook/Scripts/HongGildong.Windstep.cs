@@ -1,0 +1,147 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+namespace Storybook
+{
+    public sealed partial class HongGildong
+    {
+        [Header("E - Windstep")]
+        [SerializeField, Min(.01f)] float windstepDuration = 4f;
+        [SerializeField, Min(0f)] float windstepSpeedBonus = .4f;
+        [SerializeField, Min(0f)] float windstepCooldown = 12f;
+
+        InputAction windstepInput;
+        double windstepEndsAt, windstepReadyAt;
+        bool windstepVisualActive;
+        WindstepVisual windstepVisual;
+        readonly List<Collider> windstepBodies = new List<Collider>();
+        readonly Collider[] windstepScan = new Collider[32];
+        GUIStyle windstepLabelStyle;
+        Font windstepFont;
+
+        public bool IsWindstepActive => isActiveAndEnabled && Time.timeAsDouble < windstepEndsAt;
+        public float WindstepTimeRemaining => IsWindstepActive ? (float)(windstepEndsAt - Time.timeAsDouble) : 0f;
+        public float WindstepCooldownRemaining => (float)System.Math.Max(0d, windstepReadyAt - Time.timeAsDouble);
+        public float EffectiveWalkSpeed => walkSpeed * (IsWindstepActive ? 1f + windstepSpeedBonus : 1f);
+
+        void InitializeWindstepInput() =>
+            windstepInput = new InputAction("Windstep", InputActionType.Button, "<Keyboard>/e");
+
+        void UpdateWindstep()
+        {
+            if (!IsCastingSwordTyphoon && windstepInput.WasPressedThisFrame() && !IsWindstepActive && WindstepCooldownRemaining <= 0f)
+            {
+                double now = Time.timeAsDouble;
+                windstepEndsAt = now + windstepDuration;
+                windstepReadyAt = now + windstepCooldown;
+                if (windstepVisual == null) windstepVisual = WindstepVisual.Create(transform);
+                windstepVisual.Begin();
+                windstepVisualActive = true;
+            }
+
+            if (IsWindstepActive)
+            {
+                IgnoreNearbyMonsterBodies();
+                return;
+            }
+
+            if (windstepVisualActive)
+            {
+                windstepVisual.End();
+                windstepVisualActive = false;
+            }
+
+            RestoreWindstepBodies(false);
+        }
+
+        void IgnoreNearbyMonsterBodies()
+        {
+            if (!controller.enabled) return;
+
+            // Include the player's possible walk or dash step and nearby body extents.
+            float movementSpeed = Mathf.Max(EffectiveWalkSpeed, dashDistance / dashDuration);
+            float radius = 2f + movementSpeed * Time.deltaTime;
+            Vector3 center = transform.TransformPoint(controller.center);
+            int count = Physics.OverlapSphereNonAlloc(center, radius, windstepScan, ~0, QueryTriggerInteraction.Ignore);
+            Collider[] nearby = windstepScan;
+            if (count == nearby.Length)
+            {
+                nearby = Physics.OverlapSphere(center, radius, ~0, QueryTriggerInteraction.Ignore);
+                count = nearby.Length;
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                Collider candidate = nearby[i];
+                if (candidate == controller || Physics.GetIgnoreCollision(controller, candidate)) continue;
+
+                MonsterHealth monster = candidate.GetComponentInParent<MonsterHealth>();
+                if (monster == null || monster.IsDead) continue;
+
+                Physics.IgnoreCollision(controller, candidate, true);
+                if (!windstepBodies.Contains(candidate)) windstepBodies.Add(candidate);
+            }
+        }
+
+        void RestoreWindstepBodies(bool force)
+        {
+            if (windstepBodies.Count == 0) return;
+
+            Collider[] overlaps = null;
+            if (!force && controller.enabled)
+            {
+                Vector3 center = transform.TransformPoint(controller.center);
+                Vector3 scale = transform.lossyScale;
+                float horizontalScale = Mathf.Max(Mathf.Abs(scale.x), Mathf.Abs(scale.z));
+                float radius = controller.radius * horizontalScale;
+                float axis = Mathf.Max(0f, controller.height * Mathf.Abs(scale.y) * .5f - radius);
+                Vector3 end = transform.up * axis;
+                // Retain only pairs still touching the controller's padded capsule.
+                overlaps = Physics.OverlapCapsule(center - end, center + end,
+                    radius + controller.skinWidth * horizontalScale, ~0, QueryTriggerInteraction.Ignore);
+            }
+
+            for (int i = windstepBodies.Count - 1; i >= 0; i--)
+            {
+                Collider other = windstepBodies[i];
+                if (other != null && overlaps != null && System.Array.IndexOf(overlaps, other) >= 0) continue;
+
+                if (controller != null && other != null && Physics.GetIgnoreCollision(controller, other))
+                    Physics.IgnoreCollision(controller, other, false);
+                windstepBodies.RemoveAt(i);
+            }
+        }
+
+        void ClearWindstep()
+        {
+            windstepEndsAt = 0d;
+            windstepVisualActive = false;
+            if (windstepVisual != null) windstepVisual.Clear();
+            RestoreWindstepBodies(true);
+            if (windstepFont != null) Destroy(windstepFont);
+            windstepLabelStyle = null;
+        }
+
+        void OnGUI()
+        {
+            if (windstepLabelStyle == null)
+            {
+                windstepFont = Font.CreateDynamicFontFromOSFont("Malgun Gothic", 15);
+                windstepLabelStyle = new GUIStyle(GUI.skin.box)
+                {
+                    alignment = TextAnchor.MiddleLeft,
+                    font = windstepFont,
+                    fontSize = 15,
+                    padding = new RectOffset(10, 8, 4, 4)
+                };
+            }
+
+            float remaining = WindstepCooldownRemaining;
+            string state = IsWindstepActive ? $"활성 {WindstepTimeRemaining:0.0}초"
+                : remaining > 0f ? "재사용 대기" : "사용 가능";
+            GUI.Box(new Rect(12f, 12f, 245f, 56f),
+                $"E  풍신보  {state}\n남은 쿨타임  {remaining:0.0}초", windstepLabelStyle);
+        }
+    }
+}

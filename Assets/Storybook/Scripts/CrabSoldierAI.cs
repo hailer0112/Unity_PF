@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 namespace Storybook
 {
     [RequireComponent(typeof(MonsterHealth),typeof(CharacterController))]
@@ -6,12 +7,18 @@ namespace Storybook
     {
         public enum State { Idle, Chase, Windup, Slam, Recovery, Dead }
         [SerializeField] PlayerHealth target;
-        [SerializeField, Min(0)] float detectionRange=8;
-        [SerializeField, Min(.1f)] float attackRange=1.8f;
-        [SerializeField, Min(0)] float moveSpeed=2.5f;
+        [SerializeField, Min(0)] float moveSpeed = 1.6f;
+        [SerializeField, Min(0)] float detectionRange = 4.5f;
+        [SerializeField, Min(0)] float loseTargetRange = 6.5f;
+        [SerializeField, Min(.1f), FormerlySerializedAs("attackRange")] float attackStartRange = 1.3f;
+
+        [Header("Attack Hitbox Size (meters)")]
+        [SerializeField, Min(.1f), InspectorName("Length")] float hitLength = 1.35f;
+        [SerializeField, Min(.1f), InspectorName("Width")] float hitWidth = .825f;
+
+        [Header("Attack Timing")]
         [SerializeField, Min(.01f)] float windupTime=.6f,activeTime=.15f,recoveryTime=.7f;
         [SerializeField, Min(0)] float attackDamage=15,attackInterval=2;
-        [SerializeField, Min(.1f)] float hitLength=1.8f,hitWidth=1.1f;
         [SerializeField] State state;
         MonsterHealth health;
         CharacterController controller;
@@ -19,7 +26,9 @@ namespace Storybook
         LineRenderer warning;
         ChargedAttackWarning chargedWarning;
         float attackStarted,nextAttack,previousElapsed;
-        Vector3 attackDirection;
+        Vector3 attackOrigin, attackDirection, attackRight;
+        Vector2 attackSize;
+        bool hasDetectedTarget;
         bool attemptedHit;
         public State CurrentState => state;
         public Vector3 LockedDirection => attackDirection;
@@ -40,12 +49,19 @@ namespace Storybook
         void Update()
         {
             if(health.IsDead){if(state!=State.Dead)Die();return;}
-            if(target==null || !target.isActiveAndEnabled || target.IsDead){CancelAttack();state=State.Idle;return;}
+            if(target==null || !target.isActiveAndEnabled || target.IsDead){CancelAttack();hasDetectedTarget=false;state=State.Idle;return;}
             if(state==State.Windup || state==State.Slam || state==State.Recovery){TickAttack();return;}
             if(chargedWarning.IsVisible)CancelAttack();
             Vector3 delta=Vector3.ProjectOnPlane(target.transform.position-transform.position,Vector3.up);float distance=delta.magnitude;
-            if(distance>detectionRange){state=State.Idle;return;}
-            if(distance<=attackRange)
+            // Keep awareness during cooldown and attack recovery as well as movement.
+            float trackingRange = hasDetectedTarget ? Mathf.Max(detectionRange, loseTargetRange) : detectionRange;
+            hasDetectedTarget = distance <= trackingRange;
+            if (!hasDetectedTarget)
+            {
+                state = State.Idle;
+                return;
+            }
+            if(distance<=attackStartRange)
             {
                 state=State.Idle;
                 if(Time.time>=nextAttack && !Occluded())BeginAttack(delta);
@@ -57,14 +73,20 @@ namespace Storybook
         void BeginAttack(Vector3 delta)
         {
             attackDirection=delta.sqrMagnitude>.0001f?delta.normalized:Vector3.forward;
+            attackOrigin = transform.position;
+            attackRight = Vector3.Cross(Vector3.up, attackDirection);
+            attackSize = new Vector2(hitWidth, hitLength);
             attackStarted=Time.time;nextAttack=attackStarted+attackInterval;previousElapsed=0;attemptedHit=false;state=State.Windup;
             visual.Begin();DrawWarning();
         }
         void DrawWarning()
         {
-            Vector3 side=Vector3.Cross(Vector3.up,attackDirection)*hitWidth*.5f;
-            Vector3 origin=transform.position+Vector3.up*.025f,end=origin+attackDirection*hitLength;
-            warning.SetPositions(new[]{origin-side,origin+side,end+side,end-side});warning.enabled=true;chargedWarning.Begin(origin,attackDirection,hitWidth,hitLength);
+            Vector3 side = attackRight * (attackSize.x * .5f);
+            Vector3 origin = attackOrigin + Vector3.up * .025f;
+            Vector3 end = origin + attackDirection * attackSize.y;
+            warning.SetPositions(new[] { origin - side, origin + side, end + side, end - side });
+            warning.enabled = true;
+            chargedWarning.Begin(origin, attackDirection, attackSize.x, attackSize.y);
         }
         void TickAttack()
         {
@@ -88,14 +110,37 @@ namespace Storybook
         }
         void TryHit()
         {
-            Vector3 center=transform.position+Vector3.up*.4f+attackDirection*hitLength*.5f;
-            foreach(var collider in Physics.OverlapBox(center,new Vector3(hitWidth*.5f,.6f,hitLength*.5f),Quaternion.LookRotation(attackDirection),~0,QueryTriggerInteraction.Ignore))
+            // The same ground footprint drives the warning and the damage check.
+            // Checking the target root prevents its capsule rim from extending the range.
+            Vector3 offset = target.transform.position - attackOrigin;
+            float forward = Vector3.Dot(offset, attackDirection);
+            float sideways = Mathf.Abs(Vector3.Dot(offset, attackRight));
+            if (forward < 0f || forward > attackSize.y || sideways > attackSize.x * .5f) return;
+
+            Vector3 center = attackOrigin + Vector3.up * .4f + attackDirection * (attackSize.y * .5f);
+            // CharacterController movement can omit an ignored player body from
+            // the overlap query. Its ground position already passed the exact footprint.
+            if (target.TryGetComponent(out CharacterController playerBody) && playerBody.enabled &&
+                Physics.GetIgnoreCollision(controller, playerBody))
+            {
+                Bounds body = playerBody.bounds;
+                if (body.max.y >= center.y - .6f && body.min.y <= center.y + .6f)
+                    ApplyHit();
+                return;
+            }
+
+            foreach(var collider in Physics.OverlapBox(center,new Vector3(attackSize.x * .5f, .6f, attackSize.y * .5f),Quaternion.LookRotation(attackDirection),~0,QueryTriggerInteraction.Ignore))
             {
                 if(collider.GetComponentInParent<PlayerHealth>()!=target)continue;
-                attemptedHit=true;
-                if(!target.IsDead && !Occluded())target.TryTakeDamage(attackDamage);
+                ApplyHit();
                 break;
             }
+        }
+
+        void ApplyHit()
+        {
+            attemptedHit = true;
+            if (!target.IsDead && !Occluded()) target.TryTakeDamage(attackDamage);
         }
     }
 }

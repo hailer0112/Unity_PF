@@ -552,6 +552,16 @@ MonoBehaviour:
   - {fileID: 21300012, guid: e1896699202541ad9eb6501c017ac401, type: 3}
   - {fileID: 21300014, guid: e1896699202541ad9eb6501c017ac401, type: 3}
   - {fileID: 21300016, guid: e1896699202541ad9eb6501c017ac401, type: 3}
+  runFront:
+  - {fileID: 21300018, guid: e1896699202541ad9eb6501c017ac401, type: 3}
+  - {fileID: 21300020, guid: e1896699202541ad9eb6501c017ac401, type: 3}
+  - {fileID: 21300022, guid: e1896699202541ad9eb6501c017ac401, type: 3}
+  - {fileID: 21300024, guid: e1896699202541ad9eb6501c017ac401, type: 3}
+  runBack:
+  - {fileID: 21300026, guid: e1896699202541ad9eb6501c017ac401, type: 3}
+  - {fileID: 21300028, guid: e1896699202541ad9eb6501c017ac401, type: 3}
+  - {fileID: 21300030, guid: e1896699202541ad9eb6501c017ac401, type: 3}
+  - {fileID: 21300032, guid: e1896699202541ad9eb6501c017ac401, type: 3}
   bladeTrail: {fileID: 177920514}
   walkSpeed: 1.8
   reach: 1.7

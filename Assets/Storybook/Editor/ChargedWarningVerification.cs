@@ -39,14 +39,14 @@ namespace Storybook.Editor
             try
             {
                 float windup=(float)Get(ai,"windupTime"),active=(float)Get(ai,"activeTime");
-                Check(Mathf.Abs(windup-.6f)<.001f && Mathf.Abs((float)Get(ai,"hitLength")-1.8f)<.001f && Mathf.Abs((float)Get(ai,"hitWidth")-1.1f)<.001f,"Existing attack timings and rectangle dimensions unchanged");
+                Check(Mathf.Abs(windup-.6f)<.001f && Mathf.Abs((float)Get(ai,"hitLength")-1.35f)<.001f && Mathf.Abs((float)Get(ai,"hitWidth")-.825f)<.001f,"Windup is unchanged and the reduced rectangle is configured");
                 Begin();Check(warning.Progress==0 && warning.IsVisible,"Attack begins at zero with original outline visible");
                 var fill=(MeshRenderer)Get(warning,"fillRenderer");
                 Check(fill.sharedMaterial!=null && !ShaderUtil.ShaderHasError(fill.sharedMaterial.shader),"Transparent fill shader compiles without errors");
                 foreach(float fraction in new[]{.25f,.5f,.75f})
                 {
                     At(windup*fraction);Check(Mathf.Abs(warning.Progress-fraction)<.001f,"Windup progress matches "+fraction);
-                    var mesh=(Mesh)Get(warning,"mesh");Check(Mathf.Abs(mesh.bounds.size.z-1.8f*fraction)<.001f,"Filled length matches actual range times progress");
+                    var mesh=(Mesh)Get(warning,"mesh");Check(Mathf.Abs(mesh.bounds.size.z-(float)Get(ai,"hitLength")*fraction)<.001f,"Filled length matches actual range times progress");
                     if(fraction==.5f)Capture();
                 }
                 Quaternion rotation=fill.transform.rotation;Vector3 position=fill.transform.position;
