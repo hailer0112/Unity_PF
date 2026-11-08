@@ -17,8 +17,6 @@ namespace Storybook
         WindstepVisual windstepVisual;
         readonly List<Collider> windstepBodies = new List<Collider>();
         readonly Collider[] windstepScan = new Collider[32];
-        GUIStyle windstepLabelStyle;
-        Font windstepFont;
 
         public bool IsWindstepActive => isActiveAndEnabled && Time.timeAsDouble < windstepEndsAt;
         public float WindstepTimeRemaining => IsWindstepActive ? (float)(windstepEndsAt - Time.timeAsDouble) : 0f;
@@ -119,29 +117,6 @@ namespace Storybook
             windstepVisualActive = false;
             if (windstepVisual != null) windstepVisual.Clear();
             RestoreWindstepBodies(true);
-            if (windstepFont != null) Destroy(windstepFont);
-            windstepLabelStyle = null;
-        }
-
-        void OnGUI()
-        {
-            if (windstepLabelStyle == null)
-            {
-                windstepFont = Font.CreateDynamicFontFromOSFont("Malgun Gothic", 15);
-                windstepLabelStyle = new GUIStyle(GUI.skin.box)
-                {
-                    alignment = TextAnchor.MiddleLeft,
-                    font = windstepFont,
-                    fontSize = 15,
-                    padding = new RectOffset(10, 8, 4, 4)
-                };
-            }
-
-            float remaining = WindstepCooldownRemaining;
-            string state = IsWindstepActive ? $"활성 {WindstepTimeRemaining:0.0}초"
-                : remaining > 0f ? "재사용 대기" : "사용 가능";
-            GUI.Box(new Rect(12f, 12f, 245f, 56f),
-                $"E  풍신보  {state}\n남은 쿨타임  {remaining:0.0}초", windstepLabelStyle);
         }
     }
 }

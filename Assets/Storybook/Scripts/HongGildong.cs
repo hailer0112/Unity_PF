@@ -16,7 +16,7 @@ namespace Storybook
         [SerializeField] Sprite[] runFront, runBack;
         [SerializeField] LineRenderer bladeTrail;
         [SerializeField, Min(.1f)] float walkSpeed = 1.8f;
-        [SerializeField] float reach = 1.7f;
+        [SerializeField] float reach = 1.36f;
         [SerializeField, Min(0)] float attackDamage = 25f;
         [SerializeField] float halfArc = 68f;
         [SerializeField] LayerMask targetMask;
@@ -42,6 +42,7 @@ namespace Storybook
         [SerializeField] Material markerMaterial;
 
         const float Windup = .12f, ContactEnd = .29f, RecoveryEnd = .42f;
+        const float SlashTrailFade = .075f;
         CharacterController controller;
         InputAction move, point, strike, dash, azureSlash;
         Vector3 facing = new Vector3(.8f, 0f, -.6f), slashDirection;
@@ -56,12 +57,27 @@ namespace Storybook
         Vector3 azureSlashDirection;
         bool back, left, attackBack, attackLeft;
         readonly HashSet<AttackTarget> hitThisSwing = new HashSet<AttackTarget>();
+        readonly Gradient slashGradient = new Gradient();
+        readonly GradientAlphaKey[] slashAlpha = new GradientAlphaKey[4];
+        float lastTrailOpacity = -1f;
         float SweepSign => attackLeft == attackBack ? -1f : 1f;
         public bool Attacking => attackTime < RecoveryEnd;
         public bool IsCastingAzureSlash { get; private set; }
         public bool HasMoveDestination => destination.HasValue;
         public bool IsDashing => dashTimeLeft > 0f;
         public bool IsInvulnerable => isActiveAndEnabled && Time.timeAsDouble < invulnerableUntil;
+
+        internal (float remaining, float duration) GetHudCooldown(HudSkill skill) => skill switch
+        {
+            HudSkill.AzureSlash => (CooldownLeft(azureSlashReadyAt), azureSlashCooldown),
+            HudSkill.CloneSlash => (CooldownLeft(cloneSlashReadyAt), cloneSlashCooldown),
+            HudSkill.Windstep => (WindstepCooldownRemaining, windstepCooldown),
+            HudSkill.SwordTyphoon => (SwordTyphoonCooldownRemaining, swordTyphoonCooldown),
+            HudSkill.Dash => (CooldownLeft(dashReadyAt), dashCooldown),
+            _ => (0f, 0f)
+        };
+
+        static float CooldownLeft(double readyAt) => (float)System.Math.Max(0d, readyAt - Time.timeAsDouble);
 
         void Awake()
         {
@@ -74,7 +90,12 @@ namespace Storybook
             InitializeCloneSlashInput();
             InitializeWindstepInput();
             swordTyphoonInput = new InputAction("Sword Typhoon", InputActionType.Button, "<Keyboard>/r");
+            var bladeVisual = body.gameObject.AddComponent<HongGildongBladeVisual>();
+            bladeVisual.Bind(runFront != null && runFront.Length > 1 ? runFront[1] : null,
+                runBack != null && runBack.Length > 1 ? runBack[1] : null);
+            ConfigureSlashTrail();
             CreateMoveMarker();
+            if (TryGetComponent<PlayerHealth>(out _)) gameObject.AddComponent<HongGildongHud>();
         }
 
         void OnEnable() { move.Enable(); point.Enable(); strike.Enable(); dash.Enable(); azureSlash.Enable(); cloneSlashInput.Enable(); windstepInput.Enable(); swordTyphoonInput.Enable(); }
@@ -308,11 +329,7 @@ namespace Storybook
 
         void BeginSwing(Vector2 cursor)
         {
-            if (!fieldCamera.pixelRect.Contains(cursor)) return;
-            Ray ray = fieldCamera.ScreenPointToRay(cursor);
-            if (!new Plane(Vector3.up, Vector3.zero).Raycast(ray, out float distance)) return;
-            Vector3 aim = Physics.Raycast(ray, out RaycastHit hit, 100f, targetMask)
-                ? hit.collider.transform.position : ray.GetPoint(distance);
+            if (!TryGroundPoint(cursor, out Vector3 aim)) return;
             Vector3 offset = Vector3.ProjectOnPlane(aim - transform.position, Vector3.up);
             PrepareForAction();
             slashDirection = offset.sqrMagnitude > .0025f ? offset.normalized : facing;
@@ -326,8 +343,8 @@ namespace Storybook
         Sprite SwingPose()
         {
             Sprite[] frames = attackBack ? swingBack : swingFront;
-            if (attackTime < Windup) return frames[0];
-            if (attackTime < (Windup + ContactEnd) * .5f) return frames[1];
+            if (attackTime < Windup * .62f) return frames[0];
+            if (attackTime < Mathf.Lerp(Windup, ContactEnd, .30f)) return frames[1];
             if (attackTime < ContactEnd) return frames[2];
             return frames[3];
         }
@@ -371,10 +388,54 @@ namespace Storybook
             }
         }
 
+        void OnDrawGizmosSelected()
+        {
+            const int segments = 24;
+            Vector3 origin = transform.position + Vector3.up * .035f;
+            Vector3 direction = Attacking ? slashDirection : facing;
+            Gizmos.color = new Color(.42f, .90f, 1f);
+            Vector3 previous = origin;
+            for (int i = 0; i <= segments; i++)
+            {
+                float angle = Mathf.Lerp(-halfArc, halfArc, i / (float)segments);
+                Vector3 next = origin + Quaternion.AngleAxis(angle, Vector3.up) * direction * reach;
+                Gizmos.DrawLine(previous, next);
+                previous = next;
+            }
+            Gizmos.DrawLine(previous, origin);
+        }
+
+        void ConfigureSlashTrail()
+        {
+            bladeTrail.widthMultiplier = .19f;
+            bladeTrail.widthCurve = new AnimationCurve(
+                new Keyframe(0f, .01f), new Keyframe(.34f, .62f),
+                new Keyframe(.70f, 1f), new Keyframe(1f, .02f));
+            slashGradient.colorKeys = new[]
+            {
+                new GradientColorKey(new Color(.52f, .80f, 1f), 0f),
+                new GradientColorKey(new Color(.76f, .92f, 1f), .48f),
+                new GradientColorKey(Color.white, .77f)
+            };
+        }
+
+        void SetSlashTrailOpacity(float opacity)
+        {
+            if (Mathf.Approximately(lastTrailOpacity, opacity)) return;
+            lastTrailOpacity = opacity;
+            slashAlpha[0] = new GradientAlphaKey(0f, 0f);
+            slashAlpha[1] = new GradientAlphaKey(.55f * opacity, .40f);
+            slashAlpha[2] = new GradientAlphaKey(.88f * opacity, .78f);
+            slashAlpha[3] = new GradientAlphaKey(0f, 1f);
+            slashGradient.alphaKeys = slashAlpha;
+            bladeTrail.colorGradient = slashGradient;
+        }
+
         void DrawTrail()
         {
-            bladeTrail.enabled = attackTime >= Windup && attackTime < ContactEnd;
+            bladeTrail.enabled = attackTime >= Windup && attackTime < ContactEnd + SlashTrailFade;
             if (!bladeTrail.enabled) return;
+            SetSlashTrailOpacity(1f - Mathf.InverseLerp(ContactEnd, ContactEnd + SlashTrailFade, attackTime));
             float head = SweepAngle(attackTime);
             for (int i = 0; i < bladeTrail.positionCount; i++)
             {

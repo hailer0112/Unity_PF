@@ -44,14 +44,15 @@ namespace Storybook
 
             State = RoomState.InCombat;
             entranceGate.SetActive(true);
+            Bounds roomBounds = GetComponent<Collider>().bounds;
 
             foreach (MonsterHealth enemy in enemies)
             {
                 if (enemy == null || enemy.IsDead) continue;
 
                 remaining.Add(enemy);
-                if (enemy.TryGetComponent(out CrabSoldierAI ai))
-                    ai.enabled = true;
+                if (enemy.TryGetComponent(out MonsterCombatAI ai))
+                    ai.ActivateInRoom(roomBounds);
             }
 
             CheckClear();

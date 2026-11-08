@@ -993,7 +993,7 @@ MonoBehaviour:
   - {fileID: 21300032, guid: e1896699202541ad9eb6501c017ac401, type: 3}
   bladeTrail: {fileID: 177920514}
   walkSpeed: 1.8
-  reach: 1.7
+  reach: 1.36
   attackDamage: 25
   halfArc: 68
   targetMask:
