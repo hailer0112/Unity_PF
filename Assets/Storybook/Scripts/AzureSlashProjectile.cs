@@ -15,6 +15,7 @@ namespace Storybook
         Vector3 halfExtents;
         Mesh crescent;
         Material crescentMaterial;
+        static ParticleSystem impactPrefab;
 
         public static void Launch(Transform owner, Vector3 direction, float range, float speed,
             float width, float damage, LayerMask targetMask)
@@ -60,8 +61,11 @@ namespace Storybook
                     continue;
 
                 var target = hit.collider.GetComponentInParent<AttackTarget>();
-                if (target != null && target.CanTakeDamage && hitTargets.Add(target))
-                    target.ReceiveDamage(damage);
+                if (target == null || !target.CanTakeDamage || !hitTargets.Add(target)) continue;
+
+                Vector3 contact = hit.distance > 0f ? hit.point : hit.collider.ClosestPoint(transform.position);
+                target.ReceiveDamage(damage);
+                PlayImpact(contact);
             }
 
             float travelled = Mathf.Min(step, wallDistance);
@@ -69,6 +73,12 @@ namespace Storybook
             remainingDistance -= travelled;
             if (wallDistance <= step || remainingDistance <= .0001f)
                 Destroy(gameObject);
+        }
+
+        static void PlayImpact(Vector3 contact)
+        {
+            if (impactPrefab == null) impactPrefab = Resources.Load<ParticleSystem>("AzureSlashImpact");
+            if (impactPrefab != null) Instantiate(impactPrefab, contact, Quaternion.identity);
         }
 
         void CreateVisual(float width)

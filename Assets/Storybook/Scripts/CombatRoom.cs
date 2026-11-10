@@ -13,6 +13,7 @@ namespace Storybook
         [SerializeField] CombatRoomExit exit;
         [SerializeField] bool reopenEntranceOnClear;
         [SerializeField] CombatRoom nextRoom;
+        [SerializeField] Transform clearMessageEnd;
         [SerializeField] string clearMessage = "방 클리어";
 
         readonly HashSet<MonsterHealth> remaining = new HashSet<MonsterHealth>();
@@ -80,6 +81,7 @@ namespace Storybook
         void OnGUI()
         {
             if (!IsCleared || (nextRoom != null && nextRoom.HasStarted)) return;
+            if (clearMessageEnd != null && player != null && player.transform.position.z >= clearMessageEnd.position.z) return;
 
             if (clearStyle == null)
             {
