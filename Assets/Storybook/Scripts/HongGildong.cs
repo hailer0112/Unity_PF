@@ -8,6 +8,7 @@ namespace Storybook
     public sealed partial class HongGildong : MonoBehaviour
     {
         [SerializeField] Camera fieldCamera;
+        [SerializeField] bool allowCombat = true;
         [SerializeField] SpriteRenderer body;
         [SerializeField] float artworkGroundOffset = .02f;
         [SerializeField] Sprite idleFront, idleBack;
@@ -99,10 +100,21 @@ namespace Storybook
                 runBack != null && runBack.Length > 1 ? runBack[1] : null);
             ConfigureSlashTrail();
             CreateMoveMarker();
-            if (TryGetComponent<PlayerHealth>(out _)) gameObject.AddComponent<HongGildongHud>();
+            if (allowCombat && TryGetComponent<PlayerHealth>(out _)) gameObject.AddComponent<HongGildongHud>();
         }
 
-        void OnEnable() { move.Enable(); point.Enable(); strike.Enable(); dash.Enable(); azureSlash.Enable(); cloneSlashInput.Enable(); windstepInput.Enable(); swordTyphoonInput.Enable(); }
+        void OnEnable()
+        {
+            move.Enable();
+            point.Enable();
+            if (!allowCombat) return;
+            strike.Enable();
+            dash.Enable();
+            azureSlash.Enable();
+            cloneSlashInput.Enable();
+            windstepInput.Enable();
+            swordTyphoonInput.Enable();
+        }
         void OnDisable()
         {
             move.Disable(); point.Disable(); strike.Disable(); dash.Disable(); azureSlash.Disable();

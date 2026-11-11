@@ -1,0 +1,533 @@
+fileFormatVersion: 2
+guid: 370279668c4c081448ec267e9d6829e1
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 268.0851
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Front_IdleA
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 1483
+        width: 224
+        height: 254
+      alignment: 9
+      pivot: {x: 0.53571427, y: 0.003937008}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f86110b5aa8bb7ad0800000000000000
+      internalID: -2703364109495101809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_IdleA
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 1483
+        width: 213
+        height: 250
+      alignment: 9
+      pivot: {x: 0.48356807, y: 0.004}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7a2cd4afa95fdf40800000000000000
+      internalID: 5755417459722824317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Right_IdleA
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 1483
+        width: 162
+        height: 254
+      alignment: 9
+      pivot: {x: 0.46296296, y: 0.003937008}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3da4c947ddeeb43e0800000000000000
+      internalID: -2068296968935028013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Front_IdleB
+      rect:
+        serializedVersion: 2
+        x: 52
+        y: 1190
+        width: 223
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5336323, y: 0.00390625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0ebfd7c4e2375c60800000000000000
+      internalID: 7806764437257305612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_IdleB
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 1191
+        width: 217
+        height: 250
+      alignment: 9
+      pivot: {x: 0.47465438, y: 0.004}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1b8b0cd9aaf43980800000000000000
+      internalID: -8559941384276309220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Right_IdleB
+      rect:
+        serializedVersion: 2
+        x: 659
+        y: 1188
+        width: 164
+        height: 259
+      alignment: 9
+      pivot: {x: 0.44512194, y: 0.0038610038}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dda7465d2c240d30800000000000000
+      internalID: 4396687709453135319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Front_StepA
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 908
+        width: 219
+        height: 245
+      alignment: 9
+      pivot: {x: 0.53881276, y: 0.0040816325}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fe00b954977772fe0800000000000000
+      internalID: -1213870211810524945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_StepA
+      rect:
+        serializedVersion: 2
+        x: 356
+        y: 908
+        width: 203
+        height: 243
+      alignment: 9
+      pivot: {x: 0.45812806, y: 0.004115226}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f6e284f7f05dd360800000000000000
+      internalID: 7195996805497284337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Right_StepA
+      rect:
+        serializedVersion: 2
+        x: 654
+        y: 908
+        width: 173
+        height: 245
+      alignment: 9
+      pivot: {x: 0.5086705, y: 0.0040816325}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f789865ad4cdbf40800000000000000
+      internalID: 5745965141628389360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Front_StepB
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 622
+        width: 211
+        height: 244
+      alignment: 9
+      pivot: {x: 0.51184833, y: 0.0040983604}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c62fb5e986d225a00800000000000000
+      internalID: 743706815826227820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_StepB
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 622
+        width: 207
+        height: 240
+      alignment: 9
+      pivot: {x: 0.44444445, y: 0.004166667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f8434a382f388a500800000000000000
+      internalID: 407720843890930831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Right_StepB
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 622
+        width: 154
+        height: 244
+      alignment: 9
+      pivot: {x: 0.42857143, y: 0.0040983604}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acc676a24b976e560800000000000000
+      internalID: 7342690057186667722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Front_Raise
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 323
+        width: 209
+        height: 246
+      alignment: 9
+      pivot: {x: 0.50239235, y: 0.0040650405}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab6b60b4eebcd1090800000000000000
+      internalID: -8062063533601933638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_Raise
+      rect:
+        serializedVersion: 2
+        x: 347
+        y: 324
+        width: 209
+        height: 245
+      alignment: 9
+      pivot: {x: 0.5263158, y: 0.0040816325}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5127e828023bf260800000000000000
+      internalID: 7132349445498675547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Right_Raise
+      rect:
+        serializedVersion: 2
+        x: 654
+        y: 324
+        width: 170
+        height: 248
+      alignment: 9
+      pivot: {x: 0.37058824, y: 0.004032258}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9dc61e70ecda1bfb0800000000000000
+      internalID: -4633731441180447527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Front_Impact
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 41
+        width: 209
+        height: 216
+      alignment: 9
+      pivot: {x: 0.50717705, y: 0.0046296297}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e667a504865c4c2c0800000000000000
+      internalID: -4412184683369302418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Back_Impact
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 42
+        width: 245
+        height: 208
+      alignment: 9
+      pivot: {x: 0.50612247, y: 0.0048076925}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 397481ede9e88cf80800000000000000
+      internalID: -8086056317961615469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Right_Impact
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 39
+        width: 227
+        height: 212
+      alignment: 9
+      pivot: {x: 0.4229075, y: 0.004716981}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 86113eaf87f732020800000000000000
+      internalID: 2315834790980555112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Back_IdleA: 5755417459722824317
+      Back_IdleB: -8559941384276309220
+      Back_Impact: -8086056317961615469
+      Back_Raise: 7132349445498675547
+      Back_StepA: 7195996805497284337
+      Back_StepB: 407720843890930831
+      Front_IdleA: -2703364109495101809
+      Front_IdleB: 7806764437257305612
+      Front_Impact: -4412184683369302418
+      Front_Raise: -8062063533601933638
+      Front_StepA: -1213870211810524945
+      Front_StepB: 743706815826227820
+      Right_IdleA: -2068296968935028013
+      Right_IdleB: 4396687709453135319
+      Right_Impact: 2315834790980555112
+      Right_Raise: -4633731441180447527
+      Right_StepA: 5745965141628389360
+      Right_StepB: 7342690057186667722
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

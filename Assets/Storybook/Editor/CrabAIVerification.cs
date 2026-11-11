@@ -102,6 +102,20 @@ namespace Storybook.Editor
         static void VerifyAttachment()
         {
             var visual=ai.GetComponentInChildren<CrabAttackVisual>();
+            var directionalAnimator = visual.GetComponent<Animator>();
+            if (directionalAnimator != null)
+            {
+                var renderer = visual.GetComponent<SpriteRenderer>();
+                Call(visual, "Pose", .59f, .6f, .15f, .7f);
+                var raise = renderer.sprite;
+                Check(renderer.enabled && raise.name.EndsWith("_Raise"), "Directional windup uses a full-body raised claw frame");
+                Call(visual, "Pose", .6f, .6f, .15f, .7f);
+                Check(renderer.enabled && renderer.sprite.name.EndsWith("_Impact") &&
+                    raise.texture == renderer.sprite.texture, "Directional contact uses a full-body frame from the same atlas");
+                Check(Get(visual, "shoulderJoint") == null, "Directional attack does not split the shoulder into temporary sprites");
+                return;
+            }
+
             var joint=(Transform)Get(visual,"shoulderJoint");var pieces=(SpriteRenderer[])Get(visual,"pieces");var cap=(SpriteRenderer)Get(visual,"shoulderCover");
             Vector3 anchor=joint.localPosition,offset=pieces[3].transform.localPosition,scale=pieces[3].transform.localScale;
             Check(pieces[3].transform.parent==joint,"Moving claw is parented to fixed shoulder joint");

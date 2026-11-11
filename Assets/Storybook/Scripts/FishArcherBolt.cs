@@ -8,10 +8,14 @@ namespace Storybook
         // Hong Gildong is on Ignore Raycast, so combat queries include every layer.
         static readonly RaycastHit[] CastHits = new RaycastHit[16];
         static readonly Collider[] OverlapHits = new Collider[8];
+        const float TrailAlignmentDistance = .9f;
         float speed, remaining, radius, damage;
+        LineRenderer trail;
+        Vector3 initialTrailOffset;
+        float trailOffsetWeight;
 
         public static void Launch(Vector3 origin, Vector3 direction, float speed, float range,
-            float radius, float damage, Material material)
+            float radius, float damage, Material material, Vector3 visualOffset = default)
         {
             var root = new GameObject("Fish Archer Water Bolt");
             root.transform.SetPositionAndRotation(origin, Quaternion.LookRotation(direction));
@@ -25,8 +29,10 @@ namespace Storybook
             line.sharedMaterial = material;
             line.useWorldSpace = false;
             line.positionCount = 2;
-            line.SetPosition(0, Vector3.back * .32f);
-            line.SetPosition(1, Vector3.forward * .025f);
+            bolt.trail = line;
+            bolt.initialTrailOffset = root.transform.InverseTransformVector(visualOffset);
+            bolt.trailOffsetWeight = visualOffset.sqrMagnitude > 0f ? 1f : 0f;
+            bolt.UpdateTrail();
             line.startWidth = .025f;
             line.endWidth = .105f;
             line.startColor = new Color(.14f, .55f, .88f, .30f);
@@ -55,7 +61,19 @@ namespace Storybook
 
             transform.position += transform.forward * step;
             remaining -= step;
+            if (trailOffsetWeight > 0f)
+            {
+                trailOffsetWeight = Mathf.Max(0f, trailOffsetWeight - step / TrailAlignmentDistance);
+                UpdateTrail();
+            }
             if (remaining <= .0001f) Destroy(gameObject);
+        }
+
+        void UpdateTrail()
+        {
+            Vector3 offset = initialTrailOffset * trailOffsetWeight;
+            trail.SetPosition(0, offset + Vector3.back * .32f);
+            trail.SetPosition(1, offset + Vector3.forward * .025f);
         }
 
         bool TouchesObstacle(out PlayerHealth player)

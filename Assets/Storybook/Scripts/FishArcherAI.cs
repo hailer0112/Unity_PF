@@ -22,6 +22,9 @@ namespace Storybook
         bool holdingPosition, fired;
 
         public State CurrentState { get; private set; }
+        internal float AimProgress => Mathf.Clamp01(AttackElapsed / Mathf.Max(.01f, windupTime));
+        internal float RecoverProgress =>
+            Mathf.Clamp01((AttackElapsed - windupTime - activeTime) / Mathf.Max(.01f, recoveryTime));
 
         void Reset()
         {
@@ -80,6 +83,7 @@ namespace Storybook
             BeginAttackTiming();
             CurrentState = State.Aim;
             shotDirection = direction;
+            visual.LockAimFacing(direction);
             fired = false;
             UpdateGuide();
         }
@@ -96,9 +100,10 @@ namespace Storybook
             if (!fired)
             {
                 fired = true;
+                visual.MarkRelease();
                 aimGuide.enabled = false;
                 FishArcherBolt.Launch(Muzzle(), shotDirection, boltSpeed, boltRange, BoltRadius, boltDamage,
-                    aimGuide.sharedMaterial);
+                    aimGuide.sharedMaterial, visual.BoltTrailOffset(shotDirection));
             }
 
             if (phase == AttackPhase.Finished) return false;

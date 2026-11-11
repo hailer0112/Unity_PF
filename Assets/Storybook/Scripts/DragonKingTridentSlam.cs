@@ -18,6 +18,7 @@ namespace Storybook
 
         [Header("Encounter")]
         [SerializeField, Min(0f)] float combatStartDelay = 2f;
+        [SerializeField, Min(.01f)] float phaseTwoWindupMultiplier = .8f;
 
         [Header("Trident Slam")]
         [SerializeField, Min(.01f)] float radius = 2.5f;
@@ -58,6 +59,7 @@ namespace Storybook
         readonly Vector3[] ring = new Vector3[RingSegments];
 
         MonsterHealth health;
+        DragonKingPhase phase;
         Transform upperBody;
         ChargedAttackWarning warning;
         LineRenderer warningOutline, shock;
@@ -70,26 +72,29 @@ namespace Storybook
         HongGildong playerMovement;
         DragonKingWaveLane waveLane;
         Vector3 lastWavePlayerPosition;
-        Quaternion waveReleaseShoulder, waveReleaseGrip;
         float waveFront;
         bool preferWave, waveActive, waveTouchedPlayer;
-        Quaternion idleFreeArm, startFreeArm, impactFreeArm;
-        Pose windupPose, animatedPose;
+        Quaternion impactFreeArm;
+        Pose windupPose, impactPose, animatedPose;
+        Pose defeatStart, bowedPose;
+        Transform defeatHead;
+        Quaternion headStart, headBowed;
         Quaternion impactShoulder, impactGrip;
         Vector3 center;
-        float lockedRadius;
+        float lockedRadius, currentWindupDuration;
         double startedAt, readyAt;
         bool hasAttacked, arenaActive;
 
         struct Pose
         {
             public Vector3 bodyPosition;
-            public Quaternion bodyRotation, shoulderRotation, gripRotation;
+            public Quaternion bodyRotation, shoulderRotation, gripRotation, freeArmRotation;
         }
 
         void Awake()
         {
             health = GetComponent<MonsterHealth>();
+            phase = GetComponent<DragonKingPhase>();
             if (player == null || arenaFloor == null || dais == null || shoulder == null || grip == null || tip == null || weaponArt == null)
             {
                 Debug.LogError("Trident Slam needs its player, floor and rig references.", this);
@@ -118,31 +123,34 @@ namespace Storybook
             var wavePrefab = Resources.Load<DragonKingTidalWaveVisual>("DragonKingTidalWave");
             if (wavePrefab != null) tidalWave = Instantiate(wavePrefab, effects.transform);
             else Debug.LogError("Tidal Wave needs its effect prefab.", this);
+            animatedPose = ReadPose();
         }
 
         void OnEnable()
         {
             if (warning == null) return;
-            health.Died += Cancel;
+            health.Died += OnBossDied;
             player.Died += Cancel;
         }
 
         void LateUpdate()
         {
             animatedPose = ReadPose();
-            if (freeShoulder != null) idleFreeArm = freeShoulder.localRotation;
+            double now = Time.timeAsDouble;
             if (!CanFight())
             {
                 if (arenaActive) Cancel();
+                phase?.HoldAttacks(now, true);
                 return;
             }
 
-            double now = Time.timeAsDouble;
             if (!arenaActive)
             {
                 arenaActive = true;
                 readyAt = now + combatStartDelay;
             }
+
+            if (phase != null && phase.HoldAttacks(now, stage == Stage.Idle)) return;
 
             switch (stage)
             {
@@ -184,32 +192,27 @@ namespace Storybook
                 && lane.Contains(hit.point))
             {
                 waveLane = lane;
-                windupPose = animatedPose;
-                pattern = Pattern.TidalWave;
-                startedAt = now;
-                stage = Stage.Windup;
+                BeginWindup(Pattern.TidalWave, now);
                 SetWaveWarning();
                 return;
             }
+            Pattern attack;
             if (canStrike)
             {
-                pattern = Pattern.Trident;
+                attack = Pattern.Trident;
                 lockedRadius = radius;
-                windupPose = animatedPose;
             }
             else
             {
                 if (eruption == null || offset.sqrMagnitude > eruptionRange * eruptionRange) return;
-                pattern = Pattern.Eruption;
+                attack = Pattern.Eruption;
                 lockedRadius = eruptionRadius;
-                startFreeArm = idleFreeArm;
-                impactFreeArm = startFreeArm * Quaternion.AngleAxis(freeArmLift + 12f, Vector3.forward);
+                impactFreeArm = animatedPose.freeArmRotation * Quaternion.AngleAxis(freeArmLift + 12f, Vector3.forward);
                 eruption.BeginCharge(PalmEffectPosition);
             }
 
             center = hit.point;
-            startedAt = now;
-            stage = Stage.Windup;
+            BeginWindup(attack, now);
             SetRing(warningOutline, lockedRadius, RingHeight, WarningRed);
             warning.BeginCircle(center + Vector3.up * RingHeight, lockedRadius);
         }
@@ -263,15 +266,25 @@ namespace Storybook
             return true;
         }
 
-        void TickWindup(double now)
+        void BeginWindup(Pattern attack, double now)
         {
-            float duration = pattern switch
+            pattern = attack;
+            windupPose = animatedPose;
+            float duration = attack switch
             {
                 Pattern.Trident => windupTime,
                 Pattern.TidalWave => waveWindupTime,
                 _ => eruptionWindupTime
             };
-            float progress = Mathf.Clamp01((float)(now - startedAt) / Mathf.Max(.01f, duration));
+            float multiplier = phase != null && phase.IsSecondPhase ? phaseTwoWindupMultiplier : 1f;
+            currentWindupDuration = Mathf.Max(.01f, duration * multiplier);
+            startedAt = now;
+            stage = Stage.Windup;
+        }
+
+        void TickWindup(double now)
+        {
+            float progress = Mathf.Clamp01((float)(now - startedAt) / currentWindupDuration);
             if (pattern == Pattern.Trident) PoseTridentWindup(progress);
             else if (pattern == Pattern.TidalWave) PoseWaveWindup(progress);
             else PoseEruptionWindup(progress);
@@ -284,49 +297,75 @@ namespace Storybook
 
         void PoseEruptionWindup(float progress)
         {
-            Quaternion liftedArm = startFreeArm * Quaternion.AngleAxis(freeArmLift, Vector3.forward);
-            float lift = Mathf.SmoothStep(0f, 1f, progress / .8f);
-            Quaternion raised = Quaternion.Slerp(startFreeArm, liftedArm, lift);
-            freeShoulder.localRotation = Quaternion.Slerp(raised, impactFreeArm,
-                Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(.88f, 1f, progress)));
+            Pose raised = windupPose;
+            raised.bodyPosition.y += .11f;
+            raised.bodyRotation *= Quaternion.Euler(-5f, 3f, -3f);
+            raised.freeArmRotation *= Quaternion.AngleAxis(freeArmLift, Vector3.forward);
+
+            Pose cast = windupPose;
+            cast.bodyPosition.y -= .055f;
+            cast.bodyRotation *= Quaternion.Euler(4f, -2f, 2f);
+            cast.freeArmRotation = impactFreeArm;
+
+            Pose gather = Blend(windupPose, raised, Ease(.06f, .67f, progress));
+            Apply(Blend(gather, cast, Ease(.79f, 1f, progress)));
             eruption.UpdateCharge(PalmEffectPosition, progress);
         }
 
         void PoseTridentWindup(float progress)
         {
-            Quaternion raisedShoulder = Quaternion.AngleAxis(24f, Vector3.forward);
-            Quaternion raisedGrip = Quaternion.AngleAxis(-12f, Vector3.forward);
-            if (progress < StrikeStart)
-            {
-                float lift = Mathf.SmoothStep(0f, 1f, progress / StrikeStart);
-                Apply(windupPose, Quaternion.Slerp(windupPose.shoulderRotation, raisedShoulder, lift),
-                    Quaternion.Slerp(windupPose.gripRotation, raisedGrip, lift));
-            }
-            else
-            {
-                float fall = Mathf.InverseLerp(StrikeStart, 1f, progress);
-                fall *= fall;
-                Apply(windupPose, Quaternion.Slerp(raisedShoulder, impactShoulder, fall),
-                    Quaternion.Slerp(raisedGrip, impactGrip, fall));
-            }
+            Pose brace = windupPose;
+            brace.bodyPosition.y -= .075f;
+            brace.bodyRotation *= Quaternion.Euler(4f, 0f, -2f);
+
+            Pose raised = windupPose;
+            raised.bodyPosition.y += .22f;
+            raised.bodyRotation *= Quaternion.Euler(-7f, -3f, 4f);
+            raised.shoulderRotation *= Quaternion.AngleAxis(23f, Vector3.forward);
+            raised.gripRotation *= Quaternion.AngleAxis(-13f, Vector3.forward);
+            raised.freeArmRotation *= Quaternion.AngleAxis(-6f, Vector3.forward);
+
+            Pose loaded = raised;
+            loaded.bodyPosition.y += .035f;
+            loaded.shoulderRotation *= Quaternion.AngleAxis(3f, Vector3.forward);
+
+            Pose contact = windupPose;
+            contact.shoulderRotation = impactShoulder;
+            contact.gripRotation = impactGrip;
+
+            Pose pose = Blend(windupPose, brace, Ease(0f, .13f, progress));
+            pose = Blend(pose, raised, Ease(.11f, .60f, progress));
+            pose = Blend(pose, loaded, Ease(.60f, StrikeStart, progress));
+            float drop = Mathf.InverseLerp(StrikeStart, 1f, progress);
+            Apply(Blend(pose, contact, drop * drop));
         }
 
         void PoseWaveWindup(float progress)
         {
-            float lift = Mathf.SmoothStep(0f, 1f, progress / StrikeStart);
-            float sweep = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(StrikeStart, 1f, progress));
-            Quaternion raised = windupPose.shoulderRotation * Quaternion.AngleAxis(35f, Vector3.forward);
-            Quaternion yaw = Quaternion.AngleAxis(Mathf.Lerp(28f, -33f, sweep) * lift, Vector3.up);
-            shoulder.rotation = yaw * upperBody.rotation * Quaternion.Slerp(windupPose.shoulderRotation, raised, lift);
+            float draw = Ease(.05f, .65f, progress);
+            float sweep = Ease(.71f, 1f, progress);
+            Pose pose = windupPose;
+            pose.bodyPosition.y += .15f * draw - .20f * sweep;
+            pose.bodyRotation *= Quaternion.Euler(-5f * draw + 9f * sweep,
+                10f * draw - 20f * sweep, -5f * draw + 9f * sweep);
+            pose.freeArmRotation *= Quaternion.AngleAxis(-9f * draw + 13f * sweep, Vector3.forward);
+            Apply(pose);
 
-            Vector3 backSwing = Quaternion.AngleAxis(82f, Vector3.up) * waveLane.Forward;
+            Quaternion raised = windupPose.shoulderRotation * Quaternion.AngleAxis(35f, Vector3.forward);
+            Quaternion yaw = Quaternion.AngleAxis(Mathf.Lerp(28f, -33f, sweep) * draw, Vector3.up);
+            shoulder.rotation = yaw * upperBody.rotation * Quaternion.Slerp(windupPose.shoulderRotation, raised, draw);
+
+            Vector3 backSwing = (Quaternion.AngleAxis(-82f, Vector3.up) * waveLane.Forward + Vector3.up * .36f).normalized;
             Vector3 swingEnd = transform.position + waveLane.Forward * .2f;
             Vector3 followThrough = Vector3.ProjectOnPlane(swingEnd - grip.position, Vector3.up).normalized;
             Vector3 shaft = Vector3.Slerp(backSwing, followThrough, sweep);
-            Quaternion horizontalGrip = Quaternion.LookRotation(Vector3.up, shaft) *
+            // Keep the sprite facing the same side of the rig as it turns through the swing.
+            Vector3 bladeNormal = Vector3.ProjectOnPlane(upperBody.parent.forward, shaft);
+            Quaternion swingGrip = Quaternion.LookRotation(bladeNormal, shaft) *
                 Quaternion.FromToRotation(tip.localPosition, Vector3.up);
-            grip.rotation = Quaternion.Slerp(shoulder.rotation * windupPose.gripRotation, horizontalGrip, lift);
+            grip.rotation = Quaternion.Slerp(shoulder.rotation * windupPose.gripRotation, swingGrip, draw);
         }
+
 
         void ResolveImpact(double now)
         {
@@ -334,11 +373,10 @@ namespace Storybook
             startedAt = now;
             hasAttacked = true;
             warning.Hide();
+            impactPose = ReadPose();
             if (pattern == Pattern.TidalWave)
             {
                 preferWave = false;
-                waveReleaseShoulder = shoulder.localRotation;
-                waveReleaseGrip = grip.localRotation;
                 waveFront = 0f;
                 waveTouchedPlayer = false;
                 waveActive = true;
@@ -368,17 +406,12 @@ namespace Storybook
                 Pattern.TidalWave => waveRecoveryTime,
                 _ => eruptionRecoveryTime
             };
-            float t = Mathf.SmoothStep(0f, 1f, elapsed / Mathf.Max(.01f, duration));
-            if (pattern == Pattern.Trident) PoseTridentRecovery(elapsed, t);
-            else if (pattern == Pattern.TidalWave)
-            {
-                shoulder.localRotation = Quaternion.Slerp(waveReleaseShoulder, animatedPose.shoulderRotation, t);
-                grip.localRotation = Quaternion.Slerp(waveReleaseGrip, animatedPose.gripRotation, t);
-                if (waveActive) TickWave(elapsed);
-            }
-            else freeShoulder.localRotation = Quaternion.Slerp(impactFreeArm, idleFreeArm, t);
+            float progress = Mathf.Clamp01(elapsed / Mathf.Max(.01f, duration));
+            PoseRecovery(progress);
+            if (pattern == Pattern.Trident) UpdateShock(elapsed);
+            if (pattern == Pattern.TidalWave && waveActive) TickWave(elapsed);
 
-            if (!arenaActive || t < 1f || waveActive) return;
+            if (!arenaActive || progress < 1f || waveActive) return;
             stage = Stage.Idle;
             shock.enabled = false;
             readyAt = now + repeatDelay;
@@ -406,16 +439,34 @@ namespace Storybook
             else tidalWave.Move(waveLane, waveFront, waveFront - previous, elapsed);
         }
 
-        void PoseTridentRecovery(float elapsed, float t)
+        void PoseRecovery(float progress)
         {
-            var body = new Pose
+            Pose pose = impactPose;
+            float followThrough = Ease(0f, .16f, progress) * (1f - Ease(.16f, .40f, progress));
+            float releaseStart;
+            switch (pattern)
             {
-                bodyPosition = Vector3.Lerp(windupPose.bodyPosition, animatedPose.bodyPosition, t),
-                bodyRotation = Quaternion.Slerp(windupPose.bodyRotation, animatedPose.bodyRotation, t)
-            };
-            Apply(body, Quaternion.Slerp(impactShoulder, animatedPose.shoulderRotation, t),
-                Quaternion.Slerp(impactGrip, animatedPose.gripRotation, t));
+                case Pattern.Trident:
+                    pose.bodyPosition.y += .10f * followThrough;
+                    pose.shoulderRotation *= Quaternion.Euler(-4f * followThrough, 0f, 3f * followThrough);
+                    releaseStart = .13f;
+                    break;
+                case Pattern.Eruption:
+                    pose.freeArmRotation *= Quaternion.AngleAxis(5f * followThrough, Vector3.forward);
+                    releaseStart = .10f;
+                    break;
+                default:
+                    pose.bodyRotation *= Quaternion.Euler(0f, -4f * followThrough, 2f * followThrough);
+                    pose.shoulderRotation *= Quaternion.AngleAxis(-4f * followThrough, Vector3.up);
+                    releaseStart = .20f;
+                    break;
+            }
 
+            Apply(Blend(pose, animatedPose, Ease(releaseStart, 1f, progress)));
+        }
+
+        void UpdateShock(float elapsed)
+        {
             float wave = elapsed / ShockDuration;
             if (wave < 1f)
                 SetRing(shock, lockedRadius * Mathf.Lerp(.16f, 1f, wave), RingHeight + .005f,
@@ -423,20 +474,35 @@ namespace Storybook
             else shock.enabled = false;
         }
 
+        static float Ease(float start, float end, float progress) =>
+            Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(start, end, progress));
+
+        static Pose Blend(Pose from, Pose to, float progress) => new Pose
+        {
+            bodyPosition = Vector3.Lerp(from.bodyPosition, to.bodyPosition, progress),
+            bodyRotation = Quaternion.Slerp(from.bodyRotation, to.bodyRotation, progress),
+            shoulderRotation = Quaternion.Slerp(from.shoulderRotation, to.shoulderRotation, progress),
+            gripRotation = Quaternion.Slerp(from.gripRotation, to.gripRotation, progress),
+            freeArmRotation = Quaternion.Slerp(from.freeArmRotation, to.freeArmRotation, progress)
+        };
+
         Pose ReadPose() => new Pose
         {
             bodyPosition = upperBody.localPosition,
             bodyRotation = upperBody.localRotation,
             shoulderRotation = shoulder.localRotation,
-            gripRotation = grip.localRotation
+            gripRotation = grip.localRotation,
+            freeArmRotation = freeShoulder != null ? freeShoulder.localRotation : Quaternion.identity
         };
 
-        void Apply(Pose pose, Quaternion arm, Quaternion weapon)
+        void Apply(Pose pose)
         {
             upperBody.SetLocalPositionAndRotation(pose.bodyPosition, pose.bodyRotation);
-            shoulder.localRotation = arm;
-            grip.localRotation = weapon;
+            shoulder.localRotation = pose.shoulderRotation;
+            grip.localRotation = pose.gripRotation;
+            if (freeShoulder != null) freeShoulder.localRotation = pose.freeArmRotation;
         }
+
 
         LineRenderer CreateRing(string objectName, int order, float lineWidth)
         {
@@ -486,20 +552,14 @@ namespace Storybook
             line.enabled = true;
         }
 
-        void Cancel()
+        void OnBossDied() => StopAttacks(false);
+
+        void Cancel() => StopAttacks(true);
+
+        void StopAttacks(bool restorePose)
         {
             arenaActive = false;
-            if (stage != Stage.Idle)
-            {
-                if (pattern == Pattern.Trident)
-                    Apply(animatedPose, animatedPose.shoulderRotation, animatedPose.gripRotation);
-                else if (pattern == Pattern.TidalWave)
-                {
-                    shoulder.localRotation = animatedPose.shoulderRotation;
-                    grip.localRotation = animatedPose.gripRotation;
-                }
-                else freeShoulder.localRotation = idleFreeArm;
-            }
+            if (restorePose && stage != Stage.Idle) Apply(animatedPose);
             if (eruption != null) eruption.Clear();
             if (tidalWave != null) tidalWave.Clear();
             waveActive = false;
@@ -508,9 +568,42 @@ namespace Storybook
             if (shock != null) shock.enabled = false;
         }
 
+        internal void BeginDefeat()
+        {
+            StopAttacks(false);
+            defeatStart = ReadPose();
+            bowedPose = animatedPose;
+            bowedPose.bodyPosition.y -= .33f;
+            bowedPose.bodyRotation *= Quaternion.Euler(17f, 0f, -5f);
+            bowedPose.freeArmRotation *= Quaternion.AngleAxis(14f, Vector3.forward);
+            bowedPose.shoulderRotation *= Quaternion.AngleAxis(19f, Vector3.forward);
+
+            defeatHead = upperBody.Find("Head and Beard");
+            headStart = defeatHead.localRotation;
+            headBowed = headStart * Quaternion.Euler(19f, 0f, -5f);
+            Apply(bowedPose);
+
+            // Solve the planted tip on the arena floor with the original grip-to-tip length.
+            float length = Vector3.Distance(tip.position, grip.position);
+            float drop = Mathf.Clamp01((grip.position.y - arenaFloor.bounds.max.y) / length);
+            Vector3 ahead = Vector3.ProjectOnPlane(-transform.forward, Vector3.up).normalized;
+            Vector3 shaft = (ahead + transform.right * .25f).normalized * Mathf.Sqrt(1f - drop * drop) - Vector3.up * drop;
+            Vector3 normal = Vector3.ProjectOnPlane(upperBody.parent.forward, shaft);
+            grip.rotation = Quaternion.LookRotation(normal, shaft) * Quaternion.FromToRotation(tip.localPosition, Vector3.up);
+            bowedPose.gripRotation = grip.localRotation;
+            Apply(defeatStart);
+        }
+
+        internal void PoseDefeat(float progress)
+        {
+            Apply(Blend(defeatStart, bowedPose, Ease(0f, 1f, progress)));
+            defeatHead.localRotation = Quaternion.Slerp(headStart, headBowed, Ease(.25f, 1f, progress));
+        }
+
+
         void OnDisable()
         {
-            if (health != null) health.Died -= Cancel;
+            if (health != null) health.Died -= OnBossDied;
             if (player != null) player.Died -= Cancel;
             Cancel();
         }

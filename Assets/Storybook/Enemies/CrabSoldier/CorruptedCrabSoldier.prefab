@@ -1497,6 +1497,7 @@ GameObject:
   - component: {fileID: 3967261077853789605}
   - component: {fileID: 3490540024016032643}
   - component: {fileID: 4992836359360701524}
+  - component: {fileID: 4297113056811271221}
   m_Layer: 0
   m_Name: SpriteVisual
   m_TagString: Untagged
@@ -1568,7 +1569,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 3fadf07b84ee55e419cdf8f332bbeade, type: 2}
+  m_Sprite: {fileID: -2703364109495101809, guid: 370279668c4c081448ec267e9d6829e1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1604,6 +1605,7 @@ MonoBehaviour:
   idleFPS: 1.5
   walkFramesPerMeter: 2.8
   previewWalk: 0
+  directionalAnimator: {fileID: 4297113056811271221}
 --- !u!114 &4992836359360701524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1616,6 +1618,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b391817116077f4a9ed940907e35b7c, type: 3}
   m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.CrabAttackVisual
+--- !u!95 &4297113056811271221
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5901841366409660859}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cdf698e599dc401479394689ff713631, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage:
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6298880882967453499
 GameObject:
   m_ObjectHideFlags: 0

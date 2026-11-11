@@ -65,7 +65,7 @@ namespace Storybook
             attackRight = Vector3.Cross(Vector3.up, attackDirection);
             attackSize = new Vector2(hitWidth, hitLength);
             BeginAttackTiming();previousElapsed=0;attemptedHit=false;state=State.Windup;
-            visual.Begin();DrawWarning();
+            visual.Begin(attackDirection);DrawWarning();
         }
         void DrawWarning()
         {
@@ -81,7 +81,7 @@ namespace Storybook
             float elapsed=AttackElapsed,contact=windupTime,end=windupTime+activeTime;
             visual.Pose(elapsed,windupTime,activeTime,recoveryTime);
             chargedWarning.SetProgress(elapsed<contact?Mathf.Min(elapsed/Mathf.Max(.0001f,contact),.99999f):1f);
-            // Contact is aligned to the temporary claw reaching the floor. Catch skipped frames once.
+            // Contact is aligned to the claw reaching the floor. Catch skipped frames once.
             if(elapsed>=contact && previousElapsed<end && !attemptedHit)TryHit();
             AttackPhase phase = AttackPhaseAt(elapsed);
             if(phase == AttackPhase.Windup)state=State.Windup;

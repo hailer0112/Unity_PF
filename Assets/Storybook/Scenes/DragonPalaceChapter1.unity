@@ -7451,6 +7451,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3310245856661331268, guid: 6d3cc8231ba75574e8d7bf20ad1dd380, type: 3}
+      propertyPath: despawnOnDeath
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4884347727166550737, guid: 6d3cc8231ba75574e8d7bf20ad1dd380, type: 3}
       propertyPath: m_Name
       value: CorruptedDragonKing
@@ -7510,6 +7514,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4884347727166550737, guid: 6d3cc8231ba75574e8d7bf20ad1dd380, type: 3}
       insertIndex: -1
       addedObject: {fileID: 335856339}
+    - targetCorrespondingSourceObject: {fileID: 4884347727166550737, guid: 6d3cc8231ba75574e8d7bf20ad1dd380, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 335856340}
   m_SourcePrefab: {fileID: 100100000, guid: 6d3cc8231ba75574e8d7bf20ad1dd380, type: 3}
 --- !u!4 &335856333 stripped
 Transform:
@@ -7560,6 +7567,21 @@ MonoBehaviour:
   frontClearance: 0.65
   shoulderArc: {x: -55, y: 24}
   maxShaftDepth: 0.74
+--- !u!114 &335856340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 260033457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 189f29c8c1d137242aae155be07431ad, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::Storybook.DragonKingPurification
+  player: {fileID: 251033141}
+  clearScreenPrefab: {fileID: 3648926516974873753, guid: 9499fb2582c8ea345b648c9cfdf226d5, type: 3}
+  duration: 3.2
 --- !u!1 &335988842
 GameObject:
   m_ObjectHideFlags: 0

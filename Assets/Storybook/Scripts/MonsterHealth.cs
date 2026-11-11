@@ -8,6 +8,7 @@ namespace Storybook
         [SerializeField, Min(1)] float maxHP = 100;
         [SerializeField] float currentHP;
         [SerializeField, Min(0)] float deathDelay = .55f;
+        [SerializeField] bool despawnOnDeath = true;
         public float MaxHP => maxHP;
         public float CurrentHP => currentHP;
         public bool IsDead => currentHP <= 0;
@@ -22,7 +23,7 @@ namespace Storybook
             if (!IsDead) { Damaged?.Invoke(); return; }
             foreach (var collider in GetComponentsInChildren<Collider>()) collider.enabled = false;
             Died?.Invoke();
-            StartCoroutine(DisableAfterDeath());
+            if (despawnOnDeath) StartCoroutine(DisableAfterDeath());
         }
         IEnumerator DisableAfterDeath()
         {

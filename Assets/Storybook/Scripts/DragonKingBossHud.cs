@@ -13,17 +13,21 @@ namespace Storybook
         [SerializeField] RectTransform panel;
         [SerializeField] Image fill;
         [SerializeField] Text bossNameLabel, healthLabel;
-        [SerializeField] GameObject phaseMarker;
+        [SerializeField] Image phaseMarker;
+        [SerializeField] GameObject phaseBadge;
         [SerializeField] Image[] phaseOrnaments;
-        [SerializeField] bool showPhaseMarker = true;
         [SerializeField] Color phaseAccent = new Color(.93f, .42f, .38f);
         [SerializeField, Min(0f)] float fillDuration = .2f;
         [SerializeField, Min(0f)] float deathHold = .8f;
+
+        static readonly Color MarkerGold = new Color(1f, .84f, .56f);
+        static readonly Color MarkerRed = new Color(1f, .64f, .54f);
 
         Font nameFont;
         float fromFill, targetFill, hideAt;
         float fillStartedAt;
         bool initialized;
+        bool phaseReached;
 
         void OnEnable()
         {
@@ -45,7 +49,6 @@ namespace Storybook
             nameFont = Font.CreateDynamicFontFromOSFont(
                 new[] { "Malgun Gothic", "Noto Sans CJK KR", "Apple SD Gothic Neo" }, bossNameLabel.fontSize);
             if (nameFont != null) bossNameLabel.font = nameFont;
-            phaseMarker.SetActive(showPhaseMarker);
             initialized = true;
             InitializeDisplay();
         }
@@ -53,6 +56,7 @@ namespace Storybook
         void InitializeDisplay()
         {
             hideAt = float.NegativeInfinity;
+            SetPhaseAccent(phaseReached || DragonKingPhase.ReachedThreshold(boss));
             SyncHealth();
             fill.fillAmount = fromFill = targetFill;
             RefreshVisibility();
@@ -92,6 +96,7 @@ namespace Storybook
                                Mathf.CeilToInt(max).ToString("N0", CultureInfo.InvariantCulture);
             fromFill = fill.fillAmount;
             targetFill = hp / max;
+            if (!phaseReached && DragonKingPhase.ReachedThreshold(boss)) SetPhaseAccent(true);
             fillStartedAt = Time.unscaledTime;
         }
 
@@ -101,8 +106,11 @@ namespace Storybook
             hideAt = Time.unscaledTime + Mathf.Max(deathHold, fillDuration);
         }
 
-        public void SetPhaseAccent(bool active)
+        void SetPhaseAccent(bool active)
         {
+            phaseReached = active;
+            phaseMarker.color = active ? MarkerRed : MarkerGold;
+            phaseBadge.SetActive(active);
             foreach (Image ornament in phaseOrnaments)
                 ornament.color = active ? phaseAccent : Color.white;
         }

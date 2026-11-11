@@ -15,9 +15,15 @@ namespace Storybook
         Sprite coverSprite;
         bool active;
         void Awake(){body=GetComponent<SpriteRenderer>();animation=GetComponent<CrabSpriteAnimation>();}
-        public void Begin()
+        public void Begin(Vector3 direction)
         {
             End();active=true;animation.ActionLocked=true;
+            if (animation.HasDirectionalAnimator)
+            {
+                animation.BeginDirectionalAttack(direction);
+                return;
+            }
+
             var sprite=body.sprite;Rect r=sprite.rect;
             float x=r.width*.34f,y=r.height*.16f,top=r.height*.72f;
             Rect[] parts={new Rect(0,top,r.width,r.height-top),new Rect(0,0,r.width,y),new Rect(x,y,r.width-x,top-y),new Rect(0,y,x,top-y)};
@@ -47,6 +53,15 @@ namespace Storybook
         public void Pose(float elapsed,float windup,float slam,float recovery)
         {
             if(!active)return;
+            if (animation.HasDirectionalAnimator)
+            {
+                // The clip's midpoint is the same contact instant used by the damage check.
+                float progress = elapsed < windup ? .5f * elapsed / Mathf.Max(.001f, windup)
+                    : .5f + .49f * Mathf.Clamp01((elapsed - windup - slam) / Mathf.Max(.001f, recovery));
+                animation.SampleDirectionalAttack(progress);
+                return;
+            }
+
             float angle;
             if(elapsed<windup)angle=Mathf.Lerp(0,-115,Mathf.SmoothStep(0,1,elapsed/Mathf.Max(.001f,windup)));
             else if(elapsed<windup+slam)angle=5;
