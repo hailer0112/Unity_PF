@@ -42,7 +42,6 @@ namespace Storybook.Editor
                 if(existingFrame!=null){EditorUtility.CopySerialized(sprite,existingFrame);UnityEngine.Object.DestroyImmediate(sprite);sprite=existingFrame;}else AssetDatabase.CreateAsset(sprite,fp);frames[i]=sprite;
             }
             string prefabPath=Folder+"/CorruptedCrabSoldier.prefab";
-            if(AssetDatabase.LoadAssetAtPath<GameObject>(Folder+"/DetailedSpriteCrabBackup.prefab")==null)AssetDatabase.CopyAsset(prefabPath,Folder+"/DetailedSpriteCrabBackup.prefab");
             var root=PrefabUtility.LoadPrefabContents(prefabPath);
             try
             {

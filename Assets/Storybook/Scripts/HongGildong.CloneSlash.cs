@@ -147,13 +147,15 @@ namespace Storybook
         void StrikeCloneSlash(Vector3 origin)
         {
             cloneSlashHitTargets.Clear();
-            foreach (Collider collider in Physics.OverlapSphere(origin + Vector3.up * .4f, cloneSlashRange + .4f,
-                         targetMask, QueryTriggerInteraction.Ignore))
+            Vector3 center = origin + Vector3.up * .4f;
+            foreach (Collider collider in Physics.OverlapSphere(center, cloneSlashRange + .4f,
+                         targetMask, QueryTriggerInteraction.Collide))
             {
-                AttackTarget target = collider.GetComponentInParent<AttackTarget>();
-                if (target == null || !target.CanTakeDamage || !cloneSlashHitTargets.Add(target)) continue;
+                AttackTarget target = AttackTarget.FromDamageCollider(collider, out bool useSurface);
+                if (target == null || !target.CanTakeDamage || cloneSlashHitTargets.Contains(target)) continue;
 
-                Vector3 offset = Vector3.ProjectOnPlane(target.transform.position - origin, Vector3.up);
+                Vector3 contact = useSurface ? collider.ClosestPoint(center) : target.transform.position;
+                Vector3 offset = Vector3.ProjectOnPlane(contact - origin, Vector3.up);
                 if (offset.sqrMagnitude > cloneSlashRange * cloneSlashRange ||
                     Vector3.Angle(cloneSlashDirection, offset) > cloneSlashHalfArc)
                     continue;
@@ -170,7 +172,8 @@ namespace Storybook
                     }
                 }
 
-                if (!blocked) target.ReceiveDamage(attackDamage * cloneSlashDamageMultiplier);
+                if (!blocked && cloneSlashHitTargets.Add(target))
+                    target.ReceiveDamage(attackDamage * cloneSlashDamageMultiplier);
                 if (!IsCastingCloneSlash) return;
             }
         }

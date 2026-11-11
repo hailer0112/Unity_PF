@@ -43,13 +43,13 @@ namespace Storybook
 
             Vector3 direction = transform.forward;
             var hits = Physics.BoxCastAll(transform.position, halfExtents, direction,
-                transform.rotation, step, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Ignore);
+                transform.rotation, step, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Collide);
 
             // Resolve the nearest wall before applying hits, since cast results have no ordering.
             float wallDistance = float.PositiveInfinity;
             foreach (RaycastHit hit in hits)
             {
-                if (hit.collider.transform.IsChildOf(owner)) continue;
+                if (hit.collider.isTrigger || hit.collider.transform.IsChildOf(owner)) continue;
                 if (hit.collider.GetComponentInParent<AttackTarget>() == null)
                     wallDistance = Mathf.Min(wallDistance, hit.distance);
             }
@@ -60,7 +60,7 @@ namespace Storybook
                     (targetMask.value & (1 << hit.collider.gameObject.layer)) == 0)
                     continue;
 
-                var target = hit.collider.GetComponentInParent<AttackTarget>();
+                var target = AttackTarget.FromDamageCollider(hit.collider, out _);
                 if (target == null || !target.CanTakeDamage || !hitTargets.Add(target)) continue;
 
                 Vector3 contact = hit.distance > 0f ? hit.point : hit.collider.ClosestPoint(transform.position);

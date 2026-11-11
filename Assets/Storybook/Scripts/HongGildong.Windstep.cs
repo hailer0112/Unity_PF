@@ -26,9 +26,9 @@ namespace Storybook
         void InitializeWindstepInput() =>
             windstepInput = new InputAction("Windstep", InputActionType.Button, "<Keyboard>/e");
 
-        void UpdateWindstep()
+        void UpdateWindstep(bool acceptInput)
         {
-            if (!IsCastingSwordTyphoon && windstepInput.WasPressedThisFrame() && !IsWindstepActive && WindstepCooldownRemaining <= 0f)
+            if (acceptInput && !IsCastingSwordTyphoon && windstepInput.WasPressedThisFrame() && !IsWindstepActive && WindstepCooldownRemaining <= 0f)
             {
                 double now = Time.timeAsDouble;
                 windstepEndsAt = now + windstepDuration;

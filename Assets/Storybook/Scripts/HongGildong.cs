@@ -43,7 +43,10 @@ namespace Storybook
 
         const float Windup = .12f, ContactEnd = .29f, RecoveryEnd = .42f;
         const float SlashTrailFade = .075f;
+        const float KnockbackSpeed = 8f;
         CharacterController controller;
+        Vector3 knockbackDirection;
+        float knockbackRemaining;
         InputAction move, point, strike, dash, azureSlash;
         Vector3 facing = new Vector3(.8f, 0f, -.6f), slashDirection;
         const float WalkCycleDistance = 1.3f, RunCycleDistance = 1.7f, ArrivalTolerance = .015f;
@@ -64,6 +67,7 @@ namespace Storybook
         public bool Attacking => attackTime < RecoveryEnd;
         public bool IsCastingAzureSlash { get; private set; }
         public bool HasMoveDestination => destination.HasValue;
+        internal Rect MovementBounds => movementBounds;
         public bool IsDashing => dashTimeLeft > 0f;
         public bool IsInvulnerable => isActiveAndEnabled && Time.timeAsDouble < invulnerableUntil;
 
@@ -110,7 +114,7 @@ namespace Storybook
             CancelCloneSlash();
             IsCastingAzureSlash = false;
             PrepareForAction();
-            dashTimeLeft = gaitPhase = 0f;
+            dashTimeLeft = gaitPhase = knockbackRemaining = 0f;
             invulnerableUntil = 0;
             attackTime = RecoveryEnd;
             bladeTrail.enabled = false;
@@ -127,8 +131,9 @@ namespace Storybook
         void Update()
         {
             Vector2 cursor = point.ReadValue<Vector2>();
-            if (swordTyphoonInput.WasPressedThisFrame()) BeginSwordTyphoon(cursor);
-            UpdateWindstep();
+            bool acceptInput = knockbackRemaining <= 0f;
+            if (acceptInput && swordTyphoonInput.WasPressedThisFrame()) BeginSwordTyphoon(cursor);
+            UpdateWindstep(acceptInput);
             if (IsCastingSwordTyphoon)
             {
                 UpdateSwordTyphoon();
@@ -147,9 +152,9 @@ namespace Storybook
             }
 
             // Actions own movement until they finish; clicks during them are not queued.
-            if (!IsDashing && !Attacking && move.WasPressedThisFrame() && TryGroundPoint(cursor, out Vector3 goal))
+            if (acceptInput && !IsDashing && !Attacking && move.WasPressedThisFrame() && TryGroundPoint(cursor, out Vector3 goal))
                 SetDestination(goal);
-            if (!IsDashing && !Attacking && dash.WasPressedThisFrame() && Time.timeAsDouble >= dashReadyAt)
+            if (acceptInput && !IsDashing && !Attacking && dash.WasPressedThisFrame() && Time.timeAsDouble >= dashReadyAt)
                 BeginDash(cursor);
             if (IsDashing)
             {
@@ -158,19 +163,19 @@ namespace Storybook
                 body.sprite = back ? dashBack : dashFront;
                 return;
             }
-            if (azureSlash.WasPressedThisFrame() && BeginAzureSlash(cursor))
+            if (acceptInput && azureSlash.WasPressedThisFrame() && BeginAzureSlash(cursor))
             {
                 UpdateAzureSlash();
                 return;
             }
 
-            if (cloneSlashInput.WasPressedThisFrame() && BeginCloneSlash(cursor))
+            if (acceptInput && cloneSlashInput.WasPressedThisFrame() && BeginCloneSlash(cursor))
             {
                 UpdateCloneSlash();
                 return;
             }
 
-            if (!Attacking && strike.WasPressedThisFrame()) BeginSwing(cursor);
+            if (acceptInput && !Attacking && strike.WasPressedThisFrame()) BeginSwing(cursor);
             Vector3 offset = Attacking ? Vector3.zero : RemainingWalk();
             if (offset.sqrMagnitude > 0f) Face(offset.normalized);
             float step = EffectiveWalkSpeed * Time.deltaTime;
@@ -260,10 +265,30 @@ namespace Storybook
             if (Mathf.Abs(direction.z) > .01f) back = direction.z > 0f;
         }
 
+        internal void ApplyKnockback(Vector3 direction, float distance)
+        {
+            direction = Vector3.ProjectOnPlane(direction, Vector3.up);
+            if (!isActiveAndEnabled || distance <= 0f || direction.sqrMagnitude < .0001f) return;
+            knockbackDirection = direction.normalized;
+            knockbackRemaining = distance;
+            dashTimeLeft = 0f;
+            PrepareForAction();
+        }
+
         CollisionFlags MoveOnGround(Vector3 delta)
         {
-            Vector3 next = InsideClearing(transform.position + delta);
-            return controller.Move(next - transform.position + Vector3.down * (2f * Time.deltaTime));
+            Vector3 before = transform.position;
+            float push = Mathf.Min(knockbackRemaining, KnockbackSpeed * Time.deltaTime);
+            if (push > 0f) delta = knockbackDirection * push;
+            Vector3 next = InsideClearing(before + delta);
+            CollisionFlags flags = controller.Move(next - before + Vector3.down * (2f * Time.deltaTime));
+            if (push > 0f)
+            {
+                float travelled = Vector3.Dot(transform.position - before, knockbackDirection);
+                knockbackRemaining = (flags & CollisionFlags.Sides) != 0 || travelled + .001f < push
+                    ? 0f : Mathf.Max(0f, knockbackRemaining - push);
+            }
+            return flags;
         }
 
         void BeginDash(Vector2 cursor)
@@ -378,10 +403,13 @@ namespace Storybook
 
         void StrikeTargets(float start, float end)
         {
-            foreach (Collider other in Physics.OverlapSphere(transform.position + Vector3.up * .45f, reach + .45f, targetMask))
+            Vector3 center = transform.position + Vector3.up * .45f;
+            foreach (Collider other in Physics.OverlapSphere(center, reach + .45f, targetMask, QueryTriggerInteraction.Collide))
             {
-                AttackTarget target = other.GetComponentInParent<AttackTarget>(); if (target == null || !target.CanTakeDamage) continue;
-                Vector3 offset = Vector3.ProjectOnPlane(other.transform.position - transform.position, Vector3.up);
+                AttackTarget target = AttackTarget.FromDamageCollider(other, out bool useSurface);
+                if (target == null || !target.CanTakeDamage) continue;
+                Vector3 contact = useSurface ? other.ClosestPoint(center) : other.transform.position;
+                Vector3 offset = Vector3.ProjectOnPlane(contact - transform.position, Vector3.up);
                 float angle = SweepSign * Vector3.SignedAngle(slashDirection, offset, Vector3.up);
                 if (offset.sqrMagnitude <= reach * reach && angle >= start && angle <= end && hitThisSwing.Add(target))
                     target.ReceiveDamage(attackDamage);

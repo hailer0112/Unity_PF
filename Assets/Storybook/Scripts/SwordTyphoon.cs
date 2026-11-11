@@ -75,19 +75,19 @@ namespace Storybook
             Vector3 scanCenter = center + Vector3.up * TraceHeight;
             float scanRadius = radius + .5f;
             int count = Physics.OverlapSphereNonAlloc(scanCenter, scanRadius, overlapHits, targetMask,
-                QueryTriggerInteraction.Ignore);
+                QueryTriggerInteraction.Collide);
             Collider[] hits = overlapHits;
             if (count == hits.Length)
             {
-                hits = Physics.OverlapSphere(scanCenter, scanRadius, targetMask, QueryTriggerInteraction.Ignore);
+                hits = Physics.OverlapSphere(scanCenter, scanRadius, targetMask, QueryTriggerInteraction.Collide);
                 count = hits.Length;
             }
 
             for (int i = 0; i < count; i++)
             {
-                MonsterHealth enemy = hits[i].GetComponentInParent<MonsterHealth>();
+                var enemy = AttackTarget.FromDamageCollider(hits[i], out bool useSurface) as MonsterHealth;
                 if (enemy == null || !enemy.CanTakeDamage || targets.Contains(enemy)) continue;
-                Vector3 enemyGround = enemy.transform.position;
+                Vector3 enemyGround = useSurface ? hits[i].ClosestPoint(scanCenter) : enemy.transform.position;
                 enemyGround.y = center.y;
                 Vector3 offset = enemyGround - center;
                 if (offset.sqrMagnitude <= radius * radius && ObstacleDistance(owner, center, enemyGround) >= offset.magnitude)

@@ -14,6 +14,7 @@ namespace Storybook
         [SerializeField, Min(0f)] protected float loseTargetRange = 6.5f;
 
         [Header("Attack Timing")]
+        [SerializeField, Min(0f)] float combatStartDelay = 1.5f;
         [SerializeField, Min(.01f), FormerlySerializedAs("aimTime")] protected float windupTime = .6f;
         [SerializeField, Min(.01f), FormerlySerializedAs("releaseTime")] protected float activeTime = .15f;
         [SerializeField, Min(.01f)] protected float recoveryTime = .7f;
@@ -25,6 +26,7 @@ namespace Storybook
         MonsterHealth health;
         bool tracking;
         Bounds? roomBounds;
+        double roomReadyAt;
 
         protected bool AttackReady => Time.time >= nextAttack;
         protected float AttackElapsed => Time.time - attackStarted;
@@ -57,12 +59,15 @@ namespace Storybook
                 return;
             }
 
-            TickBehavior();
+            if (Time.timeAsDouble >= roomReadyAt) TickBehavior();
         }
 
         public void ActivateInRoom(Bounds bounds)
         {
+            if (health.IsDead) return;
             roomBounds = bounds;
+            ResetTrackingAndAction(false);
+            roomReadyAt = Time.timeAsDouble + combatStartDelay;
             enabled = true;
         }
 
