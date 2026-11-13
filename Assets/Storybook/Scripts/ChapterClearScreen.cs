@@ -1,9 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Storybook
@@ -13,8 +11,6 @@ namespace Storybook
     {
         [SerializeField] Button returnButton;
         [SerializeField] Text title, description, buttonLabel, status;
-        [SerializeField, Tooltip("Name or build path of the future library scene.")]
-        string libraryScene;
 
         Font font;
         Action closed;
@@ -41,40 +37,20 @@ namespace Storybook
             returnButton.Select();
         }
 
-        void Update()
-        {
-            if (shown && !loading && Keyboard.current?.escapeKey.wasPressedThisFrame == true)
-                Close();
-        }
-
         void RequestReturn()
         {
-            if (loading) return;
-            if (!string.IsNullOrWhiteSpace(libraryScene) && Application.CanStreamedLevelBeLoaded(libraryScene))
+            if (!shown || loading) return;
+            var player = FindAnyObjectByType<HongGildong>();
+            loading = StorybookTransition.TryBegin(StorybookTransition.ArchiveScene,
+                StorybookTransition.Reason.Purification, player);
+            if (loading)
             {
-                loading = true;
                 returnButton.interactable = false;
-                SceneManager.LoadSceneAsync(libraryScene);
                 return;
             }
 
-            if (status.gameObject.activeSelf)
-            {
-                Close();
-                return;
-            }
-            status.text = "테스트 · 서고 씬 연결 대기";
-            buttonLabel.text = "닫기";
+            status.text = "서고 씬을 불러올 수 없습니다";
             status.gameObject.SetActive(true);
-        }
-
-        void Close()
-        {
-            shown = false;
-            gameObject.SetActive(false);
-            closed?.Invoke();
-            closed = null;
-            Destroy(gameObject);
         }
 
         void OnDestroy()

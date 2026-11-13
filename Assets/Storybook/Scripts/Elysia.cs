@@ -16,6 +16,7 @@ namespace Storybook
         [SerializeField, Min(.1f)] float interactionRange = 1.35f;
 
         HongGildong player;
+        ArchiveStoryEntrance entrance;
         Transform visual;
         Vector3 restPosition;
         float breathTime;
@@ -32,6 +33,7 @@ namespace Storybook
             restPosition = visual.localPosition;
             artwork.sprite = front;
             player = FindFirstObjectByType<HongGildong>();
+            entrance = FindAnyObjectByType<ArchiveStoryEntrance>();
         }
 
         void Update()
@@ -57,7 +59,7 @@ namespace Storybook
                 return;
             }
 
-            if (pressedInteract && PlayerInRange(out Vector3 offset))
+            if (pressedInteract && (entrance == null || !entrance.CanUse(player)) && PlayerInRange(out Vector3 offset))
             {
                 artwork.sprite = DirectionTo(offset);
                 IsInteracting = true;

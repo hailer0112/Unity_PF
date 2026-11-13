@@ -1019,7 +1019,6 @@ MonoBehaviour:
   description: {fileID: 8776201429550579713}
   buttonLabel: {fileID: 8906432701777235147}
   status: {fileID: 7766611151246603285}
-  libraryScene: 
 --- !u!1 &8299343746216422487
 GameObject:
   m_ObjectHideFlags: 0

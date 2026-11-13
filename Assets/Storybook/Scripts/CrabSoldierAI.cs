@@ -49,14 +49,18 @@ namespace Storybook
                 state = State.Idle;
                 return;
             }
-            if(distance<=attackStartRange)
+            if(distance<=attackStartRange && !Occluded())
             {
                 state=State.Idle;
-                if(AttackReady && !Occluded())BeginAttack(delta);
+                if(AttackReady)BeginAttack(delta);
                 return;
             }
             state=State.Chase;
-            MoveOnGround(delta.normalized, distance);
+            float clearance = (controller.radius + controller.skinWidth) *
+                Mathf.Max(transform.lossyScale.x, transform.lossyScale.z);
+            Vector3 waypoint = PalaceCover.NextPoint(transform.position, target.transform.position, clearance);
+            Vector3 step = PlanarOffset(waypoint);
+            MoveOnGround(step.normalized, step.magnitude);
         }
         void BeginAttack(Vector3 delta)
         {

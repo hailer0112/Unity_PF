@@ -188,7 +188,7 @@ namespace Storybook
             }
 
             if (acceptInput && !Attacking && strike.WasPressedThisFrame()) BeginSwing(cursor);
-            Vector3 offset = Attacking ? Vector3.zero : RemainingWalk();
+            Vector3 offset = Attacking ? Vector3.zero : WalkOffset();
             if (offset.sqrMagnitude > 0f) Face(offset.normalized);
             float step = EffectiveWalkSpeed * Time.deltaTime;
             MoveOnGround(Vector3.ClampMagnitude(offset, step));
@@ -220,6 +220,16 @@ namespace Storybook
             return true;
         }
 
+        float CoverClearance => (controller.radius + controller.skinWidth) *
+            Mathf.Max(transform.lossyScale.x, transform.lossyScale.z);
+
+        Vector3 WalkOffset()
+        {
+            if (!destination.HasValue) return Vector3.zero;
+            Vector3 waypoint = PalaceCover.NextPoint(transform.position, destination.Value, CoverClearance);
+            return Vector3.ProjectOnPlane(waypoint - transform.position, Vector3.up);
+        }
+
         Vector3 RemainingWalk() => destination.HasValue
             ? Vector3.ProjectOnPlane(destination.Value - transform.position, Vector3.up) : Vector3.zero;
 
@@ -235,7 +245,7 @@ namespace Storybook
 
         void SetDestination(Vector3 goal)
         {
-            destination = InsideClearing(goal);
+            destination = InsideClearing(PalaceCover.WalkableGoal(transform.position, InsideClearing(goal), CoverClearance));
             moveMarker.transform.position = destination.Value + Vector3.up * markerHeight;
             moveMarker.enabled = true;
             ClearReachedDestination();
