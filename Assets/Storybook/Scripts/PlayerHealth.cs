@@ -14,6 +14,14 @@ namespace Storybook
         public event Action Damaged, Died;
         internal bool ChapterClearProtected { get; set; }
         void Awake() { player=GetComponent<HongGildong>();currentHP=maxHP; }
+        public bool TryHeal(float amount)
+        {
+            if (!isActiveAndEnabled || IsDead || currentHP >= maxHP || amount <= 0f ||
+                float.IsNaN(amount) || float.IsInfinity(amount)) return false;
+            currentHP = Mathf.Min(maxHP, currentHP + amount);
+            return true;
+        }
+
         public bool TryTakeDamage(float damage)
         {
             if(!isActiveAndEnabled || IsDead || ChapterClearProtected || player.IsInvulnerable || damage<=0 || float.IsNaN(damage) || float.IsInfinity(damage))return false;

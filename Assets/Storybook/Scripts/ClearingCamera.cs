@@ -15,6 +15,15 @@ namespace Storybook
         [SerializeField] Rect groundViewBounds;
         Camera view;
         Vector3 velocity;
+        bool? dungeonBossView;
+        internal void SetDungeonRoom(bool bossView, bool snap)
+        {
+            dungeonBossView = bossView;
+            if (!snap || followTarget == null) return;
+            velocity = Vector3.zero;
+            transform.position = FollowPosition();
+        }
+
         void Awake() { view = GetComponent<Camera>(); }
         void Start()
         {
@@ -34,7 +43,9 @@ namespace Storybook
         Vector3 FollowPosition()
         {
             Vector3 position = FocusPoint() + offset;
-            if (!limitGroundView || (groundViewEntrance != null && followTarget.position.z < groundViewEntrance.position.z))
+            bool clampView = dungeonBossView ?? (limitGroundView &&
+                (groundViewEntrance == null || followTarget.position.z >= groundViewEntrance.position.z));
+            if (!clampView)
                 return position;
 
             // Measure the ground footprint at the same zoom used for rendering.

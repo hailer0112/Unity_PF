@@ -69,6 +69,16 @@ namespace Storybook
         public bool IsCastingAzureSlash { get; private set; }
         public bool HasMoveDestination => destination.HasValue;
         internal Rect MovementBounds => movementBounds;
+        Rect? dungeonMovementBounds;
+
+        internal void PlaceInDungeon(Vector3 position, Rect bounds)
+        {
+            dungeonMovementBounds = bounds;
+            PrepareForAction();
+            controller.enabled = false;
+            transform.position = position + Vector3.up * .025f;
+            controller.enabled = true;
+        }
         public bool IsDashing => dashTimeLeft > 0f;
         public bool IsInvulnerable => isActiveAndEnabled && Time.timeAsDouble < invulnerableUntil;
 
@@ -206,9 +216,12 @@ namespace Storybook
             body.transform.localPosition = Vector3.up * artworkGroundOffset;
         }
 
-        Vector3 InsideClearing(Vector3 p) =>
-            new Vector3(Mathf.Clamp(p.x, movementBounds.xMin, movementBounds.xMax), p.y,
-                Mathf.Clamp(p.z, movementBounds.yMin, movementBounds.yMax));
+        Vector3 InsideClearing(Vector3 p)
+        {
+            Rect bounds = dungeonMovementBounds ?? movementBounds;
+            return new Vector3(Mathf.Clamp(p.x, bounds.xMin, bounds.xMax), p.y,
+                Mathf.Clamp(p.z, bounds.yMin, bounds.yMax));
+        }
 
         bool TryGroundPoint(Vector2 cursor, out Vector3 ground)
         {
