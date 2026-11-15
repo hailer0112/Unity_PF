@@ -8,6 +8,7 @@ namespace Storybook
     {
         readonly HashSet<AttackTarget> hitTargets = new HashSet<AttackTarget>();
         Transform owner;
+        Vector3 castOrigin;
         float remainingDistance;
         float speed;
         float damage;
@@ -26,6 +27,7 @@ namespace Storybook
 
             var projectile = root.AddComponent<AzureSlashProjectile>();
             projectile.owner = owner;
+            projectile.castOrigin = owner.position;
             projectile.remainingDistance = range;
             projectile.speed = speed;
             projectile.damage = damage;
@@ -64,7 +66,7 @@ namespace Storybook
                 if (target == null || !target.CanTakeDamage || !hitTargets.Add(target)) continue;
 
                 Vector3 contact = hit.distance > 0f ? hit.point : hit.collider.ClosestPoint(transform.position);
-                target.ReceiveDamage(damage);
+                target.ReceiveDamage(damage, castOrigin);
                 PlayImpact(contact);
             }
 

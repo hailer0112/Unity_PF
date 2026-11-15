@@ -33,7 +33,7 @@ namespace Storybook
         public Room Boss { get; private set; }
         readonly List<Room> rooms = new();
 
-        public static PalaceDungeonGraph Generate(int seed, int minCombat, int maxCombat, int bossDepth, float recoveryChance)
+        public static PalaceDungeonGraph Generate(int seed, int minCombat, int maxCombat, int bossDepth, float recoveryChance, int templateCount = 2)
         {
             minCombat = Mathf.Clamp(minCombat, 1, 20);
             maxCombat = Mathf.Clamp(maxCombat, minCombat, 20);
@@ -48,18 +48,18 @@ namespace Storybook
             bool recovery = random.NextDouble() < Mathf.Clamp01(recoveryChance);
             for (int attempt = 0; attempt < 32; attempt++)
             {
-                var graph = Build(random, combat, pathLength, recovery);
+                var graph = Build(random, combat, pathLength, recovery, Mathf.Max(1, templateCount));
                 if (graph != null && graph.IsValid(depth)) return graph;
             }
 
             // A straight spine always leaves room for side branches.
-            var fallback = Build(random, combat, combat + 1, recovery, straight: true);
+            var fallback = Build(random, combat, combat + 1, recovery, Mathf.Max(1, templateCount), straight: true);
             if (fallback == null || !fallback.IsValid(depth))
                 throw new InvalidOperationException("Failed to construct the fallback palace graph.");
             return fallback;
         }
 
-        static PalaceDungeonGraph Build(Random random, int combat, int length, bool recovery, bool straight = false)
+        static PalaceDungeonGraph Build(Random random, int combat, int length, bool recovery, int templateCount, bool straight = false)
         {
             var path = new List<Vector2Int> { Vector2Int.zero };
             var occupied = new HashSet<Vector2Int> { Vector2Int.zero };
@@ -89,7 +89,7 @@ namespace Storybook
                 Room parent = i == 0 ? null : graph.rooms[^1];
                 PalaceRoomType type = i == 0 ? PalaceRoomType.Start :
                     i == length ? PalaceRoomType.Boss : PalaceRoomType.Combat;
-                Room room = graph.Add(type, grid, random, parent);
+                Room room = graph.Add(type, grid, random, parent, templateCount);
                 if (type == PalaceRoomType.Boss) graph.Boss = room;
             }
 
@@ -109,7 +109,7 @@ namespace Storybook
                 if (sockets.Count == 0) return null;
                 var (parent, gridPosition) = sockets[random.Next(sockets.Count)];
                 PalaceRoomType type = remainingCombat > 0 ? PalaceRoomType.Combat : PalaceRoomType.Recovery;
-                graph.Add(type, gridPosition, random, parent);
+                graph.Add(type, gridPosition, random, parent, templateCount);
                 occupied.Add(gridPosition);
                 if (type == PalaceRoomType.Combat) remainingCombat--;
                 else recovery = false;
@@ -117,9 +117,9 @@ namespace Storybook
             return graph;
         }
 
-        Room Add(PalaceRoomType type, Vector2Int grid, Random random, Room parent)
+        Room Add(PalaceRoomType type, Vector2Int grid, Random random, Room parent, int templateCount)
         {
-            int template = type == PalaceRoomType.Combat ? random.Next(2) : 0;
+            int template = type == PalaceRoomType.Combat ? random.Next(templateCount) : 0;
             var room = new Room(rooms.Count, type, grid, template);
             rooms.Add(room);
             if (parent != null)

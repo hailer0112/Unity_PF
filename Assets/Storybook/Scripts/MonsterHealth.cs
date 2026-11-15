@@ -15,7 +15,18 @@ namespace Storybook
         public override bool CanTakeDamage => base.CanTakeDamage && !IsDead;
         public event Action Damaged;
         public event Action Died;
-        void Awake() { currentHP = maxHP; }
+        TurtleGuardAI guard;
+
+        void Awake()
+        {
+            currentHP = maxHP;
+            TryGetComponent(out guard);
+        }
+
+        public override void ReceiveDamage(float damage, Vector3 source)
+        {
+            ReceiveDamage(guard != null ? guard.GuardDamage(damage, source) : damage);
+        }
         public override void ReceiveDamage(float damage)
         {
             if (!CanTakeDamage || damage <= 0 || float.IsNaN(damage) || float.IsInfinity(damage)) return;

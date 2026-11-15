@@ -173,7 +173,7 @@ namespace Storybook
                 }
 
                 if (!blocked && cloneSlashHitTargets.Add(target))
-                    target.ReceiveDamage(attackDamage * cloneSlashDamageMultiplier);
+                    target.ReceiveDamage(attackDamage * cloneSlashDamageMultiplier, origin);
                 if (!IsCastingCloneSlash) return;
             }
         }

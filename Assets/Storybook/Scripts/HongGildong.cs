@@ -447,7 +447,7 @@ namespace Storybook
                 Vector3 offset = Vector3.ProjectOnPlane(contact - transform.position, Vector3.up);
                 float angle = SweepSign * Vector3.SignedAngle(slashDirection, offset, Vector3.up);
                 if (offset.sqrMagnitude <= reach * reach && angle >= start && angle <= end && hitThisSwing.Add(target))
-                    target.ReceiveDamage(attackDamage);
+                    target.ReceiveDamage(attackDamage, transform.position);
             }
         }
 

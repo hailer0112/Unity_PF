@@ -12,6 +12,7 @@ namespace Storybook
         [SerializeField] DragonKingBossHud bossHud;
         [SerializeField] PalaceDungeonRoom[] combatRooms = new PalaceDungeonRoom[2];
         [SerializeField] GameObject passage;
+        [SerializeField] PalaceRoomWaves.Settings encounterWaves = new();
         static readonly Vector2 GridSpacing = new(20f, 19f);
         [SerializeField, Min(1)] int minimumCombatRooms = 3;
         [SerializeField, Min(1)] int maximumCombatRooms = 5;
@@ -41,7 +42,7 @@ namespace Storybook
         void Generate()
         {
             Seed = useFixedSeed ? fixedSeed : System.Guid.NewGuid().GetHashCode();
-            Layout = PalaceDungeonGraph.Generate(Seed, minimumCombatRooms, maximumCombatRooms, minimumBossDepth, recoveryChance);
+            Layout = PalaceDungeonGraph.Generate(Seed, minimumCombatRooms, maximumCombatRooms, minimumBossDepth, recoveryChance, combatRooms.Length);
             if (!useFixedSeed)
             {
                 // Scene reloads reset run state. Avoid an identical layout on consecutive departures as well.
@@ -49,7 +50,7 @@ namespace Storybook
                 for (int attempt = 0; attempt < 8 && (Seed == previousSeed || signature == previousLayout); attempt++)
                 {
                     Seed = unchecked(Seed + 1);
-                    Layout = PalaceDungeonGraph.Generate(Seed, minimumCombatRooms, maximumCombatRooms, minimumBossDepth, recoveryChance);
+                    Layout = PalaceDungeonGraph.Generate(Seed, minimumCombatRooms, maximumCombatRooms, minimumBossDepth, recoveryChance, combatRooms.Length);
                     signature = Signature(Layout);
                 }
                 previousSeed = Seed;
@@ -69,7 +70,7 @@ namespace Storybook
                     _ => bossRoom
                 };
                 room.name = $"{node.Id:00} {node.Type} ({node.Grid.x}, {node.Grid.y})";
-                room.Initialize(node, health, recoveryAmount);
+                room.Initialize(node, health, recoveryAmount, encounterWaves, Seed);
                 rooms.Add(room);
             }
 

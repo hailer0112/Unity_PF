@@ -871,7 +871,19 @@ MonoBehaviour:
   combatRooms:
   - {fileID: 7014601970989806950, guid: 3d7ab6835c6f4314490f472771cc3ec5, type: 3}
   - {fileID: 441470914604079925, guid: 41eaba83f3bf7a042aed253b02bb2d9f, type: 3}
+  - {fileID: 7759974754428141324, guid: 13b52ccd497c12d48bbdff010913f83a, type: 3}
+  - {fileID: 5978833954508937087, guid: b830863e7bfc4a94194d6bf2e80534ea, type: 3}
+  - {fileID: 410249576248614782, guid: 40befb15d4b175746bb02ebad110b520, type: 3}
   passage: {fileID: 5401431291399496545, guid: a619d2c22d8568242bf8ab289957903f, type: 3}
+  encounterWaves:
+    crab: {fileID: 1609197125568794212, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
+    archer: {fileID: 973324174093090072, guid: 496ba8fe6ac516342acdbe19d0e0c5ae, type: 3}
+    turtle: {fileID: 6619331671881593950, guid: 8e53152996f74b849a4f477f5311eea1, type: 3}
+    small: {x: 4, y: 5}
+    standard: {x: 6, y: 7}
+    large: {x: 8, y: 9}
+    warningSeconds: 0.65
+    warningMaterial: {fileID: 2100000, guid: 668b472f33dc16c4c9d60cff91cf6327, type: 2}
   minimumCombatRooms: 3
   maximumCombatRooms: 5
   minimumBossDepth: 3

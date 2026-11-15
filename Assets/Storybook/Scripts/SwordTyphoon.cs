@@ -100,7 +100,7 @@ namespace Storybook
             foreach (MonsterHealth enemy in targets)
             {
                 if (!isActiveAndEnabled) return;
-                if (enemy != null && enemy.CanTakeDamage) enemy.ReceiveDamage(damage);
+                if (enemy != null && enemy.CanTakeDamage) enemy.ReceiveDamage(damage, transform.position);
             }
         }
 
