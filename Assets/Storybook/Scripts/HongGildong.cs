@@ -97,6 +97,7 @@ namespace Storybook
         void Awake()
         {
             controller = GetComponent<CharacterController>();
+            InitializeMana();
             move = new InputAction("Move To", InputActionType.Button, "<Mouse>/rightButton");
             point = new InputAction("Aim", InputActionType.PassThrough, "<Mouse>/position");
             strike = new InputAction("Slash", InputActionType.Button, "<Mouse>/leftButton");
@@ -152,6 +153,7 @@ namespace Storybook
 
         void Update()
         {
+            RegenerateMana();
             Vector2 cursor = point.ReadValue<Vector2>();
             bool acceptInput = knockbackRemaining <= 0f;
             if (acceptInput && swordTyphoonInput.WasPressedThisFrame()) BeginSwordTyphoon(cursor);
@@ -359,6 +361,8 @@ namespace Storybook
                 !TryGroundPoint(cursor, out Vector3 ground))
                 return false;
 
+            if (!TrySpendSkillMana(HudSkill.AzureSlash, azureSlashManaCost)) return false;
+
             Vector3 direction = Vector3.ProjectOnPlane(ground - transform.position, Vector3.up);
             azureSlashDirection = direction.sqrMagnitude > .0025f ? direction.normalized : facing.normalized;
             PrepareForAction();
@@ -396,6 +400,7 @@ namespace Storybook
             attackBack = Mathf.Abs(slashDirection.z) > .08f ? slashDirection.z > 0f : back;
             attackLeft = Mathf.Abs(slashDirection.x) > .08f ? slashDirection.x < 0f : left;
             hitThisSwing.Clear();
+            restoredManaThisSwing = false;
             attackTime = 0f;
             gaitPhase = 0f;
         }
@@ -446,8 +451,9 @@ namespace Storybook
                 Vector3 contact = useSurface ? other.ClosestPoint(center) : other.transform.position;
                 Vector3 offset = Vector3.ProjectOnPlane(contact - transform.position, Vector3.up);
                 float angle = SweepSign * Vector3.SignedAngle(slashDirection, offset, Vector3.up);
-                if (offset.sqrMagnitude <= reach * reach && angle >= start && angle <= end && hitThisSwing.Add(target))
-                    target.ReceiveDamage(attackDamage, transform.position);
+                if (offset.sqrMagnitude > reach * reach || angle < start || angle > end || !hitThisSwing.Add(target))
+                    continue;
+                if (DealsBasicDamage(target, attackDamage, transform.position)) RestoreManaOnBasicHit();
             }
         }
 

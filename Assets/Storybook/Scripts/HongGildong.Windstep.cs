@@ -28,14 +28,13 @@ namespace Storybook
 
         void UpdateWindstep(bool acceptInput)
         {
-            if (acceptInput && !IsCastingSwordTyphoon && windstepInput.WasPressedThisFrame() && !IsWindstepActive && WindstepCooldownRemaining <= 0f)
+            if (acceptInput && !IsCastingSwordTyphoon && windstepInput.WasPressedThisFrame() && !IsWindstepActive &&
+                WindstepCooldownRemaining <= 0f && TrySpendSkillMana(HudSkill.Windstep, windstepManaCost))
             {
                 double now = Time.timeAsDouble;
                 windstepEndsAt = now + windstepDuration;
                 windstepReadyAt = now + windstepCooldown;
-                if (windstepVisual == null) windstepVisual = WindstepVisual.Create(transform);
-                windstepVisual.Begin();
-                windstepVisualActive = true;
+                BeginWindstepVisual();
             }
 
             if (IsWindstepActive)
@@ -51,6 +50,28 @@ namespace Storybook
             }
 
             RestoreWindstepBodies(false);
+        }
+
+        internal double SuspendForFloorTransition()
+        {
+            double windstepExpiry = windstepEndsAt;
+            enabled = false;
+            return windstepExpiry;
+        }
+
+        internal void ResumeFromFloorTransition(double windstepExpiry)
+        {
+            enabled = true;
+            if (windstepExpiry <= Time.timeAsDouble) return;
+            windstepEndsAt = windstepExpiry;
+            BeginWindstepVisual();
+        }
+
+        void BeginWindstepVisual()
+        {
+            if (windstepVisual == null) windstepVisual = WindstepVisual.Create(transform);
+            windstepVisual.Begin();
+            windstepVisualActive = true;
         }
 
         void IgnoreNearbyMonsterBodies()

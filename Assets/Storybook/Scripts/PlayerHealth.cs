@@ -11,9 +11,12 @@ namespace Storybook
         public float CurrentHP => currentHP;
         public float MaxHP => maxHP;
         public bool IsDead => currentHP <= 0;
+        public int MonsterKillCount { get; private set; }
         public event Action Damaged, Died;
         internal bool ChapterClearProtected { get; set; }
         void Awake() { player=GetComponent<HongGildong>();currentHP=maxHP; }
+        internal void RecordMonsterKill() => MonsterKillCount++;
+
         public bool TryHeal(float amount)
         {
             if (!isActiveAndEnabled || IsDead || currentHP >= maxHP || amount <= 0f ||

@@ -66,6 +66,8 @@ namespace Storybook
                 }
 
             UpdateDiscovery();
+            if (roomIcon != null)
+                roomIcon.fontSize = Mathf.Clamp(Mathf.FloorToInt(tiles[currentRoom].width * .76f), 8, 12);
         }
 
         public bool IsVisible(PalaceDungeonRoom room) => discoveredRooms.Contains(room);
@@ -105,7 +107,7 @@ namespace Storybook
             GUI.matrix = Matrix4x4.Scale(new Vector3(scale, scale, 1f));
 
             var recovery = currentRoom.Recovery;
-            string prompt = recovery != null ? recovery.Prompt : null;
+            string prompt = dungeon.PortalPrompt ?? (recovery != null ? recovery.Prompt : null);
             if (prompt != null)
             {
                 var bounds = new Rect(width * .5f - 155f, height - 150f, 310f, 33f);
@@ -138,7 +140,7 @@ namespace Storybook
         {
             Fill(bounds, Trim);
             Fill(new Rect(bounds.x + 2, bounds.y + 2, bounds.width - 4, bounds.height - 4), Panel);
-            GUI.Label(new Rect(bounds.x, bounds.y + 3, bounds.width, 22), "용궁", label);
+            GUI.Label(new Rect(bounds.x, bounds.y + 3, bounds.width, 22), dungeon.IsBossFloor ? "용왕 구역" : $"용궁 · {dungeon.Floor}구역", label);
 
             foreach (var (first, second, line) in links)
             {
@@ -161,6 +163,7 @@ namespace Storybook
                     PalaceRoomType.Start => "◆",
                     PalaceRoomType.Recovery => room.RewardUsed ? "·" : "+",
                     PalaceRoomType.Boss => "♛",
+                    PalaceRoomType.Portal => "◎",
                     _ => room.Cleared ? "·" : ""
                 };
                 if (tile.width >= 8f && !string.IsNullOrEmpty(icon))

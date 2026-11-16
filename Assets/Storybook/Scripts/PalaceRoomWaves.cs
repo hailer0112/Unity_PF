@@ -10,12 +10,37 @@ namespace Storybook
         [Serializable]
         internal sealed class Settings
         {
-            [SerializeField] MonsterHealth crab, archer, turtle;
+            [SerializeField] MonsterHealth crab, archer, turtle, pufferfish;
+            [SerializeField, Range(1, 2)] int maxPufferfishPerWave = 2;
             [SerializeField] Vector2Int small = new(4, 5), standard = new(6, 7), large = new(8, 9);
             [SerializeField, Min(.1f)] float warningSeconds = .65f;
             [SerializeField] Material warningMaterial;
 
-            internal bool IsConfigured => crab != null && archer != null && turtle != null && warningMaterial != null;
+            internal string ConfigurationError()
+            {
+                string error = PrefabError(crab, nameof(crab)) ?? PrefabError(archer, nameof(archer)) ??
+                    PrefabError(turtle, nameof(turtle)) ?? PrefabError(pufferfish, nameof(pufferfish));
+                if (error != null) return error;
+                if (warningMaterial == null) return "missing wave warning material";
+                if (!ValidRange(small) || !ValidRange(standard) || !ValidRange(large))
+                    return $"invalid wave count ranges (small {small}, standard {standard}, large {large})";
+                return null;
+            }
+
+            static bool ValidRange(Vector2Int range) => range.x >= 1 && range.y >= range.x;
+
+            static string PrefabError(MonsterHealth prefab, string slot)
+            {
+                if (prefab == null) return $"missing {slot} prefab reference";
+                if (!prefab.gameObject.activeSelf || !prefab.enabled)
+                    return $"{slot} prefab '{prefab.name}' or its MonsterHealth is disabled";
+                if (!prefab.TryGetComponent(out CharacterController body) || !body.enabled)
+                    return $"{slot} prefab '{prefab.name}' requires an enabled CharacterController";
+                if (!prefab.TryGetComponent<MonsterCombatAI>(out _))
+                    return $"{slot} prefab '{prefab.name}' is missing MonsterCombatAI";
+                return null;
+            }
+
             internal Material WarningMaterial => warningMaterial;
             internal float WarningSeconds => Mathf.Max(.1f, warningSeconds);
 
@@ -33,14 +58,21 @@ namespace Storybook
                 foreach (MonsterHealth[] wave in waves)
                 {
                     bool hasArcher = false, hasTurtle = false;
-                    int specialists = 0;
+                    int specialists = 0, pufferfishCount = 0;
                     for (int i = 0; i < wave.Length; i++)
                     {
                         wave[i] = crab;
                         // Keep at least half of each wave as regular melee enemies.
                         if (specialists >= wave.Length / 2) continue;
                         int roll = random.Next(100);
-                        if (roll >= 60 && roll < 80 && !hasArcher)
+                        if (roll >= 40 && roll < 60 && pufferfish != null &&
+                            pufferfishCount < Mathf.Clamp(maxPufferfishPerWave, 1, 2))
+                        {
+                            wave[i] = pufferfish;
+                            pufferfishCount++;
+                            specialists++;
+                        }
+                        else if (roll >= 60 && roll < 80 && !hasArcher)
                         {
                             wave[i] = archer;
                             hasArcher = true;
@@ -62,6 +94,7 @@ namespace Storybook
         const float Inset = .55f;
         const float PlayerDistance = 1.65f;
         const float DoorDistance = 1.65f;
+        const float RetryInterval = .3f;
         static readonly int Tint = Shader.PropertyToID("_Color");
 
         readonly PalaceDungeonRoom room;
@@ -73,8 +106,9 @@ namespace Storybook
         readonly List<MeshRenderer> markers = new();
         readonly MaterialPropertyBlock properties = new();
         Mesh markerMesh;
-        int nextWave, retries;
-        float spawnAt;
+        int nextWave;
+        float spawnAt, retryAt;
+        bool reportedBlocked;
 
         internal bool HasPending => nextWave < plan.Length;
 
@@ -109,8 +143,8 @@ namespace Storybook
 
         internal void Begin(List<MonsterHealth> enemies)
         {
-            Reserve();
-            Spawn(enemies);
+            if (TryReserve()) Spawn(enemies);
+            else RetryBlockedWave();
         }
 
         internal void Tick(List<MonsterHealth> enemies)
@@ -122,11 +156,10 @@ namespace Storybook
             }
             if (reserved.Count == 0)
             {
-                Reserve();
-                if (reserved.Count == 0)
+                if (Time.time < retryAt) return;
+                if (!TryReserve())
                 {
-                    // A custom room with no usable slots must still be possible to clear.
-                    nextWave++;
+                    RetryBlockedWave();
                     return;
                 }
 
@@ -137,30 +170,44 @@ namespace Storybook
 
             TintWarnings(1f - (spawnAt - Time.time) / settings.WarningSeconds);
             if (Time.time < spawnAt) return;
-            int removed = reserved.RemoveAll(slot => !IsFree(slot.prefab, slot.point));
-            if (removed > 0 && retries++ < 2)
+            Physics.SyncTransforms();
+            if (reserved.Exists(slot => !IsFree(slot.prefab, slot.point)))
             {
-                HideWarnings();
-                reserved.Clear();
+                RetryBlockedWave();
                 return;
             }
 
-            // Never spawn on a player who follows the warning. After two re-plans,
-            // finish with the slots that remained safe so the room cannot soft-lock.
             Spawn(enemies);
             HideWarnings();
         }
 
-        void Reserve()
+        bool TryReserve()
         {
+            Physics.SyncTransforms();
             foreach (MonsterHealth prefab in plan[nextWave])
-                foreach (Vector3 site in sites)
-                {
-                    if (reserved.Exists(slot => DistanceSquared(slot.point, site) < Spacing * Spacing - .0001f) ||
-                        !IsFree(prefab, site)) continue;
-                    reserved.Add((prefab, site));
-                    break;
-                }
+            {
+                int index = sites.FindIndex(site =>
+                    !reserved.Exists(slot => DistanceSquared(slot.point, site) < Spacing * Spacing - .0001f) &&
+                    IsFree(prefab, site));
+                if (index < 0) return false;
+                reserved.Add((prefab, sites[index]));
+            }
+            return true;
+        }
+
+        void RetryBlockedWave()
+        {
+            if (!reportedBlocked)
+            {
+                Debug.LogError($"[PalaceRoomWaves] {room.transform.parent?.name}/{room.name}: wave " +
+                    $"{nextWave + 1}/{plan.Length} could not reserve all {plan[nextWave].Length} spawn positions " +
+                    $"from {sites.Count} candidates. Check room colliders and clearance around the player. " +
+                    "The wave remains pending and will retry.", room);
+                reportedBlocked = true;
+            }
+            HideWarnings();
+            reserved.Clear();
+            retryAt = Time.time + RetryInterval;
         }
 
         bool IsFree(MonsterHealth prefab, Vector3 ground)
@@ -182,6 +229,7 @@ namespace Storybook
                 monster.GetComponent<MonsterCombatAI>().ActivateInRoom(room.EntryBounds);
             }
             nextWave++;
+            reportedBlocked = false;
             reserved.Clear();
         }
 

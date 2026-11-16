@@ -14,15 +14,19 @@ namespace Storybook
         static readonly Color LabelColor = new Color(.90f, .96f, 1f);
         const float IconSize = 68f;
         const float SlotSpacing = 77f;
+        const float BarHeight = 78f;
+        const float BarGap = 6f;
+        static readonly Color ManaWarningColor = new Color(1f, .62f, .49f);
 
         readonly Image[] cooldownMasks = new Image[Keys.Length];
         readonly Text[] cooldownLabels = new Text[Keys.Length];
+        readonly Text[] keyLabels = new Text[Keys.Length];
         HongGildong player;
         PlayerHealth health;
         Canvas canvas;
-        RectTransform healthFill;
-        Text healthLabel, windstepActive;
-        Font font;
+        RectTransform healthFill, manaFill;
+        Text healthLabel, manaLabel, windstepActive;
+        Font font, noticeFont;
 
         void Start()
         {
@@ -39,6 +43,7 @@ namespace Storybook
             }
 
             font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            noticeFont = Font.CreateDynamicFontFromOSFont(new[] { "Malgun Gothic", "Noto Sans CJK KR" }, 12);
             var root = new GameObject("Hong Gildong HUD", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler));
             root.transform.SetParent(null);
             UnityEngine.SceneManagement.SceneManager.MoveGameObjectToScene(root, gameObject.scene);
@@ -50,30 +55,37 @@ namespace Storybook
             scaler.referenceResolution = new Vector2(1280f, 720f);
             scaler.matchWidthOrHeight = .5f;
 
-            BuildHealth(healthFrame);
+            (healthFill, healthLabel) = BuildResourceBar("HP", healthFrame, -18f,
+                new Color(.73f, .17f, .24f), new Color(1f, .41f, .44f, .57f));
+            (manaFill, manaLabel) = BuildResourceBar("MP", healthFrame, -18f - BarHeight - BarGap,
+                new Color(.065f, .37f, .75f), new Color(.30f, .80f, 1f, .68f),
+                Resources.Load<Sprite>("ManaEmblem"));
             BuildSkills(icons);
             Update();
         }
 
-        void BuildHealth(Sprite frame)
+        (RectTransform fill, Text label) BuildResourceBar(string resource, Sprite frame, float y,
+            Color fillColor, Color highlightColor, Sprite emblem = null)
         {
-            var panel = MakeImage("HP frame", canvas.transform, frame, Color.white);
-            Pin(panel.rectTransform, Vector2.up, Vector2.up, new Vector2(20f, -18f), new Vector2(232f, 78f));
+            var panel = MakeImage(resource + " frame", canvas.transform, frame, Color.white);
+            Pin(panel.rectTransform, Vector2.up, Vector2.up, new Vector2(20f, y), new Vector2(232f, BarHeight));
+            if (emblem != null)
+                Stretch(MakeImage("Mana emblem", panel.transform, emblem, Color.white).rectTransform);
 
-            var track = MakeRect("HP fill track", panel.transform);
+            var track = MakeRect(resource + " fill track", panel.transform);
             track.anchorMin = new Vector2(.264f, .27f);
             track.anchorMax = new Vector2(.895f, .604f);
             track.offsetMin = track.offsetMax = Vector2.zero;
 
-            var fill = MakeImage("HP fill", track, null, new Color(.73f, .17f, .24f));
-            healthFill = fill.rectTransform;
-            Stretch(healthFill);
-            var gleam = MakeImage("HP upper highlight", healthFill, null, new Color(1f, .41f, .44f, .57f));
+            var fill = MakeImage(resource + " fill", track, null, fillColor).rectTransform;
+            Stretch(fill);
+            var gleam = MakeImage(resource + " upper highlight", fill, null, highlightColor);
             gleam.rectTransform.anchorMin = new Vector2(0f, .73f);
             gleam.rectTransform.anchorMax = Vector2.one;
             gleam.rectTransform.offsetMin = gleam.rectTransform.offsetMax = Vector2.zero;
-            healthLabel = MakeLabel("Current HP / Max HP", track, 13, Color.white);
-            Stretch(healthLabel.rectTransform);
+            var label = MakeLabel($"Current {resource} / Max {resource}", track, 13, Color.white);
+            Stretch(label.rectTransform);
+            return (fill, label);
         }
 
         void BuildSkills(Sprite[] icons)
@@ -107,6 +119,7 @@ namespace Storybook
                 var key = MakeLabel("Keyboard shortcut", tile, i == (int)HudSkill.Dash ? 12 : 15, LabelColor);
                 Pin(key.rectTransform, Vector2.zero, Vector2.zero, Vector2.zero, new Vector2(IconSize, 19f));
                 key.text = Keys[i];
+                keyLabels[i] = key;
 
                 if (i != (int)HudSkill.Windstep) continue;
                 windstepActive = MakeLabel("Windstep duration", art.transform, 11, new Color(.48f, 1f, .87f));
@@ -119,8 +132,8 @@ namespace Storybook
         {
             if (canvas == null) return;
 
-            healthFill.anchorMax = new Vector2(Mathf.Clamp01(health.CurrentHP / Mathf.Max(1f, health.MaxHP)), 1f);
-            healthLabel.text = $"{Mathf.CeilToInt(health.CurrentHP)} / {Mathf.CeilToInt(health.MaxHP)}";
+            SetResourceBar(healthFill, healthLabel, health.CurrentHP, health.MaxHP, true);
+            SetResourceBar(manaFill, manaLabel, player.CurrentMP, player.MaxMP, false);
 
             for (int i = 0; i < cooldownMasks.Length; i++)
             {
@@ -128,9 +141,25 @@ namespace Storybook
                 cooldownMasks[i].enabled = remaining > 0f;
                 cooldownMasks[i].fillAmount = duration > 0f ? Mathf.Clamp01(remaining / duration) : 0f;
                 cooldownLabels[i].text = remaining > 0f ? Seconds(remaining) : string.Empty;
+
+                if (i == (int)HudSkill.Dash) continue;
+                bool lowMana = player.HasInsufficientManaFeedback((HudSkill)i);
+                var key = keyLabels[i];
+                key.font = lowMana && noticeFont != null ? noticeFont : font;
+                key.fontSize = lowMana ? 12 : 15;
+                key.color = lowMana ? ManaWarningColor : LabelColor;
+                key.text = lowMana ? noticeFont != null ? "MP 부족" : "LOW MP" : Keys[i];
             }
 
             windstepActive.text = player.IsWindstepActive ? $"ON {Seconds(player.WindstepTimeRemaining)}" : string.Empty;
+        }
+
+        static void SetResourceBar(RectTransform fill, Text label, float current, float maximum, bool roundUp)
+        {
+            fill.anchorMax = new Vector2(Mathf.Clamp01(current / Mathf.Max(1f, maximum)), 1f);
+            int displayCurrent = roundUp ? Mathf.CeilToInt(current) : Mathf.FloorToInt(current);
+            int displayMaximum = roundUp ? Mathf.CeilToInt(maximum) : Mathf.FloorToInt(maximum);
+            label.text = $"{displayCurrent} / {displayMaximum}";
         }
 
         static string Seconds(float time) => time >= 1f
@@ -186,6 +215,7 @@ namespace Storybook
         void OnDestroy()
         {
             if (canvas != null) Destroy(canvas.gameObject);
+            if (noticeFont != null) Destroy(noticeFont);
         }
     }
 }

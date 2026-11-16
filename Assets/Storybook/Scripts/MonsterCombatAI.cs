@@ -30,6 +30,7 @@ namespace Storybook
 
         protected bool AttackReady => Time.time >= nextAttack;
         protected float AttackElapsed => Time.time - attackStarted;
+        protected virtual bool HasCommittedAction => false;
 
         protected virtual void Awake()
         {
@@ -42,9 +43,9 @@ namespace Storybook
             if (target == null) target = FindAnyObjectByType<PlayerHealth>();
         }
 
-        protected void OnEnable() => health.Died += OnDeath;
+        protected virtual void OnEnable() => health.Died += OnDeath;
 
-        protected void OnDisable()
+        protected virtual void OnDisable()
         {
             health.Died -= OnDeath;
             ResetTrackingAndAction(health.IsDead);
@@ -53,7 +54,7 @@ namespace Storybook
         protected void Update()
         {
             if (health.IsDead) return;
-            if (target == null || !target.isActiveAndEnabled || target.IsDead)
+            if (!HasCommittedAction && (target == null || !target.isActiveAndEnabled || target.IsDead))
             {
                 ResetTrackingAndAction(false);
                 return;

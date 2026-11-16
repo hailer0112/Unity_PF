@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 namespace Storybook
 {
+    public enum MonsterDeathCause { PlayerKilled, SelfDestruct }
+
     public sealed class MonsterHealth : AttackTarget
     {
         [SerializeField, Min(1)] float maxHP = 100;
@@ -15,6 +17,8 @@ namespace Storybook
         public override bool CanTakeDamage => base.CanTakeDamage && !IsDead;
         public event Action Damaged;
         public event Action Died;
+        public event Action<MonsterDeathCause> Defeated;
+        public MonsterDeathCause? DeathCause { get; private set; }
         TurtleGuardAI guard;
 
         void Awake()
@@ -32,7 +36,22 @@ namespace Storybook
             if (!CanTakeDamage || damage <= 0 || float.IsNaN(damage) || float.IsInfinity(damage)) return;
             currentHP = Mathf.Max(0, currentHP - damage);
             if (!IsDead) { Damaged?.Invoke(); return; }
+            FinishDeath(MonsterDeathCause.PlayerKilled);
+        }
+
+        internal bool TrySelfDestruct()
+        {
+            if (!CanTakeDamage) return false;
+            FinishDeath(MonsterDeathCause.SelfDestruct);
+            return true;
+        }
+
+        void FinishDeath(MonsterDeathCause cause)
+        {
+            currentHP = 0f;
+            DeathCause = cause;
             foreach (var collider in GetComponentsInChildren<Collider>()) collider.enabled = false;
+            Defeated?.Invoke(cause);
             Died?.Invoke();
             if (despawnOnDeath) StartCoroutine(DisableAfterDeath());
         }

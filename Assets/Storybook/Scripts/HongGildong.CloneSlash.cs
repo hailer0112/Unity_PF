@@ -47,6 +47,8 @@ namespace Storybook
                 return false;
             }
 
+            if (!TrySpendSkillMana(HudSkill.CloneSlash, cloneSlashManaCost)) return false;
+
             Vector3 direction = Vector3.ProjectOnPlane(ground - transform.position, Vector3.up);
             cloneSlashDirection = direction.sqrMagnitude > .0025f ? direction.normalized : facing.normalized;
             cloneSlashOrigin = transform.position;

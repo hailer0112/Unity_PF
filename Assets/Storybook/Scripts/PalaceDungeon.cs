@@ -1,105 +1,226 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Storybook
 {
     [DisallowMultipleComponent]
     public sealed class PalaceDungeon : MonoBehaviour
     {
+        const int LastRegularFloor = 3;
+        // Well beyond one floor's grid. Any world-space effects still expiring stay at their original position.
+        const float FloorSpacing = 1280f;
+        static readonly Vector2Int[] Directions = { Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left };
+
         [SerializeField] HongGildong player;
         [SerializeField] ClearingCamera followCamera;
         [SerializeField] PalaceDungeonRoom startRoom, recoveryRoom, bossRoom;
         [SerializeField] DragonKingBossHud bossHud;
         [SerializeField] PalaceDungeonRoom[] combatRooms = new PalaceDungeonRoom[2];
         [SerializeField] GameObject passage;
+        [SerializeField, Min(1f), Tooltip("Distance between the east and west doorways of neighboring rooms.")]
+        float eastWestPassageLength = 4.5f;
+        [SerializeField, Min(1f), Tooltip("Distance between the north and south doorways of neighboring rooms.")]
+        float northSouthPassageLength = 5f;
+        [SerializeField] GameObject floorPortalEffect;
         [SerializeField] PalaceRoomWaves.Settings encounterWaves = new();
-        static readonly Vector2 GridSpacing = new(20f, 19f);
-        [SerializeField, Min(1)] int minimumCombatRooms = 3;
-        [SerializeField, Min(1)] int maximumCombatRooms = 5;
-        [SerializeField, Min(2)] int minimumBossDepth = 3;
+        [SerializeField, Min(3)] int minimumCombatRooms = 5;
+        [SerializeField, Min(3)] int maximumCombatRooms = 7;
         [SerializeField, Range(0f, 1f)] float recoveryChance = .5f;
         [SerializeField, Range(.01f, 1f)] float recoveryAmount = .3f;
         [SerializeField] bool useFixedSeed;
         [SerializeField] int fixedSeed = 42;
 
-        static readonly Vector2Int[] Directions = { Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left };
-        static int? previousSeed;
-        static string previousLayout;
         readonly List<PalaceDungeonRoom> rooms = new();
+        readonly HashSet<string> floorLayouts = new();
+        PalaceDungeonMinimap minimap;
+        PlayerHealth health;
+        Transform floorRoot;
+        PalaceDungeonRoom portalRoom;
+        SphereCollider portalRange;
+        GameObject portalVisual;
+        int runSeed;
+
         public IReadOnlyList<PalaceDungeonRoom> Rooms => rooms;
         public PalaceDungeonRoom Current { get; private set; }
         public PalaceDungeonGraph Layout { get; private set; }
         public int Seed { get; private set; }
+        public int Floor { get; private set; } = 1;
+        public bool IsBossFloor => Floor > LastRegularFloor;
+        internal string PortalPrompt => CanUsePortal() ? "F - 다음 구역으로 이동" : null;
 
         internal static Vector2Int Direction(int side) => Directions[side];
 
+        void Awake() => bossRoom.gameObject.SetActive(false);
+
         void Start()
         {
-            Generate();
-            gameObject.AddComponent<PalaceDungeonMinimap>().Initialize(this);
+            health = player.GetComponent<PlayerHealth>();
+            runSeed = useFixedSeed ? fixedSeed : Guid.NewGuid().GetHashCode();
+            minimap = gameObject.AddComponent<PalaceDungeonMinimap>();
+            GenerateFloor();
         }
 
-        void Generate()
+        void GenerateFloor()
         {
-            Seed = useFixedSeed ? fixedSeed : System.Guid.NewGuid().GetHashCode();
-            Layout = PalaceDungeonGraph.Generate(Seed, minimumCombatRooms, maximumCombatRooms, minimumBossDepth, recoveryChance, combatRooms.Length);
-            if (!useFixedSeed)
+            Seed = unchecked(runSeed + (Floor - 1) * 486187739);
+            if (IsBossFloor)
             {
-                // Scene reloads reset run state. Avoid an identical layout on consecutive departures as well.
-                string signature = Signature(Layout);
-                for (int attempt = 0; attempt < 8 && (Seed == previousSeed || signature == previousLayout); attempt++)
+                GenerateBossFloor();
+                return;
+            }
+
+            for (int attempt = 0; ; attempt++)
+            {
+                Layout = PalaceDungeonGraph.GenerateFloor(Seed, minimumCombatRooms, maximumCombatRooms,
+                    recoveryChance, combatRooms.Length);
+                if (floorLayouts.Add(Signature(Layout)) || attempt >= 8) break;
+                Seed = unchecked(Seed + 1);
+            }
+
+            CreateFloorRoot();
+            // The regular room prefabs share the same shell and doorway positions.
+            Vector2 gridSpacing = new(
+                startRoom.DoorwayCenter(1).x - startRoom.DoorwayCenter(3).x + eastWestPassageLength,
+                startRoom.DoorwayCenter(0).z - startRoom.DoorwayCenter(2).z + northSouthPassageLength);
+            Vector3 origin = transform.position + Vector3.right * ((Floor - 1) * FloorSpacing);
+            try
+            {
+                foreach (var node in Layout.Rooms)
                 {
-                    Seed = unchecked(Seed + 1);
-                    Layout = PalaceDungeonGraph.Generate(Seed, minimumCombatRooms, maximumCombatRooms, minimumBossDepth, recoveryChance, combatRooms.Length);
-                    signature = Signature(Layout);
+                    PalaceDungeonRoom prefab = node.Type switch
+                    {
+                        PalaceRoomType.Combat => combatRooms[node.Template],
+                        PalaceRoomType.Recovery => recoveryRoom,
+                        _ => startRoom
+                    };
+                    Vector3 position = origin + new Vector3(node.Grid.x * gridSpacing.x, 0f, node.Grid.y * gridSpacing.y);
+                    AddRoom(prefab, node, position);
                 }
-                previousSeed = Seed;
-                previousLayout = signature;
-            }
-            Debug.Log($"Palace dungeon seed {Seed}, {Layout.Rooms.Count} rooms.", this);
 
-            var health = player.GetComponent<PlayerHealth>();
-            Vector3 origin = bossRoom.transform.position;
-            foreach (var node in Layout.Rooms)
+                foreach (var room in rooms)
+                    foreach (var neighbor in room.Layout.Neighbors)
+                        if (neighbor.Id > room.Layout.Id) Connect(room, rooms[neighbor.Id]);
+
+                portalRoom = rooms[Layout.Portal.Id];
+                CreatePortal();
+            }
+            catch (Exception)
             {
-                PalaceDungeonRoom room = node.Type switch
-                {
-                    PalaceRoomType.Start => Instantiate(startRoom, Position(node), Quaternion.identity, transform),
-                    PalaceRoomType.Combat => Instantiate(combatRooms[node.Template], Position(node), Quaternion.identity, transform),
-                    PalaceRoomType.Recovery => Instantiate(recoveryRoom, Position(node), Quaternion.identity, transform),
-                    _ => bossRoom
-                };
-                room.name = $"{node.Id:00} {node.Type} ({node.Grid.x}, {node.Grid.y})";
-                room.Initialize(node, health, recoveryAmount, encounterWaves, Seed);
-                rooms.Add(room);
+                Debug.LogError($"Palace floor {Floor}, seed {Seed}: created {rooms.Count}/{Layout.Rooms.Count} rooms " +
+                    $"before generation failed. Planned: {Layout.RoomCounts()}.", this);
+                throw;
             }
 
-            foreach (var room in rooms)
-                foreach (var neighbor in room.Layout.Neighbors)
-                    if (neighbor.Id > room.Layout.Id) Connect(room, rooms[neighbor.Id]);
-
+            Debug.Log($"Palace floor {Floor}, seed {Seed}: {rooms.Count} rooms. {Layout.RoomCounts()}.", this);
             Bounds envelope = new(rooms[0].transform.position, Vector3.zero);
             foreach (var room in rooms) envelope.Encapsulate(room.transform.position);
-            envelope.Expand(new Vector3(GridSpacing.x, 0f, GridSpacing.y));
-            player.PlaceInDungeon(rooms[0].transform.position,
-                Rect.MinMaxRect(envelope.min.x, envelope.min.z, envelope.max.x, envelope.max.z));
-            Physics.SyncTransforms();
-            Enter(rooms[0], true);
+            envelope.Expand(new Vector3(gridSpacing.x, 0f, gridSpacing.y));
+            PlacePlayer(rooms[0], rooms[0].transform.position, envelope);
+        }
 
-            Vector3 Position(PalaceDungeonGraph.Room node)
+        void GenerateBossFloor()
+        {
+            Layout = PalaceDungeonGraph.BossArena();
+            CreateFloorRoot();
+            float northDoorOffset = startRoom.DoorwayCenter(0).z - startRoom.transform.position.z;
+            Vector3 approach = bossRoom.transform.position;
+            approach.z = bossRoom.DoorwayCenter(2).z - northDoorOffset - northSouthPassageLength;
+            PalaceDungeonRoom preparationRoom = AddRoom(startRoom, Layout.Start, approach);
+            bossRoom.Initialize(Layout.Boss, health, recoveryAmount, encounterWaves, Seed);
+            bossRoom.gameObject.SetActive(true);
+            rooms.Add(bossRoom);
+            Connect(preparationRoom, bossRoom);
+
+            Bounds envelope = preparationRoom.EntryBounds;
+            envelope.Encapsulate(bossRoom.EntryBounds);
+            PlacePlayer(preparationRoom, approach, envelope);
+        }
+
+        void CreateFloorRoot()
+        {
+            floorRoot = new GameObject($"Palace Floor {Floor}").transform;
+            floorRoot.SetParent(transform, false);
+        }
+
+        PalaceDungeonRoom AddRoom(PalaceDungeonRoom prefab, PalaceDungeonGraph.Room node, Vector3 position)
+        {
+            PalaceDungeonRoom room = Instantiate(prefab, position, Quaternion.identity, floorRoot);
+            room.name = $"{node.Id:00} {node.Type} ({node.Grid.x}, {node.Grid.y})";
+            rooms.Add(room);
+            room.Initialize(node, health, recoveryAmount, encounterWaves, Seed);
+            return room;
+        }
+
+        void PlacePlayer(PalaceDungeonRoom room, Vector3 position, Bounds bounds)
+        {
+            player.PlaceInDungeon(position, Rect.MinMaxRect(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z));
+            Physics.SyncTransforms();
+            Enter(room, true);
+            minimap.Initialize(this);
+        }
+
+        void CreatePortal()
+        {
+            var interaction = new GameObject("Floor portal interaction", typeof(SphereCollider));
+            interaction.transform.SetParent(portalRoom.transform, false);
+            portalRange = interaction.GetComponent<SphereCollider>();
+            portalRange.isTrigger = true;
+            portalRange.center = Vector3.up * .55f;
+            portalRange.radius = 1.35f;
+            if (floorPortalEffect != null)
+                portalVisual = Instantiate(floorPortalEffect, interaction.transform);
+        }
+
+        bool CanUsePortal()
+        {
+            if (!isActiveAndEnabled || portalRange == null || Current != portalRoom || Current.InCombat ||
+                player == null || !player.isActiveAndEnabled || health.IsDead || StorybookTransition.IsBusy)
+                return false;
+
+            Vector3 playerCenter = player.transform.position + Vector3.up * .55f;
+            return (portalRange.ClosestPoint(playerCenter) - playerCenter).sqrMagnitude < .0001f;
+        }
+
+        void Update()
+        {
+            if (Keyboard.current?.fKey.wasPressedThisFrame == true && CanUsePortal())
+                StorybookTransition.TryBeginFloor(player, IntensifyPortal, AdvanceFloor);
+        }
+
+        void IntensifyPortal()
+        {
+            if (portalVisual == null || !portalVisual.activeInHierarchy) return;
+            portalVisual.transform.localScale *= 1.12f;
+            foreach (var particles in portalVisual.GetComponentsInChildren<ParticleSystem>())
             {
-                Vector2Int delta = node.Grid - Layout.Boss.Grid;
-                return origin + new Vector3(delta.x * GridSpacing.x, 0f, delta.y * GridSpacing.y);
+                var main = particles.main;
+                main.simulationSpeed *= 1.6f;
             }
+        }
+
+        void AdvanceFloor()
+        {
+            Current = null;
+            portalRoom = null;
+            portalRange = null;
+            portalVisual = null;
+            floorRoot.gameObject.SetActive(false);
+            Destroy(floorRoot.gameObject);
+            floorRoot = null;
+            rooms.Clear();
+            Floor++;
+            GenerateFloor();
         }
 
         void Connect(PalaceDungeonRoom a, PalaceDungeonRoom b)
         {
             Vector2Int direction = b.Layout.Grid - a.Layout.Grid;
-            int side = System.Array.IndexOf(Directions, direction);
+            int side = Array.IndexOf(Directions, direction);
             Vector3 first = a.DoorwayCenter(side);
             Vector3 last = b.DoorwayCenter((side + 2) % Directions.Length);
-            var link = Instantiate(passage, (first + last) * .5f, Quaternion.LookRotation(last - first), transform);
+            var link = Instantiate(passage, (first + last) * .5f, Quaternion.LookRotation(last - first), floorRoot);
             link.name = $"Passage {a.Layout.Id:00}–{b.Layout.Id:00}";
             link.transform.localScale = new Vector3(1f, 1f, Vector3.Distance(first, last) + .12f);
         }
@@ -110,8 +231,6 @@ namespace Storybook
             Current.RefreshClear();
             if (Current.InCombat || !player.isActiveAndEnabled) return;
 
-            // Only an adjacent room can receive the player, and only after the player is
-            // clear of the door frame. Travel through a corridor keeps the last room selected.
             foreach (var neighbor in Current.Layout.Neighbors)
             {
                 var next = rooms[neighbor.Id];
@@ -140,7 +259,7 @@ namespace Storybook
                         string b = $"{neighbor.Grid}/{neighbor.Type}";
                         nodes.Add(string.CompareOrdinal(a, b) < 0 ? a + b : b + a);
                     }
-            nodes.Sort(System.StringComparer.Ordinal);
+            nodes.Sort(StringComparer.Ordinal);
             return string.Join("|", nodes);
         }
     }

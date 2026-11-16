@@ -27,6 +27,39 @@ namespace Storybook
             return true;
         }
 
+        internal static bool TryBeginFloor(HongGildong player, System.Action emphasizePortal, System.Action changeFloor)
+        {
+            if (IsBusy || player == null || !player.isActiveAndEnabled) return false;
+            var root = new GameObject("Palace floor transition");
+            active = root.AddComponent<StorybookTransition>();
+            active.StartCoroutine(active.TravelFloor(player, emphasizePortal, changeFloor));
+            return true;
+        }
+
+        IEnumerator TravelFloor(HongGildong player, System.Action emphasizePortal, System.Action changeFloor)
+        {
+            var health = player.GetComponent<PlayerHealth>();
+            bool restoreProtection = health.ChapterClearProtected;
+            double windstepExpiry = player.SuspendForFloorTransition();
+            health.ChapterClearProtected = true;
+            try
+            {
+                CreateOverlay(false);
+                emphasizePortal();
+                yield return new WaitForSecondsRealtime(.18f);
+                yield return Fade(1f, .32f);
+                changeFloor();
+                yield return null;
+                yield return Fade(0f, .35f);
+            }
+            finally
+            {
+                if (health != null) health.ChapterClearProtected = restoreProtection;
+                if (player != null && health != null && !health.IsDead) player.ResumeFromFloorTransition(windstepExpiry);
+                Destroy(gameObject);
+            }
+        }
+
         IEnumerator Travel(string destination, Reason reason, HongGildong player, GameObject effect)
         {
             var sourceHealth = player != null ? player.GetComponent<PlayerHealth>() : null;
@@ -65,6 +98,7 @@ namespace Storybook
                         if (arrived != null) break;
                     }
                     if (arrived == null) return;
+                    if (reason == Reason.Departure && destination == PalaceScene) arrived.RefillManaForNewRun();
                     arrivalControls = arrived.enabled;
                     arrived.enabled = false;
                     arrivalHealth = arrived.GetComponent<PlayerHealth>();

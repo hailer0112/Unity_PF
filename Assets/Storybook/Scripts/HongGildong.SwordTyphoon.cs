@@ -33,6 +33,8 @@ namespace Storybook
                 Attacking || SwordTyphoonCooldownRemaining > 0f || !TryGroundPoint(cursor, out Vector3 ground))
                 return false;
 
+            if (!TrySpendSkillMana(HudSkill.SwordTyphoon, swordTyphoonManaCost)) return false;
+
             Vector3 origin = transform.position;
             origin.y = ground.y;
             Vector3 target = InsideClearing(origin + Vector3.ClampMagnitude(ground - origin, swordTyphoonCastRange));
