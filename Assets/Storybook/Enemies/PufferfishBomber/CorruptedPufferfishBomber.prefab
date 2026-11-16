@@ -72,6 +72,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5af48951c932234e9e3ba66d415dd46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.MonsterHealth
+  minimumFragments: 2
+  maximumFragments: 6
   maxHP: 20
   currentHP: 0
   deathDelay: 0.55

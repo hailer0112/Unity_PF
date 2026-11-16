@@ -1,0 +1,2355 @@
+fileFormatVersion: 2
+guid: 0fa72a909a23ed64584bdc3b3defc0fe
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3754983330974516821
+    second: PurificationFountain_0
+  - first:
+      213: -7221506670691314735
+    second: PurificationFountain_1
+  - first:
+      213: 9158150008795897289
+    second: PurificationFountain_2
+  - first:
+      213: -9098837187817142091
+    second: PurificationFountain_3
+  - first:
+      213: -7320509362428359549
+    second: PurificationFountain_4
+  - first:
+      213: 1120363805481730053
+    second: PurificationFountain_5
+  - first:
+      213: 7699475088379215678
+    second: PurificationFountain_6
+  - first:
+      213: 4155657938397312789
+    second: PurificationFountain_7
+  - first:
+      213: 8737400849268449251
+    second: PurificationFountain_8
+  - first:
+      213: -4880058003442381042
+    second: PurificationFountain_9
+  - first:
+      213: -6146517096346918937
+    second: PurificationFountain_10
+  - first:
+      213: 7590756290385313377
+    second: PurificationFountain_11
+  - first:
+      213: -4716483653366667270
+    second: PurificationFountain_12
+  - first:
+      213: -2630086963304315322
+    second: PurificationFountain_13
+  - first:
+      213: -1102357987294667769
+    second: PurificationFountain_14
+  - first:
+      213: 4905738013865847620
+    second: PurificationFountain_15
+  - first:
+      213: -3087447556028768644
+    second: PurificationFountain_16
+  - first:
+      213: -3243197652192511153
+    second: PurificationFountain_17
+  - first:
+      213: -228426858098587485
+    second: PurificationFountain_18
+  - first:
+      213: -4128085465929902083
+    second: PurificationFountain_19
+  - first:
+      213: 6780294961152322693
+    second: PurificationFountain_20
+  - first:
+      213: -1259587697373562661
+    second: PurificationFountain_21
+  - first:
+      213: -6608118708947993207
+    second: PurificationFountain_22
+  - first:
+      213: 6856340688682006835
+    second: PurificationFountain_23
+  - first:
+      213: 3697386240082758696
+    second: PurificationFountain_24
+  - first:
+      213: 7785575015629532407
+    second: PurificationFountain_25
+  - first:
+      213: 5506455314262121019
+    second: PurificationFountain_26
+  - first:
+      213: 2919474691238819672
+    second: PurificationFountain_27
+  - first:
+      213: 5890467672864301346
+    second: PurificationFountain_28
+  - first:
+      213: -1706776885650046771
+    second: PurificationFountain_29
+  - first:
+      213: -1259477188508176802
+    second: PurificationFountain_30
+  - first:
+      213: -3100540530237154830
+    second: PurificationFountain_31
+  - first:
+      213: -5978911603293094921
+    second: PurificationFountain_32
+  - first:
+      213: -1627221689893464755
+    second: PurificationFountain_33
+  - first:
+      213: 1498649098857938904
+    second: PurificationFountain_34
+  - first:
+      213: -4123071882819655591
+    second: PurificationFountain_35
+  - first:
+      213: -2195222752371082077
+    second: PurificationFountain_36
+  - first:
+      213: 6126453062887328196
+    second: PurificationFountain_37
+  - first:
+      213: -4275147687317530141
+    second: PurificationFountain_38
+  - first:
+      213: -5447226766488976008
+    second: PurificationFountain_39
+  - first:
+      213: 5823873948506204899
+    second: PurificationFountain_40
+  - first:
+      213: -6192944243392951647
+    second: PurificationFountain_41
+  - first:
+      213: 564837096363500698
+    second: PurificationFountain_42
+  - first:
+      213: 8888687413172133755
+    second: PurificationFountain_43
+  - first:
+      213: 226758254211947811
+    second: PurificationFountain_44
+  - first:
+      213: 1759328173428425463
+    second: PurificationFountain_45
+  - first:
+      213: -9050281759621654241
+    second: PurificationFountain_46
+  - first:
+      213: 8704340180033825958
+    second: PurificationFountain_47
+  - first:
+      213: 2250184180849074667
+    second: PurificationFountain_48
+  - first:
+      213: 3280381270866610563
+    second: PurificationFountain_49
+  - first:
+      213: -3935587079938201504
+    second: PurificationFountain_50
+  - first:
+      213: 8461746314819309300
+    second: PurificationFountain_51
+  - first:
+      213: 2607547794017162261
+    second: PurificationFountain_52
+  - first:
+      213: 7811548403050087858
+    second: PurificationFountain_53
+  - first:
+      213: 6017363174811081070
+    second: PurificationFountain_54
+  - first:
+      213: -1198888185264141389
+    second: PurificationFountain_55
+  - first:
+      213: 8288327639957899153
+    second: PurificationFountain_56
+  - first:
+      213: 3707162700180718780
+    second: PurificationFountain_57
+  - first:
+      213: 675419807242175672
+    second: PurificationFountain_58
+  - first:
+      213: -3200785373543940277
+    second: PurificationFountain_59
+  - first:
+      213: 1809747846671419966
+    second: PurificationFountain_60
+  - first:
+      213: -7172811762099533455
+    second: PurificationFountain_61
+  - first:
+      213: 8019704360382631509
+    second: PurificationFountain_62
+  - first:
+      213: 6172670106865037685
+    second: PurificationFountain_63
+  - first:
+      213: 5849552711832867267
+    second: PurificationFountain_64
+  - first:
+      213: -1938943355329477577
+    second: PurificationFountain_65
+  - first:
+      213: 5676891687651497996
+    second: PurificationFountain_66
+  - first:
+      213: -8762853473809404482
+    second: PurificationFountain_67
+  - first:
+      213: -8545664077476130109
+    second: PurificationFountain_68
+  - first:
+      213: -1191703791579894997
+    second: PurificationFountain_69
+  - first:
+      213: -5740393356284832923
+    second: PurificationFountain_70
+  - first:
+      213: -2469669469092145222
+    second: PurificationFountain_71
+  - first:
+      213: -6103999920571117922
+    second: PurificationFountain_72
+  - first:
+      213: -1645832312267366011
+    second: PurificationFountain_73
+  - first:
+      213: 7085443488589577293
+    second: PurificationFountain_74
+  - first:
+      213: 3610573408947896538
+    second: PurificationFountain_75
+  - first:
+      213: -1430983355706818018
+    second: PurificationFountain_76
+  - first:
+      213: -8851403190226897559
+    second: PurificationFountain_77
+  - first:
+      213: 3393516630117928346
+    second: PurificationFountain_78
+  - first:
+      213: -2618386217460528792
+    second: PurificationFountain_79
+  - first:
+      213: -6301984507093942560
+    second: PurificationFountain_80
+  - first:
+      213: -6170562902168885859
+    second: PurificationFountain_81
+  - first:
+      213: 8107303669314787484
+    second: PurificationFountain_82
+  - first:
+      213: 6161934643209963306
+    second: PurificationFountain_83
+  - first:
+      213: -7566897411416928444
+    second: PurificationFountain_84
+  - first:
+      213: 1276150075152082066
+    second: PurificationFountain_85
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 9
+  spritePivot: {x: 0.504, y: 0.21291865}
+  spritePixelsToUnits: 470
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PurificationFountain_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1241
+        height: 1243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba930c32e8e93ebc0800000000000000
+      internalID: -3754983330974516821
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_1
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 1159
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1d39456b1fd08cb90800000000000000
+      internalID: -7221506670691314735
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_2
+      rect:
+        serializedVersion: 2
+        x: 541
+        y: 1162
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9cd150a39e8481f70800000000000000
+      internalID: 9158150008795897289
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_3
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 1148
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5b88b0f09cf6ab180800000000000000
+      internalID: -9098837187817142091
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_4
+      rect:
+        serializedVersion: 2
+        x: 533
+        y: 1154
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38c49854583586a90800000000000000
+      internalID: -7320509362428359549
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_5
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 1147
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50081f4f1f45c8f00800000000000000
+      internalID: 1120363805481730053
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_6
+      rect:
+        serializedVersion: 2
+        x: 705
+        y: 1108
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3fffcf9cc70ada60800000000000000
+      internalID: 7699475088379215678
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_7
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 1036
+        width: 23
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 517343a90ecdba930800000000000000
+      internalID: 4155657938397312789
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_8
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 1078
+        width: 13
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ef97d897cb714970800000000000000
+      internalID: 8737400849268449251
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_9
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 1038
+        width: 40
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e0fc38df91d864cb0800000000000000
+      internalID: -4880058003442381042
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_10
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 1076
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ef506a344f23baa0800000000000000
+      internalID: -6146517096346918937
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_11
+      rect:
+        serializedVersion: 2
+        x: 868
+        y: 1084
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16e7af8e0a8c75960800000000000000
+      internalID: 7590756290385313377
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_12
+      rect:
+        serializedVersion: 2
+        x: 874
+        y: 1084
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af7a4243b1fab8eb0800000000000000
+      internalID: -4716483653366667270
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_13
+      rect:
+        serializedVersion: 2
+        x: 1163
+        y: 901
+        width: 8
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6464cd777dd008bd0800000000000000
+      internalID: -2630086963304315322
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_14
+      rect:
+        serializedVersion: 2
+        x: 1182
+        y: 912
+        width: 7
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70c9cf74043a3b0f0800000000000000
+      internalID: -1102357987294667769
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_15
+      rect:
+        serializedVersion: 2
+        x: 1149
+        y: 901
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44baa9d5bbea41440800000000000000
+      internalID: 4905738013865847620
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_16
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 791
+        width: 9
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c7ed1484ece2725d0800000000000000
+      internalID: -3087447556028768644
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_17
+      rect:
+        serializedVersion: 2
+        x: 1035
+        y: 755
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4b3fa42be8ddf2d0800000000000000
+      internalID: -3243197652192511153
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_18
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 754
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a800e99bf674dcf0800000000000000
+      internalID: -228426858098587485
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_19
+      rect:
+        serializedVersion: 2
+        x: 213
+        y: 720
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: df79bc8e32816b6c0800000000000000
+      internalID: -4128085465929902083
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_20
+      rect:
+        serializedVersion: 2
+        x: 1021
+        y: 726
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58cead7f752781e50800000000000000
+      internalID: 6780294961152322693
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_21
+      rect:
+        serializedVersion: 2
+        x: 1027
+        y: 722
+        width: 19
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd8b89ea9ab058ee0800000000000000
+      internalID: -1259587697373562661
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_22
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 709
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98dba87ab0f3b44a0800000000000000
+      internalID: -6608118708947993207
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_23
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 708
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 339b2f7a78d962f50800000000000000
+      internalID: 6856340688682006835
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_24
+      rect:
+        serializedVersion: 2
+        x: 1053
+        y: 706
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82ccc8d1231cf4330800000000000000
+      internalID: 3697386240082758696
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_25
+      rect:
+        serializedVersion: 2
+        x: 1037
+        y: 664
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fc21ca1a3beb0c60800000000000000
+      internalID: 7785575015629532407
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_26
+      rect:
+        serializedVersion: 2
+        x: 1043
+        y: 665
+        width: 9
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3ad7221febda6c40800000000000000
+      internalID: 5506455314262121019
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_27
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 631
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 857780e73ce048820800000000000000
+      internalID: 2919474691238819672
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_28
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 618
+        width: 7
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 221aff1b3252fb150800000000000000
+      internalID: 5890467672864301346
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_29
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 633
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc04bf3277f4058e0800000000000000
+      internalID: -1706776885650046771
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_30
+      rect:
+        serializedVersion: 2
+        x: 1067
+        y: 618
+        width: 17
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5e23488b20758ee0800000000000000
+      internalID: -1259477188508176802
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_31
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 618
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f9538ba0daa8f4d0800000000000000
+      internalID: -3100540530237154830
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_32
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 598
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7fbf04e0393a60da0800000000000000
+      internalID: -5978911603293094921
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_33
+      rect:
+        serializedVersion: 2
+        x: 1043
+        y: 592
+        width: 11
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d45d6139e72fa69e0800000000000000
+      internalID: -1627221689893464755
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_34
+      rect:
+        serializedVersion: 2
+        x: 1105
+        y: 546
+        width: 19
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dff26c4a654cc410800000000000000
+      internalID: 1498649098857938904
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_35
+      rect:
+        serializedVersion: 2
+        x: 202
+        y: 524
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9582221b7f7e7c6c0800000000000000
+      internalID: -4123071882819655591
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_36
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 487
+        width: 11
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3acf01a99800981e0800000000000000
+      internalID: -2195222752371082077
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_37
+      rect:
+        serializedVersion: 2
+        x: 1099
+        y: 514
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c9c082f998850550800000000000000
+      internalID: 6126453062887328196
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_38
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 489
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e91b1f34df9ba4c0800000000000000
+      internalID: -4275147687317530141
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_39
+      rect:
+        serializedVersion: 2
+        x: 1129
+        y: 479
+        width: 12
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 875cc64dd109764b0800000000000000
+      internalID: -5447226766488976008
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_40
+      rect:
+        serializedVersion: 2
+        x: 1085
+        y: 440
+        width: 41
+        height: 30
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ea2d5dff7e82d050800000000000000
+      internalID: 5823873948506204899
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_41
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 393
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1aa43c2b50e3e0aa0800000000000000
+      internalID: -6192944243392951647
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_42
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 392
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a94a5b4b854b6d700800000000000000
+      internalID: 564837096363500698
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_43
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 371
+        width: 9
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7f5c95ab16fa5b70800000000000000
+      internalID: 8888687413172133755
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_44
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 377
+        width: 11
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32dd0384e6b952300800000000000000
+      internalID: 226758254211947811
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_45
+      rect:
+        serializedVersion: 2
+        x: 1049
+        y: 343
+        width: 17
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f2c98407a36a6810800000000000000
+      internalID: 1759328173428425463
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_46
+      rect:
+        serializedVersion: 2
+        x: 1077
+        y: 360
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f19dd88a0b0f66280800000000000000
+      internalID: -9050281759621654241
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_47
+      rect:
+        serializedVersion: 2
+        x: 1091
+        y: 353
+        width: 9
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6ac6313b6470cc870800000000000000
+      internalID: 8704340180033825958
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_48
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 344
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be166ba27924a3f10800000000000000
+      internalID: 2250184180849074667
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_49
+      rect:
+        serializedVersion: 2
+        x: 1061
+        y: 320
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38949d9b261468d20800000000000000
+      internalID: 3280381270866610563
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_50
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 240
+        width: 11
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 068aaa5076cf169c0800000000000000
+      internalID: -3935587079938201504
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_51
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 210
+        width: 17
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4fe864ae0792e6570800000000000000
+      internalID: 8461746314819309300
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_52
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 226
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5141f3d37eedf2420800000000000000
+      internalID: 2607547794017162261
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_53
+      rect:
+        serializedVersion: 2
+        x: 937
+        y: 222
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b5029d92e1386c60800000000000000
+      internalID: 7811548403050087858
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_54
+      rect:
+        serializedVersion: 2
+        x: 945
+        y: 230
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6991271de7f18350800000000000000
+      internalID: 6017363174811081070
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_55
+      rect:
+        serializedVersion: 2
+        x: 719
+        y: 214
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3bb0be72c81bc5fe0800000000000000
+      internalID: -1198888185264141389
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_56
+      rect:
+        serializedVersion: 2
+        x: 820
+        y: 200
+        width: 25
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1970eb9331e060370800000000000000
+      internalID: 8288327639957899153
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_57
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 202
+        width: 7
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb489dc95dc727330800000000000000
+      internalID: 3707162700180718780
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_58
+      rect:
+        serializedVersion: 2
+        x: 861
+        y: 184
+        width: 30
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b4cee47cb29f5900800000000000000
+      internalID: 675419807242175672
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_59
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 178
+        width: 23
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4fb5a749a68493d0800000000000000
+      internalID: -3200785373543940277
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_60
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 192
+        width: 20
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3ac0edf3148d1910800000000000000
+      internalID: 1809747846671419966
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_61
+      rect:
+        serializedVersion: 2
+        x: 856
+        y: 193
+        width: 7
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 179405f94bd057c90800000000000000
+      internalID: -7172811762099533455
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_62
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 168
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55e024420a6bb4f60800000000000000
+      internalID: 8019704360382631509
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_63
+      rect:
+        serializedVersion: 2
+        x: 659
+        y: 158
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 571fc5b02cab9a550800000000000000
+      internalID: 6172670106865037685
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_64
+      rect:
+        serializedVersion: 2
+        x: 723
+        y: 162
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c198bbf239cd2150800000000000000
+      internalID: 5849552711832867267
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_65
+      rect:
+        serializedVersion: 2
+        x: 729
+        y: 155
+        width: 31
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7348bf19a4d7715e0800000000000000
+      internalID: -1938943355329477577
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_66
+      rect:
+        serializedVersion: 2
+        x: 772
+        y: 168
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c08d5d699ee58ce40800000000000000
+      internalID: 5676891687651497996
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_67
+      rect:
+        serializedVersion: 2
+        x: 520
+        y: 144
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebdeac27137146680800000000000000
+      internalID: -8762853473809404482
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_68
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 144
+        width: 20
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3c218346cc3b76980800000000000000
+      internalID: -8545664077476130109
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_69
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 142
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2be46927b7367fe0800000000000000
+      internalID: -1191703791579894997
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_70
+      rect:
+        serializedVersion: 2
+        x: 569
+        y: 130
+        width: 23
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56351a708a60650b0800000000000000
+      internalID: -5740393356284832923
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_71
+      rect:
+        serializedVersion: 2
+        x: 721
+        y: 144
+        width: 28
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ab79226e3b8f9bdd0800000000000000
+      internalID: -2469669469092145222
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_72
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 156
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9e8851a96c3a4ba0800000000000000
+      internalID: -6103999920571117922
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_73
+      rect:
+        serializedVersion: 2
+        x: 514
+        y: 146
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 581a1736b34d829e0800000000000000
+      internalID: -1645832312267366011
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_74
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 128
+        width: 25
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4c7c75005d845260800000000000000
+      internalID: 7085443488589577293
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_75
+      rect:
+        serializedVersion: 2
+        x: 707
+        y: 146
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad08fc3c2655b1230800000000000000
+      internalID: 3610573408947896538
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_76
+      rect:
+        serializedVersion: 2
+        x: 713
+        y: 146
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e12499b3830242ce0800000000000000
+      internalID: -1430983355706818018
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_77
+      rect:
+        serializedVersion: 2
+        x: 593
+        y: 128
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96534caf1bf792580800000000000000
+      internalID: -8851403190226897559
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_78
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 128
+        width: 9
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9d4f8d3561381f20800000000000000
+      internalID: 3393516630117928346
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_79
+      rect:
+        serializedVersion: 2
+        x: 536
+        y: 117
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8698c77ab9f99abd0800000000000000
+      internalID: -2618386217460528792
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_80
+      rect:
+        serializedVersion: 2
+        x: 611
+        y: 112
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ee76aaea7ada88a0800000000000000
+      internalID: -6301984507093942560
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_81
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 120
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d952508cbb1cd5aa0800000000000000
+      internalID: -6170562902168885859
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_82
+      rect:
+        serializedVersion: 2
+        x: 722
+        y: 118
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c989abf9bbde28070800000000000000
+      internalID: 8107303669314787484
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_83
+      rect:
+        serializedVersion: 2
+        x: 922
+        y: 102
+        width: 13
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2704b129e6938550800000000000000
+      internalID: 6161934643209963306
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_84
+      rect:
+        serializedVersion: 2
+        x: 938
+        y: 101
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44fcbac35eafcf690800000000000000
+      internalID: -7566897411416928444
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PurificationFountain_85
+      rect:
+        serializedVersion: 2
+        x: 954
+        y: 87
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29427856bbbc5b110800000000000000
+      internalID: 1276150075152082066
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    outline: []
+    customData:
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices:
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      PurificationFountain_0: -3754983330974516821
+      PurificationFountain_1: -7221506670691314735
+      PurificationFountain_10: -6146517096346918937
+      PurificationFountain_11: 7590756290385313377
+      PurificationFountain_12: -4716483653366667270
+      PurificationFountain_13: -2630086963304315322
+      PurificationFountain_14: -1102357987294667769
+      PurificationFountain_15: 4905738013865847620
+      PurificationFountain_16: -3087447556028768644
+      PurificationFountain_17: -3243197652192511153
+      PurificationFountain_18: -228426858098587485
+      PurificationFountain_19: -4128085465929902083
+      PurificationFountain_2: 9158150008795897289
+      PurificationFountain_20: 6780294961152322693
+      PurificationFountain_21: -1259587697373562661
+      PurificationFountain_22: -6608118708947993207
+      PurificationFountain_23: 6856340688682006835
+      PurificationFountain_24: 3697386240082758696
+      PurificationFountain_25: 7785575015629532407
+      PurificationFountain_26: 5506455314262121019
+      PurificationFountain_27: 2919474691238819672
+      PurificationFountain_28: 5890467672864301346
+      PurificationFountain_29: -1706776885650046771
+      PurificationFountain_3: -9098837187817142091
+      PurificationFountain_30: -1259477188508176802
+      PurificationFountain_31: -3100540530237154830
+      PurificationFountain_32: -5978911603293094921
+      PurificationFountain_33: -1627221689893464755
+      PurificationFountain_34: 1498649098857938904
+      PurificationFountain_35: -4123071882819655591
+      PurificationFountain_36: -2195222752371082077
+      PurificationFountain_37: 6126453062887328196
+      PurificationFountain_38: -4275147687317530141
+      PurificationFountain_39: -5447226766488976008
+      PurificationFountain_4: -7320509362428359549
+      PurificationFountain_40: 5823873948506204899
+      PurificationFountain_41: -6192944243392951647
+      PurificationFountain_42: 564837096363500698
+      PurificationFountain_43: 8888687413172133755
+      PurificationFountain_44: 226758254211947811
+      PurificationFountain_45: 1759328173428425463
+      PurificationFountain_46: -9050281759621654241
+      PurificationFountain_47: 8704340180033825958
+      PurificationFountain_48: 2250184180849074667
+      PurificationFountain_49: 3280381270866610563
+      PurificationFountain_5: 1120363805481730053
+      PurificationFountain_50: -3935587079938201504
+      PurificationFountain_51: 8461746314819309300
+      PurificationFountain_52: 2607547794017162261
+      PurificationFountain_53: 7811548403050087858
+      PurificationFountain_54: 6017363174811081070
+      PurificationFountain_55: -1198888185264141389
+      PurificationFountain_56: 8288327639957899153
+      PurificationFountain_57: 3707162700180718780
+      PurificationFountain_58: 675419807242175672
+      PurificationFountain_59: -3200785373543940277
+      PurificationFountain_6: 7699475088379215678
+      PurificationFountain_60: 1809747846671419966
+      PurificationFountain_61: -7172811762099533455
+      PurificationFountain_62: 8019704360382631509
+      PurificationFountain_63: 6172670106865037685
+      PurificationFountain_64: 5849552711832867267
+      PurificationFountain_65: -1938943355329477577
+      PurificationFountain_66: 5676891687651497996
+      PurificationFountain_67: -8762853473809404482
+      PurificationFountain_68: -8545664077476130109
+      PurificationFountain_69: -1191703791579894997
+      PurificationFountain_7: 4155657938397312789
+      PurificationFountain_70: -5740393356284832923
+      PurificationFountain_71: -2469669469092145222
+      PurificationFountain_72: -6103999920571117922
+      PurificationFountain_73: -1645832312267366011
+      PurificationFountain_74: 7085443488589577293
+      PurificationFountain_75: 3610573408947896538
+      PurificationFountain_76: -1430983355706818018
+      PurificationFountain_77: -8851403190226897559
+      PurificationFountain_78: 3393516630117928346
+      PurificationFountain_79: -2618386217460528792
+      PurificationFountain_8: 8737400849268449251
+      PurificationFountain_80: -6301984507093942560
+      PurificationFountain_81: -6170562902168885859
+      PurificationFountain_82: 8107303669314787484
+      PurificationFountain_83: 6161934643209963306
+      PurificationFountain_84: -7566897411416928444
+      PurificationFountain_85: 1276150075152082066
+      PurificationFountain_9: -4880058003442381042
+  mipmapLimitGroupName:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:

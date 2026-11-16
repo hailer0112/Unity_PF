@@ -98,7 +98,7 @@ namespace Storybook
                         if (arrived != null) break;
                     }
                     if (arrived == null) return;
-                    if (reason == Reason.Departure && destination == PalaceScene) arrived.RefillManaForNewRun();
+                    if (reason == Reason.Departure && destination == PalaceScene) arrived.RefillMana();
                     arrivalControls = arrived.enabled;
                     arrived.enabled = false;
                     arrivalHealth = arrived.GetComponent<PlayerHealth>();

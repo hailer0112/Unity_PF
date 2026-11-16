@@ -11,6 +11,19 @@ namespace Storybook
         [SerializeField] float currentHP;
         [SerializeField, Min(0)] float deathDelay = .55f;
         [SerializeField] bool despawnOnDeath = true;
+        [Header("Story Fragments")]
+        [SerializeField, Min(0)] int minimumFragments;
+        [SerializeField, Min(0)] int maximumFragments;
+        PlayerHealth fragmentRecipient;
+
+        void OnValidate()
+        {
+            minimumFragments = Mathf.Max(0, minimumFragments);
+            maximumFragments = Mathf.Max(minimumFragments, maximumFragments);
+        }
+
+        internal void SetFragmentRecipient(PlayerHealth recipient) => fragmentRecipient = recipient;
+
         public float MaxHP => maxHP;
         public float CurrentHP => currentHP;
         public bool IsDead => currentHP <= 0;
@@ -50,6 +63,10 @@ namespace Storybook
         {
             currentHP = 0f;
             DeathCause = cause;
+            var recipient = fragmentRecipient;
+            fragmentRecipient = null;
+            if (cause == MonsterDeathCause.PlayerKilled && recipient != null)
+                recipient.AwardStoryFragments(minimumFragments, maximumFragments);
             foreach (var collider in GetComponentsInChildren<Collider>()) collider.enabled = false;
             Defeated?.Invoke(cause);
             Died?.Invoke();

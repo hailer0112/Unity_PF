@@ -312,7 +312,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e81052787224d348802443fda782c85, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.HongGildong
   cloneSlashRange: 3
   cloneSlashHalfArc: 68
@@ -327,6 +327,14 @@ MonoBehaviour:
   cloneSlashOpacity: 0.8
   cloneSlashFadeTime: 0.15
   cloneSlashPrefab: {fileID: 0}
+  maxMP: 100
+  startingMP: 100
+  manaRegenPerSecond: 3
+  manaPerBasicAttack: 5
+  azureSlashManaCost: 15
+  cloneSlashManaCost: 25
+  windstepManaCost: 20
+  swordTyphoonManaCost: 40
   swordTyphoonCastRange: 6
   swordTyphoonRadius: 3
   swordTyphoonDuration: 3
@@ -460,7 +468,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c646c0b03af29b4a80f24a391ae3f95, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.PlayerHealth
   maxHP: 100
   currentHP: 0
@@ -474,7 +482,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2dafb94276534f898903040f86016f18, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.ChapterDefeatReturn
 --- !u!65 &277486043 stripped
 BoxCollider:
@@ -490,7 +498,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5af48951c932234e9e3ba66d415dd46, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.MonsterHealth
 --- !u!1 &520503969
 GameObject:
@@ -595,7 +603,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 434902cfb8c845d4d8610e644d90342e, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.HongGildongIdleVisual
   player: {fileID: 251033138}
   body: {fileID: 520503970}
@@ -802,15 +810,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3226699557933289556, guid: a612e66d5667dee4db1c13a0e44b4a7b, type: 3}
       propertyPath: boss
-      value:
+      value: 
       objectReference: {fileID: 335856337}
     - target: {fileID: 3226699557933289556, guid: a612e66d5667dee4db1c13a0e44b4a7b, type: 3}
       propertyPath: player
-      value:
+      value: 
       objectReference: {fileID: 251033140}
     - target: {fileID: 3226699557933289556, guid: a612e66d5667dee4db1c13a0e44b4a7b, type: 3}
       propertyPath: arenaFloor
-      value:
+      value: 
       objectReference: {fileID: 277486043}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -826,7 +834,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1acf53863cc44b546b0df94098b6a561, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.DragonKingBossHud
 --- !u!4 &1162671514 stripped
 Transform:
@@ -860,7 +868,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a608be82039ed7e4abb311131655542b, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.PalaceDungeon
   player: {fileID: 251033138}
   followCamera: {fileID: 1728389240}
@@ -875,6 +883,8 @@ MonoBehaviour:
   - {fileID: 5978833954508937087, guid: b830863e7bfc4a94194d6bf2e80534ea, type: 3}
   - {fileID: 410249576248614782, guid: 40befb15d4b175746bb02ebad110b520, type: 3}
   passage: {fileID: 5401431291399496545, guid: a619d2c22d8568242bf8ab289957903f, type: 3}
+  eastWestPassageLength: 4.5
+  northSouthPassageLength: 5
   floorPortalEffect: {fileID: 6718917004043220981, guid: 283f007796255d54dab764b891c5d905, type: 3}
   encounterWaves:
     crab: {fileID: 1609197125568794212, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
@@ -890,7 +900,7 @@ MonoBehaviour:
   minimumCombatRooms: 5
   maximumCombatRooms: 7
   recoveryChance: 0.5
-  recoveryAmount: 0.3
+  recoveryAmount: 0.4
   useFixedSeed: 0
   fixedSeed: 42
 --- !u!4 &1712308460
@@ -988,7 +998,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a3920ffc617b6574a88bca52e5a04357, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.ClearingCamera
   followTarget: {fileID: 251033140}
   verticalSize: 2.6
@@ -1127,11 +1137,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 135230054589703647, guid: 8c4b963a288a6f940ae14baed6e1e291, type: 3}
       propertyPath: player
-      value:
+      value: 
       objectReference: {fileID: 251033141}
     - target: {fileID: 1333503611567296181, guid: 8c4b963a288a6f940ae14baed6e1e291, type: 3}
       propertyPath: player
-      value:
+      value: 
       objectReference: {fileID: 251033141}
     - target: {fileID: 1738533468945206560, guid: 8c4b963a288a6f940ae14baed6e1e291, type: 3}
       propertyPath: m_Name
@@ -1143,7 +1153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1987319083670914466, guid: 8c4b963a288a6f940ae14baed6e1e291, type: 3}
       propertyPath: player
-      value:
+      value: 
       objectReference: {fileID: 251033140}
     - target: {fileID: 4846673157310683974, guid: 8c4b963a288a6f940ae14baed6e1e291, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1199,7 +1209,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59f94fb8bdae0894aa3ae33fde9faad8, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.PalaceDungeonRoom
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

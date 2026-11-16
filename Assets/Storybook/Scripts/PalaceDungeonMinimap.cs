@@ -22,14 +22,24 @@ namespace Storybook
         readonly HashSet<(int from, int to)> discoveredLinks = new();
         readonly List<(PalaceDungeonRoom first, PalaceDungeonRoom second, Rect line)> links = new();
 
+        readonly Queue<(int amount, float expires)> fragmentGains = new();
+        PlayerHealth fragmentOwner;
         PalaceDungeon dungeon;
         PalaceDungeonRoom currentRoom;
         Font font;
+        Texture2D fragmentIcon;
         GUIStyle label, roomIcon, promptStyle;
 
-        internal void Initialize(PalaceDungeon owner)
+        internal void Initialize(PalaceDungeon owner, PlayerHealth playerHealth)
         {
             dungeon = owner;
+            if (fragmentOwner != playerHealth)
+            {
+                if (fragmentOwner != null) fragmentOwner.StoryFragmentsGained -= ShowFragmentGain;
+                fragmentGains.Clear();
+                fragmentOwner = playerHealth;
+                if (fragmentOwner != null) fragmentOwner.StoryFragmentsGained += ShowFragmentGain;
+            }
             tiles.Clear();
             links.Clear();
             discoveredRooms.Clear();
@@ -72,7 +82,18 @@ namespace Storybook
 
         public bool IsVisible(PalaceDungeonRoom room) => discoveredRooms.Contains(room);
 
-        void LateUpdate() => UpdateDiscovery();
+        void LateUpdate()
+        {
+            UpdateDiscovery();
+            while (fragmentGains.Count > 0 && fragmentGains.Peek().expires <= Time.unscaledTime)
+                fragmentGains.Dequeue();
+        }
+
+        void ShowFragmentGain(int amount)
+        {
+            if (fragmentGains.Count >= 4) fragmentGains.Dequeue();
+            fragmentGains.Enqueue((amount, Time.unscaledTime + 1.5f));
+        }
 
         void UpdateDiscovery()
         {
@@ -103,7 +124,9 @@ namespace Storybook
             // Keep the same top-right anchor through room changes, including the boss room.
             float mapScale = Mathf.Min(scale, Screen.width * .21f / (MapWidth + 18f));
             GUI.matrix = Matrix4x4.Scale(new Vector3(mapScale, mapScale, 1f));
-            DrawMap(new Rect(Screen.width / mapScale - MapWidth - 18f, 18f, MapWidth, MapHeight));
+            Rect map = new(Screen.width / mapScale - MapWidth - 18f, 18f, MapWidth, MapHeight);
+            DrawMap(map);
+            DrawFragments(map);
             GUI.matrix = Matrix4x4.Scale(new Vector3(scale, scale, 1f));
 
             var recovery = currentRoom.Recovery;
@@ -134,6 +157,7 @@ namespace Storybook
             roomIcon = new GUIStyle(label) { padding = new RectOffset(), clipping = TextClipping.Clip,
                 fontSize = Mathf.Clamp(Mathf.FloorToInt(tiles[currentRoom].width * .76f), 8, 12) };
             promptStyle = new GUIStyle(label) { fontSize = 17 };
+            fragmentIcon = Resources.Load<Texture2D>("StoryFragment");
         }
 
         void DrawMap(Rect bounds)
@@ -177,6 +201,27 @@ namespace Storybook
             }
         }
 
+        void DrawFragments(Rect map)
+        {
+            if (fragmentOwner == null) return;
+            Rect panel = new(map.x, map.yMax + 6f, map.width, 34f);
+            Fill(panel, Trim);
+            Fill(new Rect(panel.x + 1f, panel.y + 1f, panel.width - 2f, panel.height - 2f), Panel);
+            if (fragmentIcon != null)
+                GUI.DrawTexture(new Rect(panel.x + 7f, panel.y + 1f, 32f, 32f), fragmentIcon, ScaleMode.ScaleToFit);
+            GUI.Label(new Rect(panel.x + 39f, panel.y, panel.width - 45f, panel.height),
+                $"이야기 파편  {fragmentOwner.StoryFragments:N0}", label);
+
+            float y = panel.yMax + 2f;
+            foreach (var gain in fragmentGains)
+            {
+                var gainRect = new Rect(map.xMax - 68f, y, 68f, 19f);
+                Fill(gainRect, Panel);
+                GUI.Label(gainRect, $"+{gain.amount}", label);
+                y += gainRect.height;
+            }
+        }
+
         static Rect Offset(Rect rect, Vector2 offset) => new(rect.position + offset, rect.size);
 
         static void Fill(Rect rect, Color color)
@@ -188,6 +233,7 @@ namespace Storybook
 
         void OnDestroy()
         {
+            if (fragmentOwner != null) fragmentOwner.StoryFragmentsGained -= ShowFragmentGain;
             if (font != null) Destroy(font);
         }
     }

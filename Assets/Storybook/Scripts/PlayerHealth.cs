@@ -12,10 +12,27 @@ namespace Storybook
         public float MaxHP => maxHP;
         public bool IsDead => currentHP <= 0;
         public int MonsterKillCount { get; private set; }
+        readonly System.Random fragmentRandom = new(Guid.NewGuid().GetHashCode());
+        public long StoryFragments { get; private set; }
+        internal event Action<int> StoryFragmentsGained;
         public event Action Damaged, Died;
         internal bool ChapterClearProtected { get; set; }
         void Awake() { player=GetComponent<HongGildong>();currentHP=maxHP; }
         internal void RecordMonsterKill() => MonsterKillCount++;
+
+        internal void AwardStoryFragments(int minimum, int maximum)
+        {
+            minimum = Mathf.Max(0, minimum);
+            maximum = Mathf.Max(minimum, maximum);
+            // Random.Next excludes its upper bound. Handle the largest int without overflow.
+            int amount = maximum < int.MaxValue ? fragmentRandom.Next(minimum, maximum + 1)
+                : minimum > 0 ? fragmentRandom.Next(minimum - 1, maximum) + 1
+                : fragmentRandom.Next(1 << 30) * 2 + fragmentRandom.Next(2);
+            if (amount == 0) return;
+
+            StoryFragments += amount;
+            StoryFragmentsGained?.Invoke(amount);
+        }
 
         public bool TryHeal(float amount)
         {

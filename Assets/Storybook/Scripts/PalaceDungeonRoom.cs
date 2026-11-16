@@ -125,7 +125,10 @@ namespace Storybook
         {
             if (Layout.Type != PalaceRoomType.Combat) return;
             for (int i = first; i < enemies.Count; i++)
+            {
+                enemies[i].SetFragmentRecipient(player);
                 enemies[i].Defeated += OnCombatMonsterDefeated;
+            }
         }
 
         void OnCombatMonsterDefeated(MonsterDeathCause cause)

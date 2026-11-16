@@ -28,7 +28,7 @@ namespace Storybook
             CurrentMP = Mathf.Clamp(startingMP, 0f, MaxMP);
         }
 
-        internal void RefillManaForNewRun() => CurrentMP = MaxMP;
+        internal void RefillMana() => CurrentMP = MaxMP;
 
         void RegenerateMana()
         {

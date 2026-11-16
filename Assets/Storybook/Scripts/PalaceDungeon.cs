@@ -28,7 +28,7 @@ namespace Storybook
         [SerializeField, Min(3)] int minimumCombatRooms = 5;
         [SerializeField, Min(3)] int maximumCombatRooms = 7;
         [SerializeField, Range(0f, 1f)] float recoveryChance = .5f;
-        [SerializeField, Range(.01f, 1f)] float recoveryAmount = .3f;
+        [SerializeField, Range(.01f, 1f)] float recoveryAmount = .4f;
         [SerializeField] bool useFixedSeed;
         [SerializeField] int fixedSeed = 42;
 
@@ -158,7 +158,7 @@ namespace Storybook
             player.PlaceInDungeon(position, Rect.MinMaxRect(bounds.min.x, bounds.min.z, bounds.max.x, bounds.max.z));
             Physics.SyncTransforms();
             Enter(room, true);
-            minimap.Initialize(this);
+            minimap.Initialize(this, health);
         }
 
         void CreatePortal()
