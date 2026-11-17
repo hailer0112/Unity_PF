@@ -5,7 +5,7 @@ using Random = System.Random;
 
 namespace Storybook
 {
-    public enum PalaceRoomType { Start, Combat, Recovery, Boss, Portal = 5 }
+    public enum PalaceRoomType { Start, Combat, Recovery, Boss, Portal = 5, Merchant }
 
     public sealed class PalaceDungeonGraph
     {
@@ -67,7 +67,8 @@ namespace Storybook
             return fallback;
         }
 
-        internal static PalaceDungeonGraph GenerateFloor(int seed, int minCombat, int maxCombat, float recoveryChance, int templateCount)
+        internal static PalaceDungeonGraph GenerateFloor(int seed, int minCombat, int maxCombat, float recoveryChance,
+            int templateCount, float merchantChance = 0f, int maximumMerchantRooms = 0)
         {
             Random random = SeededRandom(seed);
             int combat = CombatCount(random, Mathf.Max(3, minCombat), maxCombat);
@@ -77,14 +78,48 @@ namespace Storybook
             for (int attempt = 0; attempt < 16; attempt++)
             {
                 var graph = BuildFloor(random, combat, recovery, templateCount, reserveRouteFirst: false);
-                if (graph.IsCompleteFloor(combat, recovery)) return graph;
+                if (graph.IsCompleteFloor(combat, recovery))
+                {
+                    graph.AddMerchants(seed, merchantChance, maximumMerchantRooms);
+                    return graph;
+                }
             }
 
             // Reserve the guaranteed three-passage route before adding branches.
             var fallback = BuildFloor(random, combat, recovery, templateCount, reserveRouteFirst: true);
-            if (fallback.IsCompleteFloor(combat, recovery)) return fallback;
-            throw new InvalidOperationException($"Palace floor seed {seed} generated {fallback.Rooms.Count} of " +
-                $"{combat + 2 + (recovery ? 1 : 0)} rooms. Actual: {fallback.RoomCounts()}.");
+            if (!fallback.IsCompleteFloor(combat, recovery))
+                throw new InvalidOperationException($"Palace floor seed {seed} generated {fallback.Rooms.Count} of " +
+                    $"{combat + 2 + (recovery ? 1 : 0)} rooms. Actual: {fallback.RoomCounts()}.");
+            fallback.AddMerchants(seed, merchantChance, maximumMerchantRooms);
+            return fallback;
+        }
+
+        void AddMerchants(int seed, float chance, int maximumRooms)
+        {
+            if (chance <= 0f || maximumRooms <= 0) return;
+            // A separate stream keeps the base rooms, portal, and combat templates stable.
+            Random random = SeededRandom(seed ^ 0x4D455243);
+            var occupied = new HashSet<Vector2Int>();
+            foreach (var room in rooms) occupied.Add(room.Grid);
+            var sockets = new List<(Room parent, Vector2Int grid)>();
+            foreach (var room in rooms)
+            {
+                if (room.Type is not (PalaceRoomType.Start or PalaceRoomType.Combat)) continue;
+                foreach (var direction in Directions)
+                {
+                    Vector2Int grid = room.Grid + direction;
+                    if (!occupied.Contains(grid)) sockets.Add((room, grid));
+                }
+            }
+
+            chance = Mathf.Clamp01(chance);
+            for (int slot = 0; slot < maximumRooms && sockets.Count > 0; slot++)
+            {
+                if (random.NextDouble() >= chance) continue;
+                var (parent, grid) = sockets[random.Next(sockets.Count)];
+                Add(PalaceRoomType.Merchant, grid, random, parent, 1);
+                sockets.RemoveAll(socket => socket.grid == grid);
+            }
         }
 
         static PalaceDungeonGraph BuildFloor(Random random, int combat, bool recovery, int templateCount, bool reserveRouteFirst)
@@ -131,7 +166,7 @@ namespace Storybook
 
         internal string RoomCounts()
         {
-            int start = 0, combat = 0, recovery = 0, portal = 0, boss = 0;
+            int start = 0, combat = 0, recovery = 0, portal = 0, boss = 0, merchant = 0;
             foreach (var room in rooms)
                 switch (room.Type)
                 {
@@ -140,8 +175,9 @@ namespace Storybook
                     case PalaceRoomType.Recovery: recovery++; break;
                     case PalaceRoomType.Portal: portal++; break;
                     case PalaceRoomType.Boss: boss++; break;
+                    case PalaceRoomType.Merchant: merchant++; break;
                 }
-            return $"Start={start}, Combat={combat}, Recovery={recovery}, Portal={portal}, Boss={boss}";
+            return $"Start={start}, Combat={combat}, Recovery={recovery}, Portal={portal}, Boss={boss}, Merchant={merchant}";
         }
 
         static int CombatCount(Random random, int minCombat, int maxCombat)
@@ -254,6 +290,10 @@ namespace Storybook
                     (room.Type is PalaceRoomType.Portal or PalaceRoomType.Boss) && room != Destination)
                     return false;
                 if (room.Type == PalaceRoomType.Recovery && (++recoveryCount > 1 || room.Neighbors.Count != 1))
+                    return false;
+                if (room.Type == PalaceRoomType.Merchant &&
+                    (Portal == null || room.Neighbors.Count != 1 ||
+                     room.Neighbors[0].Type is not (PalaceRoomType.Start or PalaceRoomType.Combat)))
                     return false;
                 if (room.Type == PalaceRoomType.Combat) combatCount++;
                 var directions = new HashSet<Vector2Int>();

@@ -1,44 +1,37 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Storybook
 {
-    [DisallowMultipleComponent]
-    public sealed class Elysia : MonoBehaviour
+    public sealed class Elysia : NpcDialogue
     {
         const float BreathPeriod = 2.6f;
         const float BreathLift = .01f;
 
         [SerializeField] Transform interactionPoint;
-        [SerializeField] Transform indicatorAnchor;
         [SerializeField] SpriteRenderer artwork;
         [SerializeField] Sprite front, right, back, left;
-        [SerializeField, Min(.1f)] float interactionRange = 1.35f;
 
-        HongGildong player;
         ArchiveStoryEntrance entrance;
         Transform visual;
         Vector3 restPosition;
         float breathTime;
 
         public string NpcId => "elysia";
-        public string DisplayName => "엘리시아";
+        public override string DisplayName => "엘리시아";
         public Transform InteractionPoint => interactionPoint;
-        public Transform IndicatorAnchor => indicatorAnchor;
-        public bool IsInteracting { get; private set; }
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             visual = artwork.transform;
             restPosition = visual.localPosition;
             artwork.sprite = front;
-            player = FindFirstObjectByType<HongGildong>();
             entrance = FindAnyObjectByType<ArchiveStoryEntrance>();
         }
 
-        void Update()
+        protected override void Update()
         {
-            UpdateInteraction();
+            base.Update();
 
             breathTime = Mathf.Repeat(breathTime + Time.deltaTime, BreathPeriod);
             float phase = breathTime * (2f * Mathf.PI / BreathPeriod);
@@ -46,53 +39,22 @@ namespace Storybook
             visual.localPosition = restPosition + Vector3.up * lift;
         }
 
-        void UpdateInteraction()
-        {
-            var keyboard = Keyboard.current;
-            bool pressedInteract = keyboard != null && keyboard.fKey.wasPressedThisFrame;
+        protected override bool CanStart(HongGildong candidate) => entrance == null || !entrance.CanUse(candidate);
 
-            if (IsInteracting)
-            {
-                if (pressedInteract || (keyboard != null && keyboard.escapeKey.wasPressedThisFrame) ||
-                    !PlayerInRange(out _))
-                    EndInteraction();
-                return;
-            }
-
-            if (pressedInteract && (entrance == null || !entrance.CanUse(player)) && PlayerInRange(out Vector3 offset))
-            {
-                artwork.sprite = DirectionTo(offset);
-                IsInteracting = true;
-            }
-        }
-
-        bool PlayerInRange(out Vector3 offset)
-        {
-            offset = default;
-            if (player == null || !player.isActiveAndEnabled) return false;
-
-            offset = transform.InverseTransformDirection(player.transform.position - transform.position);
-            offset.y = 0f;
-            return offset.sqrMagnitude <= interactionRange * interactionRange;
-        }
-
-        Sprite DirectionTo(Vector3 offset)
+        protected override void FacePlayer(Vector3 offset)
         {
             if (Mathf.Abs(offset.x) > Mathf.Abs(offset.z))
-                return offset.x > 0f ? right : left;
-
-            return offset.z > 0f ? back : front;
+                artwork.sprite = offset.x > 0f ? right : left;
+            else
+                artwork.sprite = offset.z > 0f ? back : front;
         }
 
-        public void EndInteraction()
-        {
-            IsInteracting = false;
-            artwork.sprite = front;
-        }
+        protected override void FaceFront() => artwork.sprite = front;
 
-        void OnDisable()
+        protected override void OnDisable()
         {
-            EndInteraction();
+            base.OnDisable();
+            FaceFront();
             if (visual == null) return;
 
             visual.localPosition = restPosition;
@@ -100,4 +62,3 @@ namespace Storybook
         }
     }
 }
-

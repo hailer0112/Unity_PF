@@ -874,6 +874,7 @@ MonoBehaviour:
   followCamera: {fileID: 1728389240}
   startRoom: {fileID: 1422590092772001318, guid: 1615f5699babb8a4d81e18ee84552961, type: 3}
   recoveryRoom: {fileID: 1522308412088220116, guid: f73a88e75a60b214db483896f5e04e03, type: 3}
+  merchantRoom: {fileID: 7941212599607424649, guid: 6c026c9c2713b6c42a3f307b79ceb742, type: 3}
   bossRoom: {fileID: 1111066365603640003}
   bossHud: {fileID: 1115423036}
   combatRooms:
@@ -901,6 +902,8 @@ MonoBehaviour:
   maximumCombatRooms: 7
   recoveryChance: 0.5
   recoveryAmount: 0.4
+  merchantChance: 0.35
+  maximumMerchantRooms: 1
   useFixedSeed: 0
   fixedSeed: 42
 --- !u!4 &1712308460

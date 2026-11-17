@@ -188,6 +188,7 @@ namespace Storybook
                     PalaceRoomType.Recovery => room.RewardUsed ? "·" : "+",
                     PalaceRoomType.Boss => "♛",
                     PalaceRoomType.Portal => "◎",
+                    PalaceRoomType.Merchant => "상",
                     _ => room.Cleared ? "·" : ""
                 };
                 if (tile.width >= 8f && !string.IsNullOrEmpty(icon))

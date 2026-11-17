@@ -11,18 +11,15 @@ namespace Storybook
         [SerializeField, Min(.1f)] float interactionRange = 1.15f;
         [SerializeField] StoryEntry[] stories;
 
-        Elysia archivist;
         ArchiveStorySelection selection;
         Font font;
         GUIStyle prompt;
         int closedFrame = -1;
 
-        void Start() => archivist = FindAnyObjectByType<Elysia>();
-
         internal bool CanUse(HongGildong candidate)
         {
             if (!isActiveAndEnabled || candidate == null || candidate != player || !player.isActiveAndEnabled ||
-                selection != null || closedFrame == Time.frameCount || StorybookTransition.IsBusy || (archivist != null && archivist.IsInteracting)) return false;
+                selection != null || closedFrame == Time.frameCount || StorybookTransition.IsBusy || NpcDialogue.BlocksInteraction) return false;
             Vector3 offset = player.transform.position - transform.position;
             offset.y = 0f;
             return offset.sqrMagnitude <= interactionRange * interactionRange;

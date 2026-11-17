@@ -44,7 +44,7 @@ namespace Storybook
             if (!toggle) return;
             if (openMenu == this) Close();
             else if (dungeon?.Current != null && player != null && player.isActiveAndEnabled &&
-                health != null && !health.IsDead && !StorybookTransition.IsBusy)
+                health != null && !health.IsDead && !StorybookTransition.IsBusy && !NpcDialogue.BlocksInteraction)
                 Open();
         }
 
@@ -164,7 +164,7 @@ namespace Storybook
             AddButton(panel, "일반 전투방", 24, 124, 162, () => Travel(() => dungeon.TestRoom(PalaceRoomType.Combat)));
             AddButton(panel, "회복방", 194, 124, 162, () => Travel(() => dungeon.TestRoom(PalaceRoomType.Recovery)));
             AddButton(panel, "용왕 보스방", 24, 163, 162, () => Travel(() => dungeon.TestRoom(PalaceRoomType.Boss)));
-            AddButton(panel, "상인방 · 미구현", 194, 163, 162);
+            AddButton(panel, "상인방", 194, 163, 162, () => Travel(() => dungeon.TestRoom(PalaceRoomType.Merchant)));
             AddButton(panel, "보물방 · 미구현", 24, 202, 162);
             AddButton(panel, "시련방 · 미구현", 194, 202, 162);
 

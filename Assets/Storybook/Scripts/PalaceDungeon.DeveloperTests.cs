@@ -29,7 +29,8 @@ namespace Storybook
             // Abandoning an active encounter must also clear its waves, gates and effects.
             if (destination == null || Current.InCombat && destination != Current)
             {
-                ReplaceTestFloor(destinationFloor, type == PalaceRoomType.Recovery ? 1f : null);
+                ReplaceTestFloor(destinationFloor, type == PalaceRoomType.Recovery ? 1f : null,
+                    requireMerchant: type == PalaceRoomType.Merchant);
                 destination = FindTestRoom(type);
             }
             if (destination == null) throw new InvalidOperationException($"Floor {Floor} has no {type} test room.");
@@ -50,6 +51,7 @@ namespace Storybook
             center.y = room.transform.position.y;
             if (room.Recovery != null)
                 return room.Recovery.transform.position + Vector3.back * .95f;
+            if (room.Layout.Type == PalaceRoomType.Merchant) return center;
 
             foreach (var neighbor in room.Layout.Neighbors)
             {
@@ -68,7 +70,7 @@ namespace Storybook
             catch (Exception error) { Debug.LogException(error, this); }
         });
 
-        void ReplaceTestFloor(int floor, float? recoveryChanceOverride = null)
+        void ReplaceTestFloor(int floor, float? recoveryChanceOverride = null, bool requireMerchant = false)
         {
             RemoveTestMonster();
             if (IsBossFloor)
@@ -83,7 +85,7 @@ namespace Storybook
                 Destroy(bossRoom.gameObject);
                 bossRoom = replacement;
             }
-            ReplaceFloor(floor, recoveryChanceOverride);
+            ReplaceFloor(floor, recoveryChanceOverride, requireMerchant);
         }
 
         void RememberBossForTesting()

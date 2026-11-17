@@ -15,7 +15,7 @@ namespace Storybook
 
         [SerializeField] HongGildong player;
         [SerializeField] ClearingCamera followCamera;
-        [SerializeField] PalaceDungeonRoom startRoom, recoveryRoom, bossRoom;
+        [SerializeField] PalaceDungeonRoom startRoom, recoveryRoom, merchantRoom, bossRoom;
         [SerializeField] DragonKingBossHud bossHud;
         [SerializeField] PalaceDungeonRoom[] combatRooms = new PalaceDungeonRoom[2];
         [SerializeField] GameObject passage;
@@ -29,6 +29,9 @@ namespace Storybook
         [SerializeField, Min(3)] int maximumCombatRooms = 7;
         [SerializeField, Range(0f, 1f)] float recoveryChance = .5f;
         [SerializeField, Range(.01f, 1f)] float recoveryAmount = .4f;
+        [SerializeField, Range(0f, 1f), Tooltip("Chance for each merchant room slot on a regular floor.")]
+        float merchantChance = .35f;
+        [SerializeField, Range(0, 3)] int maximumMerchantRooms = 1;
         [SerializeField] bool useFixedSeed;
         [SerializeField] int fixedSeed = 42;
 
@@ -65,7 +68,7 @@ namespace Storybook
 #endif
         }
 
-        void GenerateFloor(float? recoveryChanceOverride = null)
+        void GenerateFloor(float? recoveryChanceOverride = null, bool requireMerchant = false)
         {
             Seed = unchecked(runSeed + (Floor - 1) * 486187739);
             if (IsBossFloor)
@@ -74,10 +77,12 @@ namespace Storybook
                 return;
             }
 
+            float shopChance = merchantRoom == null ? 0f : requireMerchant ? 1f : merchantChance;
+            int shopLimit = requireMerchant ? 1 : Mathf.Clamp(maximumMerchantRooms, 0, 3);
             for (int attempt = 0; ; attempt++)
             {
                 Layout = PalaceDungeonGraph.GenerateFloor(Seed, minimumCombatRooms, maximumCombatRooms,
-                    recoveryChanceOverride ?? recoveryChance, combatRooms.Length);
+                    recoveryChanceOverride ?? recoveryChance, combatRooms.Length, shopChance, shopLimit);
                 if (floorLayouts.Add(Signature(Layout)) || attempt >= 8) break;
                 Seed = unchecked(Seed + 1);
             }
@@ -96,6 +101,7 @@ namespace Storybook
                     {
                         PalaceRoomType.Combat => combatRooms[node.Template],
                         PalaceRoomType.Recovery => recoveryRoom,
+                        PalaceRoomType.Merchant => merchantRoom,
                         _ => startRoom
                     };
                     Vector3 position = origin + new Vector3(node.Grid.x * gridSpacing.x, 0f, node.Grid.y * gridSpacing.y);
@@ -211,7 +217,7 @@ namespace Storybook
 
         void AdvanceFloor() => ReplaceFloor(Floor + 1);
 
-        void ReplaceFloor(int floor, float? recoveryChanceOverride = null)
+        void ReplaceFloor(int floor, float? recoveryChanceOverride = null, bool requireMerchant = false)
         {
             Current = null;
             portalRoom = null;
@@ -222,7 +228,7 @@ namespace Storybook
             floorRoot = null;
             rooms.Clear();
             Floor = floor;
-            GenerateFloor(recoveryChanceOverride);
+            GenerateFloor(recoveryChanceOverride, requireMerchant);
         }
 
         void Connect(PalaceDungeonRoom a, PalaceDungeonRoom b)
@@ -270,7 +276,7 @@ namespace Storybook
             var nodes = new List<string>();
             foreach (var room in layout.Rooms)
                 foreach (var neighbor in room.Neighbors)
-                    if (neighbor.Id > room.Id)
+                    if (neighbor.Id > room.Id && room.Type != PalaceRoomType.Merchant && neighbor.Type != PalaceRoomType.Merchant)
                     {
                         string a = $"{room.Grid}/{room.Type}";
                         string b = $"{neighbor.Grid}/{neighbor.Type}";
