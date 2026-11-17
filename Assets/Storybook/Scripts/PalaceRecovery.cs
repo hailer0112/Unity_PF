@@ -7,17 +7,21 @@ namespace Storybook
     {
         [SerializeField] GameObject readyLight;
         [SerializeField] SpriteRenderer fountain;
-        [SerializeField] Material spentFountain;
         [SerializeField] LineRenderer ripple;
         [SerializeField, Min(.1f)] float interactionRange = 1.25f;
 
         const float RippleDuration = .6f;
+        const float WaterFadeDuration = 1.1f;
         const int RippleSegments = 48;
+        static readonly int WaterFlow = Shader.PropertyToID("_WaterFlow");
+        static readonly int WaterSparks = Shader.PropertyToID("_WaterSparks");
         PlayerHealth hero;
         HongGildong controls;
         PalaceDungeonRoom room;
         float fraction;
         float rippleTime;
+        float waterFlow = 1f;
+        MaterialPropertyBlock fountainProperties;
         public bool Used { get; private set; }
 
         internal void Initialize(PalaceDungeonRoom owner, PlayerHealth player, float healingFraction)
@@ -43,7 +47,13 @@ namespace Storybook
             hero.TryHeal(hero.MaxHP * fraction);
             controls.RefillMana();
             if (readyLight != null) readyLight.SetActive(false);
-            if (fountain != null && spentFountain != null) fountain.sharedMaterial = spentFountain;
+            if (fountain != null)
+            {
+                fountainProperties = new MaterialPropertyBlock();
+                fountain.GetPropertyBlock(fountainProperties);
+                fountainProperties.SetFloat(WaterSparks, 0f);
+                UpdateWater();
+            }
             if (ripple != null)
             {
                 ripple.positionCount = RippleSegments;
@@ -55,13 +65,28 @@ namespace Storybook
 
         void Update()
         {
-            if (Keyboard.current?.fKey.wasPressedThisFrame == true) TryUse();
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (PalaceDeveloperMenu.BlocksGameplay) return;
+#endif
+            if (!Used && Keyboard.current?.fKey.wasPressedThisFrame == true) TryUse();
+            if (fountainProperties != null && waterFlow > 0f)
+            {
+                waterFlow = Mathf.MoveTowards(waterFlow, 0f, Time.deltaTime / WaterFadeDuration);
+                UpdateWater();
+            }
+
             if (ripple == null || !ripple.enabled) return;
 
             rippleTime += Time.deltaTime;
             float progress = Mathf.Clamp01(rippleTime / RippleDuration);
             if (progress == 1f) ripple.enabled = false;
             else UpdateRipple(progress);
+        }
+
+        void UpdateWater()
+        {
+            fountainProperties.SetFloat(WaterFlow, Mathf.SmoothStep(0f, 1f, waterFlow));
+            fountain.SetPropertyBlock(fountainProperties);
         }
 
         void LateUpdate()

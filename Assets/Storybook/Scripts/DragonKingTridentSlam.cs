@@ -13,6 +13,9 @@ namespace Storybook
 
         [SerializeField] PlayerHealth player;
         [SerializeField] BoxCollider arenaFloor, dais;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        internal BoxCollider ArenaFloorForTesting => arenaFloor;
+#endif
         [SerializeField] Transform shoulder, grip, tip;
         [SerializeField] SpriteRenderer weaponArt;
 

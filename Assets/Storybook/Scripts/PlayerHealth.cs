@@ -44,10 +44,24 @@ namespace Storybook
 
         public bool TryTakeDamage(float damage)
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (TestInvulnerable || PalaceDeveloperMenu.BlocksGameplay) return false;
+#endif
             if(!isActiveAndEnabled || IsDead || ChapterClearProtected || player.IsInvulnerable || damage<=0 || float.IsNaN(damage) || float.IsInfinity(damage))return false;
             currentHP=Mathf.Max(0,currentHP-damage);
             if(IsDead){player.enabled=false;Died?.Invoke();}else Damaged?.Invoke();
             return true;
         }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        internal bool TestInvulnerable { get; set; }
+
+        internal void SetOneHPForTesting()
+        {
+            if (!IsDead) currentHP = 1f;
+        }
+
+        internal void ClearFragmentsForTesting() => StoryFragments = 0;
+#endif
     }
 }

@@ -129,5 +129,15 @@ namespace Storybook
         {
             if (nameFont != null) Destroy(nameFont);
         }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        internal void BindTestArena(DragonKingTridentSlam encounter)
+        {
+            gameObject.SetActive(false);
+            boss = encounter.GetComponent<MonsterHealth>();
+            arenaFloor = encounter.ArenaFloorForTesting;
+            phaseReached = false;
+        }
+#endif
     }
 }

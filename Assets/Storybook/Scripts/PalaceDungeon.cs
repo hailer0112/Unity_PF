@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 namespace Storybook
 {
     [DisallowMultipleComponent]
-    public sealed class PalaceDungeon : MonoBehaviour
+    public sealed partial class PalaceDungeon : MonoBehaviour
     {
         const int LastRegularFloor = 3;
         // Well beyond one floor's grid. Any world-space effects still expiring stay at their original position.
@@ -60,9 +60,12 @@ namespace Storybook
             runSeed = useFixedSeed ? fixedSeed : Guid.NewGuid().GetHashCode();
             minimap = gameObject.AddComponent<PalaceDungeonMinimap>();
             GenerateFloor();
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            gameObject.AddComponent<PalaceDeveloperMenu>().Initialize(this, player, health);
+#endif
         }
 
-        void GenerateFloor()
+        void GenerateFloor(float? recoveryChanceOverride = null)
         {
             Seed = unchecked(runSeed + (Floor - 1) * 486187739);
             if (IsBossFloor)
@@ -74,7 +77,7 @@ namespace Storybook
             for (int attempt = 0; ; attempt++)
             {
                 Layout = PalaceDungeonGraph.GenerateFloor(Seed, minimumCombatRooms, maximumCombatRooms,
-                    recoveryChance, combatRooms.Length);
+                    recoveryChanceOverride ?? recoveryChance, combatRooms.Length);
                 if (floorLayouts.Add(Signature(Layout)) || attempt >= 8) break;
                 Seed = unchecked(Seed + 1);
             }
@@ -122,6 +125,9 @@ namespace Storybook
 
         void GenerateBossFloor()
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            RememberBossForTesting();
+#endif
             Layout = PalaceDungeonGraph.BossArena();
             CreateFloorRoot();
             float northDoorOffset = startRoom.DoorwayCenter(0).z - startRoom.transform.position.z;
@@ -185,6 +191,9 @@ namespace Storybook
 
         void Update()
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (PalaceDeveloperMenu.BlocksGameplay) return;
+#endif
             if (Keyboard.current?.fKey.wasPressedThisFrame == true && CanUsePortal())
                 StorybookTransition.TryBeginFloor(player, IntensifyPortal, AdvanceFloor);
         }
@@ -200,7 +209,9 @@ namespace Storybook
             }
         }
 
-        void AdvanceFloor()
+        void AdvanceFloor() => ReplaceFloor(Floor + 1);
+
+        void ReplaceFloor(int floor, float? recoveryChanceOverride = null)
         {
             Current = null;
             portalRoom = null;
@@ -210,8 +221,8 @@ namespace Storybook
             Destroy(floorRoot.gameObject);
             floorRoot = null;
             rooms.Clear();
-            Floor++;
-            GenerateFloor();
+            Floor = floor;
+            GenerateFloor(recoveryChanceOverride);
         }
 
         void Connect(PalaceDungeonRoom a, PalaceDungeonRoom b)
@@ -227,6 +238,9 @@ namespace Storybook
 
         void LateUpdate()
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (PalaceDeveloperMenu.BlocksGameplay) return;
+#endif
             if (Current == null || player == null) return;
             Current.RefreshClear();
             if (Current.InCombat || !player.isActiveAndEnabled) return;
@@ -242,6 +256,9 @@ namespace Storybook
 
         void Enter(PalaceDungeonRoom room, bool snapCamera = false)
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (Current != room) RemoveTestMonster();
+#endif
             Current = room;
             room.Enter();
             if (room == bossRoom) bossHud.gameObject.SetActive(true);

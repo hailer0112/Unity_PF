@@ -44,6 +44,23 @@ namespace Storybook
             internal Material WarningMaterial => warningMaterial;
             internal float WarningSeconds => Mathf.Max(.1f, warningSeconds);
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            internal MonsterHealth GetTestPrefab(TestMonsterKind kind)
+            {
+                MonsterHealth prefab = kind switch
+                {
+                    TestMonsterKind.Crab => crab,
+                    TestMonsterKind.Archer => archer,
+                    TestMonsterKind.Turtle => turtle,
+                    TestMonsterKind.Pufferfish => pufferfish,
+                    _ => null
+                };
+                string error = PrefabError(prefab, kind.ToString());
+                if (error != null) throw new InvalidOperationException(error);
+                return prefab;
+            }
+#endif
+
             internal MonsterHealth[][] Plan(Random random, Bounds bounds)
             {
                 Vector2Int range = random.Next(3) switch { 0 => small, 1 => standard, _ => large };
@@ -210,7 +227,9 @@ namespace Storybook
             retryAt = Time.time + RetryInterval;
         }
 
-        bool IsFree(MonsterHealth prefab, Vector3 ground)
+        bool IsFree(MonsterHealth prefab, Vector3 ground) => IsSpawnPointFree(prefab, ground, player);
+
+        internal static bool IsSpawnPointFree(MonsterHealth prefab, Vector3 ground, PlayerHealth player)
         {
             if (DistanceSquared(ground, player.transform.position) < PlayerDistance * PlayerDistance) return false;
             var body = prefab.GetComponent<CharacterController>();

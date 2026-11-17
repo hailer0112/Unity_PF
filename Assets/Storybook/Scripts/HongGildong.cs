@@ -153,6 +153,9 @@ namespace Storybook
 
         void Update()
         {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (PalaceDeveloperMenu.BlocksGameplay) return;
+#endif
             RegenerateMana();
             Vector2 cursor = point.ReadValue<Vector2>();
             bool acceptInput = knockbackRemaining <= 0f;
@@ -217,6 +220,15 @@ namespace Storybook
             body.sprite = Attacking ? SwingPose() : TravelPose();
             body.transform.localPosition = Vector3.up * artworkGroundOffset;
         }
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        internal void ResetSkillCooldownsForTesting()
+        {
+            azureSlashReadyAt = cloneSlashReadyAt = windstepReadyAt = swordTyphoonReadyAt = dashReadyAt = 0d;
+        }
+
+        internal void MoveToTestRoom(Vector3 position) => PlaceInDungeon(position, dungeonMovementBounds ?? movementBounds);
+#endif
 
         Vector3 InsideClearing(Vector3 p)
         {
