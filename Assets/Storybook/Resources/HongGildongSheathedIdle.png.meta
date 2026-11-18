@@ -1,0 +1,301 @@
+fileFormatVersion: 2
+guid: 6cfbfa630d4fb1242bfc5424f8ff60f3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3127066773813817321
+    second: HongGildongSheathedIdle_0
+  - first:
+      213: 3555992148435813175
+    second: HongGildongSheathedIdle_1
+  - first:
+      213: -3723552798902820236
+    second: HongGildongSheathedIdle_2
+  - first:
+      213: -55795538469169825
+    second: HongGildongSheathedIdle_3
+  - first:
+      213: 8356386037217124184
+    second: HongGildongSheathedIdle_4
+  - first:
+      213: 7323505854994420188
+    second: HongGildongSheathedIdle_5
+  - first:
+      213: -3195540351310911477
+    second: HongGildongSheathedIdle_6
+  - first:
+      213: -2337415487163669855
+    second: HongGildongSheathedIdle_7
+  - first:
+      213: 5481191950516715222
+    second: HongGildongSheathedIdle_8
+  - first:
+      213: -6378105880200241854
+    second: HongGildongSheathedIdle_9
+  - first:
+      213: -890427131625283092
+    second: HongGildongSheathedIdle_10
+  - first:
+      213: -5777018837771210631
+    second: HongGildongSheathedIdle_11
+  - first:
+      213: 8307618383829408089
+    second: HongGildongSheathedIdle_12
+  - first:
+      213: -9050979464208009009
+    second: SheathedIdle0
+  - first:
+      213: -4375921175082711116
+    second: SheathedIdle1
+  - first:
+      213: -252570541259700566
+    second: SheathedIdle2
+  - first:
+      213: -3955189677978023690
+    second: SheathedIdle3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 347.42856
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SheathedIdle0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 543
+        height: 724
+      alignment: 9
+      pivot: {x: 0.6132597, y: 0.09320867}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc8b686a126746280800000000000000
+      internalID: -9050979464208009009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SheathedIdle1
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 0
+        width: 543
+        height: 724
+      alignment: 9
+      pivot: {x: 0.55985266, y: 0.09873353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b7c51a30ea9543c0800000000000000
+      internalID: -4375921175082711116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SheathedIdle2
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 0
+        width: 543
+        height: 724
+      alignment: 9
+      pivot: {x: 0.45303866, y: 0.09320867}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa6cc7f4e60be7cf0800000000000000
+      internalID: -252570541259700566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SheathedIdle3
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 0
+        width: 543
+        height: 724
+      alignment: 9
+      pivot: {x: 0.36924493, y: 0.09873353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6f804d081f75c19c0800000000000000
+      internalID: -3955189677978023690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HongGildongSheathedIdle_0: 3127066773813817321
+      HongGildongSheathedIdle_1: 3555992148435813175
+      HongGildongSheathedIdle_10: -890427131625283092
+      HongGildongSheathedIdle_11: -5777018837771210631
+      HongGildongSheathedIdle_12: 8307618383829408089
+      HongGildongSheathedIdle_2: -3723552798902820236
+      HongGildongSheathedIdle_3: -55795538469169825
+      HongGildongSheathedIdle_4: 8356386037217124184
+      HongGildongSheathedIdle_5: 7323505854994420188
+      HongGildongSheathedIdle_6: -3195540351310911477
+      HongGildongSheathedIdle_7: -2337415487163669855
+      HongGildongSheathedIdle_8: 5481191950516715222
+      HongGildongSheathedIdle_9: -6378105880200241854
+      SheathedIdle0: -9050979464208009009
+      SheathedIdle1: -4375921175082711116
+      SheathedIdle2: -252570541259700566
+      SheathedIdle3: -3955189677978023690
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

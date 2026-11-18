@@ -354,6 +354,45 @@ MonoBehaviour:
   artworkGroundOffset: 0.008
   idleFront: {fileID: 21300000, guid: cdc3935f4f638614da72a4f26ebe9cca, type: 3}
   idleBack: {fileID: 21300000, guid: 4379c2b41d95cfb43943436a09126a21, type: 3}
+  sheathedRun:
+  - {fileID: -2225319899074135275, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: 677240294762775931, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: 4804775227467869219, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -10652191300341097, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -4636607127036585328, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -2612242284477379899, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -7401950324589059321, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: 7449036546039977670, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: 7523457083759856793, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -248775416959761298, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -8972246258291701907, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: 3750683852129619954, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: 1220949704169186801, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: 8240291204492834307, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: 121115011924850542, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -5722689542967086686, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -6303254333047226878, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -1386199812006478950, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -2934359746706726482, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: 156430511355599680, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -4908214722751063939, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -4692259914567825251, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -566446279277197820, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -57962413598076219, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -2859647755152657308, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -5171719247092214572, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -7043803783357871316, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: 5499229057365366049, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -6665470447604119230, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: 4335319418986776885, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -5263055458561066265, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  - {fileID: -7718274289674784147, guid: ab136639cc7932b44b2fe27d7b607dbd, type: 3}
+  sheathedRunFrontOverride:
+  - {fileID: 2347642190543102391, guid: 2fefe7c148da9de45b387f062c911f45, type: 3}
+  - {fileID: -1006044840030413966, guid: 2fefe7c148da9de45b387f062c911f45, type: 3}
+  - {fileID: 8875833817987075428, guid: 2fefe7c148da9de45b387f062c911f45, type: 3}
+  - {fileID: 5834408651597348371, guid: 2fefe7c148da9de45b387f062c911f45, type: 3}
+  sheathedRunFramesPerSecond: 8
   swingFront:
   - {fileID: 21300002, guid: 0993acb237b54f80a29cade95ac7db36, type: 3}
   - {fileID: 21300004, guid: 0993acb237b54f80a29cade95ac7db36, type: 3}
@@ -609,6 +648,11 @@ MonoBehaviour:
   body: {fileID: 520503970}
   idleFront: {fileID: 21300000, guid: cdc3935f4f638614da72a4f26ebe9cca, type: 3}
   idleBack: {fileID: 21300000, guid: 4379c2b41d95cfb43943436a09126a21, type: 3}
+  renewedIdle:
+  - {fileID: -8238641599083352247, guid: e92384ebfb5f1e6469a984a5bc188f2b, type: 3}
+  - {fileID: 3831247435023569364, guid: e92384ebfb5f1e6469a984a5bc188f2b, type: 3}
+  - {fileID: -1200411359544423442, guid: e92384ebfb5f1e6469a984a5bc188f2b, type: 3}
+  - {fileID: 9218180090493837057, guid: e92384ebfb5f1e6469a984a5bc188f2b, type: 3}
   loopDuration: 1.5
   strength: 1
   breathPixels: 0.85

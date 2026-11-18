@@ -1,19 +1,31 @@
 fileFormatVersion: 2
-guid: c93605b9408a46fb977ed7354e4d8f23
+guid: 2fefe7c148da9de45b387f062c911f45
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6286397221291726501
-    second: ElysiaGame_Front
+      213: -8513391399475599108
+    second: HongGildong_Run_Front_4Frames_0
   - first:
-      213: 6286397221291726502
-    second: ElysiaGame_Right
+      213: -5269784206278094960
+    second: HongGildong_Run_Front_4Frames_1
   - first:
-      213: 6286397221291726503
-    second: ElysiaGame_Back
+      213: -1967664735341102847
+    second: HongGildong_Run_Front_4Frames_2
   - first:
-      213: 6286397221291726504
-    second: ElysiaGame_Left
+      213: 4566292868075322515
+    second: HongGildong_Run_Front_4Frames_3
+  - first:
+      213: 2347642190543102391
+    second: HongFront4_0
+  - first:
+      213: -1006044840030413966
+    second: HongFront4_1
+  - first:
+      213: 8875833817987075428
+    second: HongFront4_2
+  - first:
+      213: 5834408651597348371
+    second: HongFront4_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -57,12 +69,12 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 0
-  alignment: 9
-  spritePivot: {x: 0.5, y: 0.057692308}
-  spritePixelsToUnits: 64
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 344
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationMethod: 0
@@ -83,7 +95,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -107,93 +119,119 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ElysiaGame_Front
+      name: HongFront4_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 72
-        height: 104
+        width: 543
+        height: 724
       alignment: 9
-      pivot: {x: 0.5, y: 0.057692308}
+      pivot: {x: 0.4990792, y: 0.108300045}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d31d91a7d09647388eca30b699374b72
-      internalID: 6286397221291726501
+      spriteID: 7b1aa0b4220849020800000000000000
+      internalID: 2347642190543102391
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ElysiaGame_Right
+      name: HongFront4_1
       rect:
         serializedVersion: 2
-        x: 72
+        x: 543
         y: 0
-        width: 72
-        height: 104
+        width: 543
+        height: 724
       alignment: 9
-      pivot: {x: 0.5, y: 0.057692308}
+      pivot: {x: 0.53222835, y: 0.12349342}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e9d37b11f36b4046bb8cfd60e3708407
-      internalID: 6286397221291726502
+      spriteID: 27b5fd95c8fc902f0800000000000000
+      internalID: -1006044840030413966
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ElysiaGame_Back
+      name: HongFront4_2
       rect:
         serializedVersion: 2
-        x: 144
+        x: 1086
         y: 0
-        width: 72
-        height: 104
+        width: 543
+        height: 724
       alignment: 9
-      pivot: {x: 0.5, y: 0.057692308}
+      pivot: {x: 0.5184162, y: 0.108300045}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4e67183f98f04823baa49a21e6a2d3ff
-      internalID: 6286397221291726503
+      spriteID: 46dc48ec4db4d2b70800000000000000
+      internalID: 8875833817987075428
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ElysiaGame_Left
+      name: HongFront4_3
       rect:
         serializedVersion: 2
-        x: 216
+        x: 1629
         y: 0
-        width: 72
-        height: 104
+        width: 543
+        height: 724
       alignment: 9
-      pivot: {x: 0.5, y: 0.057692308}
+      pivot: {x: 0.48802948, y: 0.11244369}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: db076eab28164a449ad82a5e4274d003
-      internalID: 6286397221291726504
+      spriteID: 31efce0b1cbf7f050800000000000000
+      internalID: 5834408651597348371
       vertices: []
       indices: 
       edges: []
@@ -202,7 +240,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e0c8b019fb564a34a3157e5d7c732a2a
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -212,10 +250,14 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      ElysiaGame_Front: 6286397221291726501
-      ElysiaGame_Right: 6286397221291726502
-      ElysiaGame_Back: 6286397221291726503
-      ElysiaGame_Left: 6286397221291726504
+      HongFront4_0: 2347642190543102391
+      HongFront4_1: -1006044840030413966
+      HongFront4_2: 8875833817987075428
+      HongFront4_3: 5834408651597348371
+      HongGildong_Run_Front_4Frames_0: -8513391399475599108
+      HongGildong_Run_Front_4Frames_1: -5269784206278094960
+      HongGildong_Run_Front_4Frames_2: -1967664735341102847
+      HongGildong_Run_Front_4Frames_3: 4566292868075322515
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,0 +1,385 @@
+fileFormatVersion: 2
+guid: e92384ebfb5f1e6469a984a5bc188f2b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3486755651123578969
+    second: HongGildong_Idle_4Directions_v1_0
+  - first:
+      213: -7250132897524118995
+    second: HongGildong_Idle_4Directions_v1_1
+  - first:
+      213: 6490093070519615431
+    second: HongGildong_Idle_4Directions_v1_2
+  - first:
+      213: -4621817188948223912
+    second: HongGildong_Idle_4Directions_v1_3
+  - first:
+      213: -8338124224663178700
+    second: HongGildong_Idle_4Directions_v1_4
+  - first:
+      213: -8809891955443996422
+    second: HongGildong_Idle_4Directions_v1_5
+  - first:
+      213: 3766973542290022004
+    second: HongGildong_Idle_4Directions_v1_6
+  - first:
+      213: -535330925691995686
+    second: HongGildong_Idle_4Directions_v1_7
+  - first:
+      213: -6461691992514324249
+    second: HongGildong_Idle_4Directions_v1_8
+  - first:
+      213: -3171262478414728940
+    second: HongGildong_Idle_4Directions_v1_9
+  - first:
+      213: 6756155879968175981
+    second: HongGildong_Idle_4Directions_v1_10
+  - first:
+      213: -5894913641179583980
+    second: HongGildong_Idle_4Directions_v1_11
+  - first:
+      213: 5223952405015554886
+    second: HongGildong_Idle_4Directions_v1_12
+  - first:
+      213: -9140913223368527076
+    second: HongGildong_Idle_4Directions_v1_13
+  - first:
+      213: 3230026853729288847
+    second: HongGildong_Idle_4Directions_v1_14
+  - first:
+      213: -7635030306639007764
+    second: HongGildong_Idle_4Directions_v1_15
+  - first:
+      213: 6214014382234346817
+    second: HongGildong_Idle_4Directions_v1_16
+  - first:
+      213: 7700756453116774406
+    second: HongGildong_Idle_4Directions_v1_17
+  - first:
+      213: 2544016616869669836
+    second: HongGildong_Idle_4Directions_v1_18
+  - first:
+      213: 4705304436248133837
+    second: HongGildong_Idle_4Directions_v1_19
+  - first:
+      213: 8320380772288651227
+    second: HongGildong_Idle_4Directions_v1_20
+  - first:
+      213: 7832883018472737556
+    second: HongGildong_Idle_4Directions_v1_21
+  - first:
+      213: 259178784211169030
+    second: HongGildong_Idle_4Directions_v1_22
+  - first:
+      213: -5300307059782809962
+    second: HongGildong_Idle_4Directions_v1_23
+  - first:
+      213: -6373143889580539894
+    second: HongGildong_Idle_4Directions_v1_24
+  - first:
+      213: 9045169532122374781
+    second: HongGildong_Idle_4Directions_v1_25
+  - first:
+      213: 3462047997111669418
+    second: HongGildong_Idle_4Directions_v1_26
+  - first:
+      213: 135855372130126001
+    second: HongGildong_Idle_4Directions_v1_27
+  - first:
+      213: -2175731456432564588
+    second: HongGildong_Idle_4Directions_v1_28
+  - first:
+      213: 8027788350857679184
+    second: HongGildong_Idle_4Directions_v1_29
+  - first:
+      213: 8655271748285577898
+    second: HongGildong_Idle_4Directions_v1_30
+  - first:
+      213: 2395343961918443579
+    second: HongGildong_Idle_4Directions_v1_31
+  - first:
+      213: -8662008529193408782
+    second: HongGildong_Idle_4Directions_v1_32
+  - first:
+      213: -4079423910341449574
+    second: HongGildong_Idle_4Directions_v1_33
+  - first:
+      213: -8238641599083352247
+    second: HongGildong_NewIdle_0_Front
+  - first:
+      213: 3831247435023569364
+    second: HongGildong_NewIdle_1_Back
+  - first:
+      213: -1200411359544423442
+    second: HongGildong_NewIdle_2_Left
+  - first:
+      213: 9218180090493837057
+    second: HongGildong_NewIdle_3_Right
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 317.7143
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HongGildong_NewIdle_0_Front
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 543
+        height: 724
+      alignment: 9
+      pivot: {x: 0.55616945, y: 0.15724182}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94f61e6ad177aad80800000000000000
+      internalID: -8238641599083352247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongGildong_NewIdle_1_Back
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 0
+        width: 543
+        height: 724
+      alignment: 9
+      pivot: {x: 0.5018416, y: 0.15724182}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d1d43b4e335b2530800000000000000
+      internalID: 3831247435023569364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongGildong_NewIdle_2_Left
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 0
+        width: 543
+        height: 724
+      alignment: 9
+      pivot: {x: 0.4815838, y: 0.15724182}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eebc2028a38475fe0800000000000000
+      internalID: -1200411359544423442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongGildong_NewIdle_3_Right
+      rect:
+        serializedVersion: 2
+        x: 1629
+        y: 0
+        width: 543
+        height: 724
+      alignment: 9
+      pivot: {x: 0.5092081, y: 0.15724182}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10f9679c3fd8def70800000000000000
+      internalID: 9218180090493837057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HongGildong_Idle_4Directions_v1_0: -3486755651123578969
+      HongGildong_Idle_4Directions_v1_1: -7250132897524118995
+      HongGildong_Idle_4Directions_v1_10: 6756155879968175981
+      HongGildong_Idle_4Directions_v1_11: -5894913641179583980
+      HongGildong_Idle_4Directions_v1_12: 5223952405015554886
+      HongGildong_Idle_4Directions_v1_13: -9140913223368527076
+      HongGildong_Idle_4Directions_v1_14: 3230026853729288847
+      HongGildong_Idle_4Directions_v1_15: -7635030306639007764
+      HongGildong_Idle_4Directions_v1_16: 6214014382234346817
+      HongGildong_Idle_4Directions_v1_17: 7700756453116774406
+      HongGildong_Idle_4Directions_v1_18: 2544016616869669836
+      HongGildong_Idle_4Directions_v1_19: 4705304436248133837
+      HongGildong_Idle_4Directions_v1_2: 6490093070519615431
+      HongGildong_Idle_4Directions_v1_20: 8320380772288651227
+      HongGildong_Idle_4Directions_v1_21: 7832883018472737556
+      HongGildong_Idle_4Directions_v1_22: 259178784211169030
+      HongGildong_Idle_4Directions_v1_23: -5300307059782809962
+      HongGildong_Idle_4Directions_v1_24: -6373143889580539894
+      HongGildong_Idle_4Directions_v1_25: 9045169532122374781
+      HongGildong_Idle_4Directions_v1_26: 3462047997111669418
+      HongGildong_Idle_4Directions_v1_27: 135855372130126001
+      HongGildong_Idle_4Directions_v1_28: -2175731456432564588
+      HongGildong_Idle_4Directions_v1_29: 8027788350857679184
+      HongGildong_Idle_4Directions_v1_3: -4621817188948223912
+      HongGildong_Idle_4Directions_v1_30: 8655271748285577898
+      HongGildong_Idle_4Directions_v1_31: 2395343961918443579
+      HongGildong_Idle_4Directions_v1_32: -8662008529193408782
+      HongGildong_Idle_4Directions_v1_33: -4079423910341449574
+      HongGildong_Idle_4Directions_v1_4: -8338124224663178700
+      HongGildong_Idle_4Directions_v1_5: -8809891955443996422
+      HongGildong_Idle_4Directions_v1_6: 3766973542290022004
+      HongGildong_Idle_4Directions_v1_7: -535330925691995686
+      HongGildong_Idle_4Directions_v1_8: -6461691992514324249
+      HongGildong_Idle_4Directions_v1_9: -3171262478414728940
+      HongGildong_NewIdle_0_Front: -8238641599083352247
+      HongGildong_NewIdle_1_Back: 3831247435023569364
+      HongGildong_NewIdle_2_Left: -1200411359544423442
+      HongGildong_NewIdle_3_Right: 9218180090493837057
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -7,6 +7,7 @@ namespace Storybook
         [SerializeField] HongGildong player;
         [SerializeField] SpriteRenderer body;
         [SerializeField] Sprite idleFront, idleBack;
+        [SerializeField] Sprite[] renewedIdle = new Sprite[4];
         [SerializeField, Min(.1f)] float loopDuration = 1.5f;
         [SerializeField, Range(0,2)] float strength = 1;
         [SerializeField, Range(0,2)] float breathPixels = .85f;
@@ -22,9 +23,20 @@ namespace Storybook
         Vector2[] normalized;
         float clock;
         bool rendering;
+        Sprite[] sheathedIdle;
+        AnimationClip[] idleClips;
+        Sprite[] idleFrames;
+        [SerializeField, Range(4f,6f)] float idleFramesPerSecond = 5f;
+        float spriteClock;
         public bool IsPlaying => rendering;
         void Awake()
         {
+            sheathedIdle=Resources.LoadAll<Sprite>("HongGildongSheathedIdle");
+            System.Array.Sort(sheathedIdle,(a,b)=>string.CompareOrdinal(a.name,b.name));
+            idleClips=Resources.LoadAll<AnimationClip>("HongGildongIdle");
+            System.Array.Sort(idleClips,(a,b)=>string.CompareOrdinal(a.name,b.name));
+            idleFrames=Resources.LoadAll<Sprite>("HongGildongIdle/Idle32");
+            System.Array.Sort(idleFrames,(a,b)=>string.CompareOrdinal(a.name,b.name));
             var go=new GameObject("Idle Motion Surface",typeof(MeshFilter),typeof(MeshRenderer));
             go.transform.SetParent(body.transform,false);
             surface=go.GetComponent<MeshRenderer>();
@@ -57,7 +69,41 @@ namespace Storybook
         {
             bool eligible=player!=null && player.isActiveAndEnabled && !player.Attacking && !player.IsCastingAzureSlash && !player.IsCastingCloneSlash && !player.IsCastingSwordTyphoon && !player.IsDashing && !player.HasMoveDestination
                 && body.gameObject.activeInHierarchy && (body.sprite==idleFront || body.sprite==idleBack);
-            if(!eligible || (!rendering && !body.enabled)){Stop();return;}
+            if(!eligible || (!rendering && !body.enabled)){spriteClock=0f;Stop();return;}
+            if(renewedIdle.Length==4 && System.Array.TrueForAll(renewedIdle,sprite=>sprite!=null))
+            {
+                Stop();
+                Vector3 direction=player.FacingDirection;
+                int index=Mathf.Abs(direction.x)>Mathf.Abs(direction.z)
+                    ? (direction.x>0f ? 3 : 2) : (direction.z>0f ? 1 : 0);
+                body.sprite=renewedIdle[index];
+                body.flipX=false;
+                body.enabled=true;
+                return;
+            }
+            if(idleClips.Length==4 && idleFrames.Length==32)
+            {
+                Stop();
+                Vector3 direction=player.FacingDirection;
+                int index=Mathf.Abs(direction.x)>Mathf.Abs(direction.z)
+                    ? (direction.x>0f ? 3 : 2) : (direction.z>0f ? 1 : 0);
+                spriteClock=Mathf.Repeat(spriteClock+Time.deltaTime,8f/idleFramesPerSecond);
+                body.sprite=idleFrames[index*8+Mathf.FloorToInt(spriteClock*idleFramesPerSecond)];
+                body.flipX=false;
+                body.enabled=true;
+                return;
+            }
+            if(sheathedIdle.Length==4)
+            {
+                Stop();
+                Vector3 direction=player.FacingDirection;
+                int index=Mathf.Abs(direction.x)>Mathf.Abs(direction.z)
+                    ? (direction.x>0f ? 1 : 3) : (direction.z>0f ? 2 : 0);
+                body.sprite=sheathedIdle[index];
+                body.flipX=false;
+                body.enabled=true;
+                return;
+            }
             if(source!=body.sprite)Build(body.sprite);
             clock=Mathf.Repeat(clock+Time.deltaTime,Mathf.Max(.1f,loopDuration));
             ApplyPose(clock/Mathf.Max(.1f,loopDuration));

@@ -1,0 +1,1105 @@
+fileFormatVersion: 2
+guid: 11c1d59f64156dc49ac75facf2f75ad2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3874061112073302215
+    second: HongGildong_Run_Cleaned_0
+  - first:
+      213: -127224999932001354
+    second: HongGildong_Run_Cleaned_1
+  - first:
+      213: -2541200218310955602
+    second: HongGildong_Run_Cleaned_2
+  - first:
+      213: -4689725686818755436
+    second: HongGildong_Run_Cleaned_3
+  - first:
+      213: -5053461114886835069
+    second: HongGildong_Run_Cleaned_4
+  - first:
+      213: 2065524467042930702
+    second: HongGildong_Run_Cleaned_5
+  - first:
+      213: -8105752556605847751
+    second: HongGildong_Run_Cleaned_6
+  - first:
+      213: 486718391697309289
+    second: HongGildong_Run_Cleaned_7
+  - first:
+      213: -8181670201038521821
+    second: HongGildong_Run_Cleaned_8
+  - first:
+      213: -4513576504314735444
+    second: HongGildong_Run_Cleaned_9
+  - first:
+      213: 405086955918421202
+    second: HongGildong_Run_Cleaned_10
+  - first:
+      213: -359683293471800891
+    second: HongGildong_Run_Cleaned_11
+  - first:
+      213: 4778515902092054111
+    second: HongGildong_Run_Cleaned_12
+  - first:
+      213: 1499688240949911436
+    second: HongGildong_Run_Cleaned_13
+  - first:
+      213: -6618647657836279211
+    second: HongGildong_Run_Cleaned_14
+  - first:
+      213: 604592648134661113
+    second: HongGildong_Run_Cleaned_15
+  - first:
+      213: -5170090583594161969
+    second: HongGildong_Run_Cleaned_16
+  - first:
+      213: 2429210010295749267
+    second: HongGildong_Run_Cleaned_17
+  - first:
+      213: 7675037110095763956
+    second: HongGildong_Run_Cleaned_18
+  - first:
+      213: -5918945742518190238
+    second: HongGildong_Run_Cleaned_19
+  - first:
+      213: -4445090755755793537
+    second: HongGildong_Run_Cleaned_20
+  - first:
+      213: 8753125265887829163
+    second: HongGildong_Run_Cleaned_21
+  - first:
+      213: 8705879411049825916
+    second: HongGildong_Run_Cleaned_22
+  - first:
+      213: -3004038120269620685
+    second: HongGildong_Run_Cleaned_23
+  - first:
+      213: -7210446545752206737
+    second: HongGildong_Run_Cleaned_24
+  - first:
+      213: 8751324604286643788
+    second: HongGildong_Run_Cleaned_25
+  - first:
+      213: -6234749914646030185
+    second: HongGildong_Run_Cleaned_26
+  - first:
+      213: 8789675026640554570
+    second: HongGildong_Run_Cleaned_27
+  - first:
+      213: 2509746576003343546
+    second: HongGildong_Run_Cleaned_28
+  - first:
+      213: 3219877556934748738
+    second: HongGildong_Run_Cleaned_29
+  - first:
+      213: -6740822160712201401
+    second: HongGildong_Run_Cleaned_30
+  - first:
+      213: 1210826742792637220
+    second: HongGildong_Run_Cleaned_31
+  - first:
+      213: -2225319899074135275
+    second: HongRun_0_0
+  - first:
+      213: 677240294762775931
+    second: HongRun_0_1
+  - first:
+      213: 4804775227467869219
+    second: HongRun_0_2
+  - first:
+      213: -10652191300341097
+    second: HongRun_0_3
+  - first:
+      213: -4636607127036585328
+    second: HongRun_0_4
+  - first:
+      213: -2612242284477379899
+    second: HongRun_0_5
+  - first:
+      213: -7401950324589059321
+    second: HongRun_0_6
+  - first:
+      213: 7449036546039977670
+    second: HongRun_0_7
+  - first:
+      213: 7523457083759856793
+    second: HongRun_1_0
+  - first:
+      213: -248775416959761298
+    second: HongRun_1_1
+  - first:
+      213: -8972246258291701907
+    second: HongRun_1_2
+  - first:
+      213: 3750683852129619954
+    second: HongRun_1_3
+  - first:
+      213: 1220949704169186801
+    second: HongRun_1_4
+  - first:
+      213: 8240291204492834307
+    second: HongRun_1_5
+  - first:
+      213: 121115011924850542
+    second: HongRun_1_6
+  - first:
+      213: -5722689542967086686
+    second: HongRun_1_7
+  - first:
+      213: -6303254333047226878
+    second: HongRun_2_0
+  - first:
+      213: -1386199812006478950
+    second: HongRun_2_1
+  - first:
+      213: -2934359746706726482
+    second: HongRun_2_2
+  - first:
+      213: 156430511355599680
+    second: HongRun_2_3
+  - first:
+      213: -4908214722751063939
+    second: HongRun_2_4
+  - first:
+      213: -4692259914567825251
+    second: HongRun_2_5
+  - first:
+      213: -566446279277197820
+    second: HongRun_2_6
+  - first:
+      213: -57962413598076219
+    second: HongRun_2_7
+  - first:
+      213: -2859647755152657308
+    second: HongRun_3_0
+  - first:
+      213: -5171719247092214572
+    second: HongRun_3_1
+  - first:
+      213: -7043803783357871316
+    second: HongRun_3_2
+  - first:
+      213: 5499229057365366049
+    second: HongRun_3_3
+  - first:
+      213: -6665470447604119230
+    second: HongRun_3_4
+  - first:
+      213: 4335319418986776885
+    second: HongRun_3_5
+  - first:
+      213: -5263055458561066265
+    second: HongRun_3_6
+  - first:
+      213: -7718274289674784147
+    second: HongRun_3_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 114.28572
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HongRun_0_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 666
+        width: 221
+        height: 221
+      alignment: 9
+      pivot: {x: 0.5834276, y: 0.029237734}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51bf31097531e11e0800000000000000
+      internalID: -2225319899074135275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_0_1
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 666
+        width: 222
+        height: 221
+      alignment: 9
+      pivot: {x: 0.5807995, y: 0.056387056}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b758aecb57a066900800000000000000
+      internalID: 677240294762775931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_0_2
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 666
+        width: 222
+        height: 221
+      alignment: 9
+      pivot: {x: 0.5807995, y: 0.06996172}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32ca1d2dc9dfda240800000000000000
+      internalID: 4804775227467869219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_0_3
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 666
+        width: 222
+        height: 221
+      alignment: 9
+      pivot: {x: 0.5807995, y: 0.06996172}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 792b67173e72adff0800000000000000
+      internalID: -10652191300341097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_0_4
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 666
+        width: 221
+        height: 221
+      alignment: 9
+      pivot: {x: 0.5834276, y: 0.06996172}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09a90fd326677afb0800000000000000
+      internalID: -4636607127036585328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_0_5
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 666
+        width: 222
+        height: 221
+      alignment: 9
+      pivot: {x: 0.5807995, y: 0.06996172}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ca88768b737fbbd0800000000000000
+      internalID: -2612242284477379899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_0_6
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 666
+        width: 222
+        height: 221
+      alignment: 9
+      pivot: {x: 0.5807995, y: 0.05186217}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70328c1a56df64990800000000000000
+      internalID: -7401950324589059321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_0_7
+      rect:
+        serializedVersion: 2
+        x: 1552
+        y: 666
+        width: 222
+        height: 221
+      alignment: 9
+      pivot: {x: 0.5807995, y: 0.06996172}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c69d9d954b406760800000000000000
+      internalID: 7449036546039977670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_1_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 444
+        width: 221
+        height: 222
+      alignment: 9
+      pivot: {x: 0.54751134, y: 0.065142065}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99c07605b50b86860800000000000000
+      internalID: 7523457083759856793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_1_1
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 444
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.545045, y: 0.069646575}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e64834b831c2c8cf0800000000000000
+      internalID: -248775416959761298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_1_2
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 444
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.545045, y: 0.0966736}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d670239a09d2c7380800000000000000
+      internalID: -8972246258291701907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_1_3
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 444
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.545045, y: 0.0966736}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ffcafe671b1d0430800000000000000
+      internalID: 3750683852129619954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_1_4
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 444
+        width: 221
+        height: 222
+      alignment: 9
+      pivot: {x: 0.54751134, y: 0.0966736}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f56f9d794fa1f010800000000000000
+      internalID: 1220949704169186801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_1_5
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 444
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.545045, y: 0.119196124}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 306329901356b5270800000000000000
+      internalID: 8240291204492834307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_1_6
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 444
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.545045, y: 0.0966736}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e677fbe26794ea100800000000000000
+      internalID: 121115011924850542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_1_7
+      rect:
+        serializedVersion: 2
+        x: 1552
+        y: 444
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.545045, y: 0.069646575}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a1ba974e2ce490b0800000000000000
+      internalID: -5722689542967086686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 222
+        width: 221
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5554299, y: 0.0966736}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20e37c584975688a0800000000000000
+      internalID: -6303254333047226878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_2_1
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 222
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5529279, y: 0.0921691}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9bf3a98d9a33cce0800000000000000
+      internalID: -1386199812006478950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_2_2
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 222
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5529279, y: 0.08316009}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ea127567b5f0747d0800000000000000
+      internalID: -2934359746706726482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_2_3
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 222
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5529279, y: 0.0921691}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 04b1265a8b0cb2200800000000000000
+      internalID: 156430511355599680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_2_4
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 222
+        width: 221
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5554299, y: 0.08316009}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d789419e6b482ebb0800000000000000
+      internalID: -4908214722751063939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_2_5
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 222
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5529279, y: 0.0921691}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d984166e77eb1eeb0800000000000000
+      internalID: -4692259914567825251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_2_6
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 222
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5529279, y: 0.1011781}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 40647533c149328f0800000000000000
+      internalID: -566446279277197820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_2_7
+      rect:
+        serializedVersion: 2
+        x: 1552
+        y: 222
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5529279, y: 0.0921691}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c2992fed73123ff0800000000000000
+      internalID: -57962413598076219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 221
+        height: 222
+      alignment: 9
+      pivot: {x: 0.510181, y: 0.0921691}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 464f16b848d7058d0800000000000000
+      internalID: -2859647755152657308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_3_1
+      rect:
+        serializedVersion: 2
+        x: 221
+        y: 0
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5078829, y: 0.12820514}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d49407eebc5a38b0800000000000000
+      internalID: -5171719247092214572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_3_2
+      rect:
+        serializedVersion: 2
+        x: 443
+        y: 0
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5078829, y: 0.10568261}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2bc66957c16f3e90800000000000000
+      internalID: -7043803783357871316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_3_3
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 0
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5078829, y: 0.0921691}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 125d4c601bf215c40800000000000000
+      internalID: 5499229057365366049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_3_4
+      rect:
+        serializedVersion: 2
+        x: 887
+        y: 0
+        width: 221
+        height: 222
+      alignment: 9
+      pivot: {x: 0.510181, y: 0.11018711}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 24941bd61fd7f73a0800000000000000
+      internalID: -6665470447604119230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_3_5
+      rect:
+        serializedVersion: 2
+        x: 1108
+        y: 0
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5078829, y: 0.12820514}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5394f84ca062a2c30800000000000000
+      internalID: 4335319418986776885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_3_6
+      rect:
+        serializedVersion: 2
+        x: 1330
+        y: 0
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5078829, y: 0.0921691}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ea794ff1fed5f6b0800000000000000
+      internalID: -5263055458561066265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongRun_3_7
+      rect:
+        serializedVersion: 2
+        x: 1552
+        y: 0
+        width: 222
+        height: 222
+      alignment: 9
+      pivot: {x: 0.5078829, y: 0.0966736}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6277ec3d6e23e490800000000000000
+      internalID: -7718274289674784147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HongGildong_Run_Cleaned_0: 3874061112073302215
+      HongGildong_Run_Cleaned_1: -127224999932001354
+      HongGildong_Run_Cleaned_10: 405086955918421202
+      HongGildong_Run_Cleaned_11: -359683293471800891
+      HongGildong_Run_Cleaned_12: 4778515902092054111
+      HongGildong_Run_Cleaned_13: 1499688240949911436
+      HongGildong_Run_Cleaned_14: -6618647657836279211
+      HongGildong_Run_Cleaned_15: 604592648134661113
+      HongGildong_Run_Cleaned_16: -5170090583594161969
+      HongGildong_Run_Cleaned_17: 2429210010295749267
+      HongGildong_Run_Cleaned_18: 7675037110095763956
+      HongGildong_Run_Cleaned_19: -5918945742518190238
+      HongGildong_Run_Cleaned_2: -2541200218310955602
+      HongGildong_Run_Cleaned_20: -4445090755755793537
+      HongGildong_Run_Cleaned_21: 8753125265887829163
+      HongGildong_Run_Cleaned_22: 8705879411049825916
+      HongGildong_Run_Cleaned_23: -3004038120269620685
+      HongGildong_Run_Cleaned_24: -7210446545752206737
+      HongGildong_Run_Cleaned_25: 8751324604286643788
+      HongGildong_Run_Cleaned_26: -6234749914646030185
+      HongGildong_Run_Cleaned_27: 8789675026640554570
+      HongGildong_Run_Cleaned_28: 2509746576003343546
+      HongGildong_Run_Cleaned_29: 3219877556934748738
+      HongGildong_Run_Cleaned_3: -4689725686818755436
+      HongGildong_Run_Cleaned_30: -6740822160712201401
+      HongGildong_Run_Cleaned_31: 1210826742792637220
+      HongGildong_Run_Cleaned_4: -5053461114886835069
+      HongGildong_Run_Cleaned_5: 2065524467042930702
+      HongGildong_Run_Cleaned_6: -8105752556605847751
+      HongGildong_Run_Cleaned_7: 486718391697309289
+      HongGildong_Run_Cleaned_8: -8181670201038521821
+      HongGildong_Run_Cleaned_9: -4513576504314735444
+      HongRun_0_0: -2225319899074135275
+      HongRun_0_1: 677240294762775931
+      HongRun_0_2: 4804775227467869219
+      HongRun_0_3: -10652191300341097
+      HongRun_0_4: -4636607127036585328
+      HongRun_0_5: -2612242284477379899
+      HongRun_0_6: -7401950324589059321
+      HongRun_0_7: 7449036546039977670
+      HongRun_1_0: 7523457083759856793
+      HongRun_1_1: -248775416959761298
+      HongRun_1_2: -8972246258291701907
+      HongRun_1_3: 3750683852129619954
+      HongRun_1_4: 1220949704169186801
+      HongRun_1_5: 8240291204492834307
+      HongRun_1_6: 121115011924850542
+      HongRun_1_7: -5722689542967086686
+      HongRun_2_0: -6303254333047226878
+      HongRun_2_1: -1386199812006478950
+      HongRun_2_2: -2934359746706726482
+      HongRun_2_3: 156430511355599680
+      HongRun_2_4: -4908214722751063939
+      HongRun_2_5: -4692259914567825251
+      HongRun_2_6: -566446279277197820
+      HongRun_2_7: -57962413598076219
+      HongRun_3_0: -2859647755152657308
+      HongRun_3_1: -5171719247092214572
+      HongRun_3_2: -7043803783357871316
+      HongRun_3_3: 5499229057365366049
+      HongRun_3_4: -6665470447604119230
+      HongRun_3_5: 4335319418986776885
+      HongRun_3_6: -5263055458561066265
+      HongRun_3_7: -7718274289674784147
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

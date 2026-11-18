@@ -12,6 +12,10 @@ namespace Storybook
         [SerializeField] SpriteRenderer body;
         [SerializeField] float artworkGroundOffset = .02f;
         [SerializeField] Sprite idleFront, idleBack;
+        [SerializeField] Sprite[] sheathedRun = new Sprite[32];
+        [SerializeField] Sprite[] sheathedRunFrontOverride = new Sprite[4];
+        [SerializeField, Min(1f)] float sheathedRunFramesPerSecond = 8f;
+        float sheathedRunTime;
         [SerializeField] Sprite[] swingFront, swingBack;
         [SerializeField] Sprite[] walkFront, walkBack;
         [SerializeField] Sprite[] runFront, runBack;
@@ -314,6 +318,8 @@ namespace Storybook
             if (Mathf.Abs(direction.z) > .01f) back = direction.z > 0f;
         }
 
+        internal Vector3 FacingDirection => facing;
+
         internal void ApplyKnockback(Vector3 direction, float distance)
         {
             direction = Vector3.ProjectOnPlane(direction, Vector3.up);
@@ -432,7 +438,24 @@ namespace Storybook
             if (velocity.sqrMagnitude < .01f)
             {
                 gaitPhase = 0f;
+                sheathedRunTime = 0f;
                 return back ? idleBack : idleFront;
+            }
+            if (!IsWindstepActive && sheathedRun.Length == 32 &&
+                System.Array.TrueForAll(sheathedRun, frame => frame != null))
+            {
+                int direction = Mathf.Abs(facing.x) > Mathf.Abs(facing.z)
+                    ? (facing.x > 0f ? 3 : 2) : (facing.z > 0f ? 1 : 0);
+                bool useFrontOverride = direction == 0 && sheathedRunFrontOverride.Length == 4 &&
+                    System.Array.TrueForAll(sheathedRunFrontOverride, frame => frame != null);
+                int frameCount = useFrontOverride ? sheathedRunFrontOverride.Length : 8;
+                sheathedRunTime = Mathf.Repeat(sheathedRunTime + Time.deltaTime,
+                    frameCount / sheathedRunFramesPerSecond);
+                int frameIndex = Mathf.Min(frameCount - 1, Mathf.FloorToInt(
+                    sheathedRunTime * sheathedRunFramesPerSecond));
+                body.flipX = false;
+                return useFrontOverride ? sheathedRunFrontOverride[frameIndex]
+                    : sheathedRun[direction * 8 + frameIndex];
             }
             Sprite[] frames = back ? walkBack : walkFront;
             float cycleDistance = WalkCycleDistance;
