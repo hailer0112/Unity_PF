@@ -1,0 +1,661 @@
+fileFormatVersion: 2
+guid: bbc84ac221a95234bbb1767319f64786
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2656042670130252615
+    second: HongGildong_SwordTyphoon_Cast_0
+  - first:
+      213: 4861747305753097762
+    second: HongGildong_SwordTyphoon_Cast_1
+  - first:
+      213: 3092397497394236954
+    second: HongGildong_SwordTyphoon_Cast_2
+  - first:
+      213: -6836136996594179577
+    second: HongGildong_SwordTyphoon_Cast_3
+  - first:
+      213: -4286892714098737933
+    second: HongGildong_SwordTyphoon_Cast_4
+  - first:
+      213: -1362295040129655326
+    second: HongGildong_SwordTyphoon_Cast_5
+  - first:
+      213: -5629538726373067614
+    second: HongGildong_SwordTyphoon_Cast_6
+  - first:
+      213: -482417585744785487
+    second: HongGildong_SwordTyphoon_Cast_7
+  - first:
+      213: -3383336698797847569
+    second: HongGildong_SwordTyphoon_Cast_8
+  - first:
+      213: -275636518779388399
+    second: HongGildong_SwordTyphoon_Cast_9
+  - first:
+      213: 565233592232310158
+    second: HongGildong_SwordTyphoon_Cast_10
+  - first:
+      213: -5261609367173991273
+    second: HongGildong_SwordTyphoon_Cast_11
+  - first:
+      213: -3876691735082022082
+    second: HongGildong_SwordTyphoon_Cast_12
+  - first:
+      213: 1599174062986660911
+    second: HongGildong_SwordTyphoon_Cast_13
+  - first:
+      213: 4527071434711319146
+    second: HongGildong_SwordTyphoon_Cast_14
+  - first:
+      213: 6837799377643224994
+    second: HongGildong_SwordTyphoon_Cast_15
+  - first:
+      213: -7876272833696929092
+    second: HongGildong_SwordTyphoon_Cast_16
+  - first:
+      213: 3063333249501724311
+    second: HongGildong_SwordTyphoon_Cast_17
+  - first:
+      213: -8716942921191779423
+    second: HongGildong_SwordTyphoon_Cast_18
+  - first:
+      213: 4956538456085533741
+    second: HongGildong_SwordTyphoon_Cast_19
+  - first:
+      213: -3367372239054193613
+    second: HongGildong_SwordTyphoon_Cast_20
+  - first:
+      213: 2041643547336085864
+    second: HongGildong_SwordTyphoon_Cast_21
+  - first:
+      213: -5060517998058152691
+    second: HongGildong_SwordTyphoon_Cast_22
+  - first:
+      213: 7250442666134119874
+    second: HongGildong_SwordTyphoon_Cast_23
+  - first:
+      213: -23101936356598957
+    second: HongGildong_SwordTyphoon_Cast_24
+  - first:
+      213: -1757028606966177608
+    second: HongTyphoonCast_Right_0
+  - first:
+      213: -476624906955860135
+    second: HongTyphoonCast_Right_1
+  - first:
+      213: 8579826709518848374
+    second: HongTyphoonCast_Right_2
+  - first:
+      213: 1439205891072865396
+    second: HongTyphoonCast_Right_3
+  - first:
+      213: 8900826306555874803
+    second: HongTyphoonCast_Left_0
+  - first:
+      213: -1867858303506419428
+    second: HongTyphoonCast_Left_1
+  - first:
+      213: 1831694732698862224
+    second: HongTyphoonCast_Left_2
+  - first:
+      213: -4965646892358793330
+    second: HongTyphoonCast_Left_3
+  - first:
+      213: -8069352712753206188
+    second: HongTyphoonCast_Front_0
+  - first:
+      213: -9065679718456498895
+    second: HongTyphoonCast_Front_1
+  - first:
+      213: 2750291098215444049
+    second: HongTyphoonCast_Front_2
+  - first:
+      213: -6639760643758560096
+    second: HongTyphoonCast_Front_3
+  - first:
+      213: -802794965231995245
+    second: HongTyphoonCast_Back_0
+  - first:
+      213: -4199261203212080769
+    second: HongTyphoonCast_Back_1
+  - first:
+      213: 5596585903314199536
+    second: HongTyphoonCast_Back_2
+  - first:
+      213: 5690781335764131021
+    second: HongTyphoonCast_Back_3
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 98
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HongTyphoonCast_Right_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b0e4958ac7cd97e0800000000000000
+      internalID: -1757028606966177608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Right_1
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 768
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 957dac12c20b269f0800000000000000
+      internalID: -476624906955860135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Right_2
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 768
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 67197473feaa11770800000000000000
+      internalID: 8579826709518848374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Right_3
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 768
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4743c08f12619f310800000000000000
+      internalID: 1439205891072865396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Left_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fd07b10e56168b70800000000000000
+      internalID: 8900826306555874803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Left_1
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 512
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c117cb0f4c80416e0800000000000000
+      internalID: -1867858303506419428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Left_2
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 512
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 092487797ac7b6910800000000000000
+      internalID: 1831694732698862224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Left_3
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 512
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e878ee4e57a761bb0800000000000000
+      internalID: -4965646892358793330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Front_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45ca2050676e30090800000000000000
+      internalID: -8069352712753206188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Front_1
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 256
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 135efedf35c303280800000000000000
+      internalID: -9065679718456498895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Front_2
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 256
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15eec02ae2ffa2620800000000000000
+      internalID: 2750291098215444049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Front_3
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 256
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ace62b9fd4dad3a0800000000000000
+      internalID: -6639760643758560096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Back_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 396ffd58b36ebd4f0800000000000000
+      internalID: -802794965231995245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Back_1
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f79e67f2f2a39b5c0800000000000000
+      internalID: -4199261203212080769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Back_2
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f360022a311bad40800000000000000
+      internalID: 5596585903314199536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonCast_Back_3
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 0
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.15625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dccd4ac4977b9fe40800000000000000
+      internalID: 5690781335764131021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HongGildong_SwordTyphoon_Cast_0: 2656042670130252615
+      HongGildong_SwordTyphoon_Cast_1: 4861747305753097762
+      HongGildong_SwordTyphoon_Cast_10: 565233592232310158
+      HongGildong_SwordTyphoon_Cast_11: -5261609367173991273
+      HongGildong_SwordTyphoon_Cast_12: -3876691735082022082
+      HongGildong_SwordTyphoon_Cast_13: 1599174062986660911
+      HongGildong_SwordTyphoon_Cast_14: 4527071434711319146
+      HongGildong_SwordTyphoon_Cast_15: 6837799377643224994
+      HongGildong_SwordTyphoon_Cast_16: -7876272833696929092
+      HongGildong_SwordTyphoon_Cast_17: 3063333249501724311
+      HongGildong_SwordTyphoon_Cast_18: -8716942921191779423
+      HongGildong_SwordTyphoon_Cast_19: 4956538456085533741
+      HongGildong_SwordTyphoon_Cast_2: 3092397497394236954
+      HongGildong_SwordTyphoon_Cast_20: -3367372239054193613
+      HongGildong_SwordTyphoon_Cast_21: 2041643547336085864
+      HongGildong_SwordTyphoon_Cast_22: -5060517998058152691
+      HongGildong_SwordTyphoon_Cast_23: 7250442666134119874
+      HongGildong_SwordTyphoon_Cast_24: -23101936356598957
+      HongGildong_SwordTyphoon_Cast_3: -6836136996594179577
+      HongGildong_SwordTyphoon_Cast_4: -4286892714098737933
+      HongGildong_SwordTyphoon_Cast_5: -1362295040129655326
+      HongGildong_SwordTyphoon_Cast_6: -5629538726373067614
+      HongGildong_SwordTyphoon_Cast_7: -482417585744785487
+      HongGildong_SwordTyphoon_Cast_8: -3383336698797847569
+      HongGildong_SwordTyphoon_Cast_9: -275636518779388399
+      HongTyphoonCast_Back_0: -802794965231995245
+      HongTyphoonCast_Back_1: -4199261203212080769
+      HongTyphoonCast_Back_2: 5596585903314199536
+      HongTyphoonCast_Back_3: 5690781335764131021
+      HongTyphoonCast_Front_0: -8069352712753206188
+      HongTyphoonCast_Front_1: -9065679718456498895
+      HongTyphoonCast_Front_2: 2750291098215444049
+      HongTyphoonCast_Front_3: -6639760643758560096
+      HongTyphoonCast_Left_0: 8900826306555874803
+      HongTyphoonCast_Left_1: -1867858303506419428
+      HongTyphoonCast_Left_2: 1831694732698862224
+      HongTyphoonCast_Left_3: -4965646892358793330
+      HongTyphoonCast_Right_0: -1757028606966177608
+      HongTyphoonCast_Right_1: -476624906955860135
+      HongTyphoonCast_Right_2: 8579826709518848374
+      HongTyphoonCast_Right_3: 1439205891072865396
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

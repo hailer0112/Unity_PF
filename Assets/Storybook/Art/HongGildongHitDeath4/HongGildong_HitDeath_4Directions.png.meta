@@ -1,0 +1,1345 @@
+fileFormatVersion: 2
+guid: aa8ace49df216de4ea28d3dfd0101668
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -1403096741333994475
+    second: HongGildong_HitDeath_4Directions_0
+  - first:
+      213: -401154203712416627
+    second: HongGildong_HitDeath_4Directions_1
+  - first:
+      213: -1210740097945458526
+    second: HongGildong_HitDeath_4Directions_2
+  - first:
+      213: 184274139206450707
+    second: HongGildong_HitDeath_4Directions_3
+  - first:
+      213: 8433086560346367205
+    second: HongGildong_HitDeath_4Directions_4
+  - first:
+      213: -3449674735264891891
+    second: HongGildong_HitDeath_4Directions_5
+  - first:
+      213: -6167902752420140100
+    second: HongGildong_HitDeath_4Directions_6
+  - first:
+      213: -9035859789817553630
+    second: HongGildong_HitDeath_4Directions_7
+  - first:
+      213: 330756190538044148
+    second: HongGildong_HitDeath_4Directions_8
+  - first:
+      213: -7793811987860418934
+    second: HongGildong_HitDeath_4Directions_9
+  - first:
+      213: 83411235758173112
+    second: HongGildong_HitDeath_4Directions_10
+  - first:
+      213: 2968703458119943861
+    second: HongGildong_HitDeath_4Directions_11
+  - first:
+      213: 3179296856541688347
+    second: HongGildong_HitDeath_4Directions_12
+  - first:
+      213: -1625206640909300108
+    second: HongGildong_HitDeath_4Directions_13
+  - first:
+      213: -986866671856063292
+    second: HongGildong_HitDeath_4Directions_14
+  - first:
+      213: 5924250392785364646
+    second: HongGildong_HitDeath_4Directions_15
+  - first:
+      213: 1304699161275257544
+    second: HongGildong_HitDeath_4Directions_16
+  - first:
+      213: -914349563518201956
+    second: HongGildong_HitDeath_4Directions_17
+  - first:
+      213: 775233256529625869
+    second: HongGildong_HitDeath_4Directions_18
+  - first:
+      213: -7236192917110385691
+    second: HongGildong_HitDeath_4Directions_19
+  - first:
+      213: 5614492253499678562
+    second: HongGildong_HitDeath_4Directions_20
+  - first:
+      213: 5874949628041176087
+    second: HongGildong_HitDeath_4Directions_21
+  - first:
+      213: 8202146173207389492
+    second: HongGildong_HitDeath_4Directions_22
+  - first:
+      213: 8051497903960687035
+    second: HongGildong_HitDeath_4Directions_23
+  - first:
+      213: 8454358668915323541
+    second: HongGildong_HitDeath_4Directions_24
+  - first:
+      213: -4490518788334128400
+    second: HongGildong_HitDeath_4Directions_25
+  - first:
+      213: -5705684132803657654
+    second: HongGildong_HitDeath_4Directions_26
+  - first:
+      213: 226954772603802444
+    second: HongGildong_HitDeath_4Directions_27
+  - first:
+      213: -8191320276384395501
+    second: HongGildong_HitDeath_4Directions_28
+  - first:
+      213: 234061826614863852
+    second: HongGildong_HitDeath_4Directions_29
+  - first:
+      213: -3652660817058169199
+    second: HongGildong_HitDeath_4Directions_30
+  - first:
+      213: 2168032652506793608
+    second: HongGildong_HitDeath_4Directions_31
+  - first:
+      213: 6332056249875935995
+    second: HongGildong_HitDeath_4Directions_32
+  - first:
+      213: 3680084272889197973
+    second: HongGildong_HitDeath_4Directions_33
+  - first:
+      213: -8463969273989633828
+    second: HongGildong_HitDeath_4Directions_34
+  - first:
+      213: 4006238608314388024
+    second: HongGildong_HitDeath_4Directions_35
+  - first:
+      213: -7005813155496722245
+    second: HongGildong_HitDeath_4Directions_36
+  - first:
+      213: -2792909797308516701
+    second: HongGildong_HitDeath_4Directions_37
+  - first:
+      213: -592962517562214672
+    second: HongGildong_HitDeath_4Directions_38
+  - first:
+      213: -6246642991411447841
+    second: HongGildong_HitDeath_4Directions_39
+  - first:
+      213: 4316746218295810785
+    second: HongHit_Right_0
+  - first:
+      213: 4047531041472603846
+    second: HongHit_Right_1
+  - first:
+      213: 4838955175568875988
+    second: HongHit_Right_2
+  - first:
+      213: -4347748144434720054
+    second: HongHit_Right_3
+  - first:
+      213: -3281011287261168267
+    second: HongDeath_Right_0
+  - first:
+      213: -7377381178356576954
+    second: HongDeath_Right_1
+  - first:
+      213: -4191104898786730258
+    second: HongDeath_Right_2
+  - first:
+      213: 9094993988151169066
+    second: HongDeath_Right_3
+  - first:
+      213: 7281648110161841740
+    second: HongDeath_Right_4
+  - first:
+      213: -4465925710920296975
+    second: HongDeath_Right_5
+  - first:
+      213: -8625496663828798736
+    second: HongHit_Left_0
+  - first:
+      213: -4299991064980480083
+    second: HongHit_Left_1
+  - first:
+      213: -5174484160143132065
+    second: HongHit_Left_2
+  - first:
+      213: -158705769496996922
+    second: HongHit_Left_3
+  - first:
+      213: 7115760495271934207
+    second: HongDeath_Left_0
+  - first:
+      213: 7746965310349658904
+    second: HongDeath_Left_1
+  - first:
+      213: -4748012211163318387
+    second: HongDeath_Left_2
+  - first:
+      213: -4992919899536823831
+    second: HongDeath_Left_3
+  - first:
+      213: 4297209577419026763
+    second: HongDeath_Left_4
+  - first:
+      213: 1619090930623994587
+    second: HongDeath_Left_5
+  - first:
+      213: 8038443116493968236
+    second: HongHit_Front_0
+  - first:
+      213: -4551230892046075404
+    second: HongHit_Front_1
+  - first:
+      213: 4756893292164323200
+    second: HongHit_Front_2
+  - first:
+      213: -1949704672404311846
+    second: HongHit_Front_3
+  - first:
+      213: 6603380912937986651
+    second: HongDeath_Front_0
+  - first:
+      213: -9178235462429275752
+    second: HongDeath_Front_1
+  - first:
+      213: -2678063596945241025
+    second: HongDeath_Front_2
+  - first:
+      213: -1453997055527635566
+    second: HongDeath_Front_3
+  - first:
+      213: 4836487948052679466
+    second: HongDeath_Front_4
+  - first:
+      213: 5129580690792891974
+    second: HongDeath_Front_5
+  - first:
+      213: -9187437002547991884
+    second: HongHit_Back_0
+  - first:
+      213: -5698130874198453753
+    second: HongHit_Back_1
+  - first:
+      213: -7993041008321158714
+    second: HongHit_Back_2
+  - first:
+      213: 6514535831791080603
+    second: HongHit_Back_3
+  - first:
+      213: 189166510030223450
+    second: HongDeath_Back_0
+  - first:
+      213: 160121025469499826
+    second: HongDeath_Back_1
+  - first:
+      213: 434227109477152343
+    second: HongDeath_Back_2
+  - first:
+      213: -8969695650489541580
+    second: HongDeath_Back_3
+  - first:
+      213: 7391673096639019691
+    second: HongDeath_Back_4
+  - first:
+      213: -5103397809307563096
+    second: HongDeath_Back_5
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 81.71429
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HongHit_Right_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ea580f70d928eb30800000000000000
+      internalID: 4316746218295810785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Right_1
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 576
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c667589908bb2830800000000000000
+      internalID: 4047531041472603846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Right_2
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 576
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d122d3281c672340800000000000000
+      internalID: 4838955175568875988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Right_3
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 576
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac2da161912b9a3c0800000000000000
+      internalID: -4347748144434720054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Right_0
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 576
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57d30c62e918772d0800000000000000
+      internalID: -3281011287261168267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Right_1
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 576
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64d4763c7e64e9990800000000000000
+      internalID: -7377381178356576954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Right_2
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 576
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eeeda6bcc4436d5c0800000000000000
+      internalID: -4191104898786730258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Right_3
+      rect:
+        serializedVersion: 2
+        x: 1232
+        y: 576
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a20501a48d8e73e70800000000000000
+      internalID: 9094993988151169066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Right_4
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 576
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4e4799506c9d0560800000000000000
+      internalID: 7281648110161841740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Right_5
+      rect:
+        serializedVersion: 2
+        x: 1584
+        y: 576
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f5df473a38d502c0800000000000000
+      internalID: -4465925710920296975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Left_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0f2ea2deb741c4880800000000000000
+      internalID: -8625496663828798736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Left_1
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 384
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daf1c72a8ec5354c0800000000000000
+      internalID: -4299991064980480083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Left_2
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 384
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5a78ca621a8038b0800000000000000
+      internalID: -5174484160143132065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Left_3
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 384
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c3935981f92ccdf0800000000000000
+      internalID: -158705769496996922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Left_0
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 384
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff8f073387240c260800000000000000
+      internalID: 7115760495271934207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Left_1
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 384
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81b4aa297efb28b60800000000000000
+      internalID: 7746965310349658904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Left_2
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 384
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d87b46ccc0cab1eb0800000000000000
+      internalID: -4748012211163318387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Left_3
+      rect:
+        serializedVersion: 2
+        x: 1232
+        y: 384
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9e9e0241ec595bab0800000000000000
+      internalID: -4992919899536823831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Left_4
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 384
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b41b773d751c2ab30800000000000000
+      internalID: 4297209577419026763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Left_5
+      rect:
+        serializedVersion: 2
+        x: 1584
+        y: 384
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bda56e28f9a287610800000000000000
+      internalID: 1619090930623994587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Front_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c639ec9cc694e8f60800000000000000
+      internalID: 8038443116493968236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Front_1
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 192
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f93fccfd97c6d0c0800000000000000
+      internalID: -4551230892046075404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Front_2
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 192
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08794e10f31e30240800000000000000
+      internalID: 4756893292164323200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Front_3
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 192
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad0fb603ee141f4e0800000000000000
+      internalID: -1949704672404311846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Front_0
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 192
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b5a634044fbe3ab50800000000000000
+      internalID: 6603380912937986651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Front_1
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 192
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 899820da97b50a080800000000000000
+      internalID: -9178235462429275752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Front_2
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 192
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3c8c2af85b95dad0800000000000000
+      internalID: -2678063596945241025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Front_3
+      rect:
+        serializedVersion: 2
+        x: 1232
+        y: 192
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 295bfc0b16d52dbe0800000000000000
+      internalID: -1453997055527635566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Front_4
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 192
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a2b4328f928ae1340800000000000000
+      internalID: 4836487948052679466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Front_5
+      rect:
+        serializedVersion: 2
+        x: 1584
+        y: 192
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 646c969e57eef2740800000000000000
+      internalID: 5129580690792891974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Back_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bae8da29baaf7080800000000000000
+      internalID: -9187437002547991884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Back_1
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 0
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 70217bfe82c2ce0b0800000000000000
+      internalID: -5698130874198453753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Back_2
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 0
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c123e74d83031190800000000000000
+      internalID: -7993041008321158714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongHit_Back_3
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 0
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b941672d2d7486a50800000000000000
+      internalID: 6514535831791080603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Back_0
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 0
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5870c940fd00a200800000000000000
+      internalID: 189166510030223450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Back_1
+      rect:
+        serializedVersion: 2
+        x: 880
+        y: 0
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b94e2c693dd83200800000000000000
+      internalID: 160121025469499826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Back_2
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 0
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 756fa34614fa60600800000000000000
+      internalID: 434227109477152343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Back_3
+      rect:
+        serializedVersion: 2
+        x: 1232
+        y: 0
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43c5431545d358380800000000000000
+      internalID: -8969695650489541580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Back_4
+      rect:
+        serializedVersion: 2
+        x: 1408
+        y: 0
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: baafaf4c48f749660800000000000000
+      internalID: 7391673096639019691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDeath_Back_5
+      rect:
+        serializedVersion: 2
+        x: 1584
+        y: 0
+        width: 176
+        height: 192
+      alignment: 9
+      pivot: {x: 0.5, y: 0.108125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ab47bc3bb61d29b0800000000000000
+      internalID: -5103397809307563096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HongDeath_Back_0: 189166510030223450
+      HongDeath_Back_1: 160121025469499826
+      HongDeath_Back_2: 434227109477152343
+      HongDeath_Back_3: -8969695650489541580
+      HongDeath_Back_4: 7391673096639019691
+      HongDeath_Back_5: -5103397809307563096
+      HongDeath_Front_0: 6603380912937986651
+      HongDeath_Front_1: -9178235462429275752
+      HongDeath_Front_2: -2678063596945241025
+      HongDeath_Front_3: -1453997055527635566
+      HongDeath_Front_4: 4836487948052679466
+      HongDeath_Front_5: 5129580690792891974
+      HongDeath_Left_0: 7115760495271934207
+      HongDeath_Left_1: 7746965310349658904
+      HongDeath_Left_2: -4748012211163318387
+      HongDeath_Left_3: -4992919899536823831
+      HongDeath_Left_4: 4297209577419026763
+      HongDeath_Left_5: 1619090930623994587
+      HongDeath_Right_0: -3281011287261168267
+      HongDeath_Right_1: -7377381178356576954
+      HongDeath_Right_2: -4191104898786730258
+      HongDeath_Right_3: 9094993988151169066
+      HongDeath_Right_4: 7281648110161841740
+      HongDeath_Right_5: -4465925710920296975
+      HongGildong_HitDeath_4Directions_0: -1403096741333994475
+      HongGildong_HitDeath_4Directions_1: -401154203712416627
+      HongGildong_HitDeath_4Directions_10: 83411235758173112
+      HongGildong_HitDeath_4Directions_11: 2968703458119943861
+      HongGildong_HitDeath_4Directions_12: 3179296856541688347
+      HongGildong_HitDeath_4Directions_13: -1625206640909300108
+      HongGildong_HitDeath_4Directions_14: -986866671856063292
+      HongGildong_HitDeath_4Directions_15: 5924250392785364646
+      HongGildong_HitDeath_4Directions_16: 1304699161275257544
+      HongGildong_HitDeath_4Directions_17: -914349563518201956
+      HongGildong_HitDeath_4Directions_18: 775233256529625869
+      HongGildong_HitDeath_4Directions_19: -7236192917110385691
+      HongGildong_HitDeath_4Directions_2: -1210740097945458526
+      HongGildong_HitDeath_4Directions_20: 5614492253499678562
+      HongGildong_HitDeath_4Directions_21: 5874949628041176087
+      HongGildong_HitDeath_4Directions_22: 8202146173207389492
+      HongGildong_HitDeath_4Directions_23: 8051497903960687035
+      HongGildong_HitDeath_4Directions_24: 8454358668915323541
+      HongGildong_HitDeath_4Directions_25: -4490518788334128400
+      HongGildong_HitDeath_4Directions_26: -5705684132803657654
+      HongGildong_HitDeath_4Directions_27: 226954772603802444
+      HongGildong_HitDeath_4Directions_28: -8191320276384395501
+      HongGildong_HitDeath_4Directions_29: 234061826614863852
+      HongGildong_HitDeath_4Directions_3: 184274139206450707
+      HongGildong_HitDeath_4Directions_30: -3652660817058169199
+      HongGildong_HitDeath_4Directions_31: 2168032652506793608
+      HongGildong_HitDeath_4Directions_32: 6332056249875935995
+      HongGildong_HitDeath_4Directions_33: 3680084272889197973
+      HongGildong_HitDeath_4Directions_34: -8463969273989633828
+      HongGildong_HitDeath_4Directions_35: 4006238608314388024
+      HongGildong_HitDeath_4Directions_36: -7005813155496722245
+      HongGildong_HitDeath_4Directions_37: -2792909797308516701
+      HongGildong_HitDeath_4Directions_38: -592962517562214672
+      HongGildong_HitDeath_4Directions_39: -6246642991411447841
+      HongGildong_HitDeath_4Directions_4: 8433086560346367205
+      HongGildong_HitDeath_4Directions_5: -3449674735264891891
+      HongGildong_HitDeath_4Directions_6: -6167902752420140100
+      HongGildong_HitDeath_4Directions_7: -9035859789817553630
+      HongGildong_HitDeath_4Directions_8: 330756190538044148
+      HongGildong_HitDeath_4Directions_9: -7793811987860418934
+      HongHit_Back_0: -9187437002547991884
+      HongHit_Back_1: -5698130874198453753
+      HongHit_Back_2: -7993041008321158714
+      HongHit_Back_3: 6514535831791080603
+      HongHit_Front_0: 8038443116493968236
+      HongHit_Front_1: -4551230892046075404
+      HongHit_Front_2: 4756893292164323200
+      HongHit_Front_3: -1949704672404311846
+      HongHit_Left_0: -8625496663828798736
+      HongHit_Left_1: -4299991064980480083
+      HongHit_Left_2: -5174484160143132065
+      HongHit_Left_3: -158705769496996922
+      HongHit_Right_0: 4316746218295810785
+      HongHit_Right_1: 4047531041472603846
+      HongHit_Right_2: 4838955175568875988
+      HongHit_Right_3: -4347748144434720054
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

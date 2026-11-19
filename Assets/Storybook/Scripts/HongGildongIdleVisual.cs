@@ -8,6 +8,14 @@ namespace Storybook
         [SerializeField] SpriteRenderer body;
         [SerializeField] Sprite idleFront, idleBack;
         [SerializeField] Sprite[] renewedIdle = new Sprite[4];
+        [SerializeField] Sprite[] hitFrames = new Sprite[16];
+        [SerializeField] Sprite[] deathFrames = new Sprite[24];
+        const float HitDuration = .30f;
+        const float DeathFrameDuration = .08f;
+        PlayerHealth health;
+        double hitStartedAt = double.NegativeInfinity;
+        double deathStartedAt = double.NegativeInfinity;
+        int hitDirection, deathDirection;
         [SerializeField, Min(.1f)] float loopDuration = 1.5f;
         [SerializeField, Range(0,2)] float strength = 1;
         [SerializeField, Range(0,2)] float breathPixels = .85f;
@@ -31,6 +39,7 @@ namespace Storybook
         public bool IsPlaying => rendering;
         void Awake()
         {
+            if (player != null) health = player.GetComponent<PlayerHealth>();
             sheathedIdle=Resources.LoadAll<Sprite>("HongGildongSheathedIdle");
             System.Array.Sort(sheathedIdle,(a,b)=>string.CompareOrdinal(a.name,b.name));
             idleClips=Resources.LoadAll<AnimationClip>("HongGildongIdle");
@@ -65,8 +74,64 @@ namespace Storybook
             mesh.Clear();mesh.vertices=rest;mesh.uv=uv;mesh.triangles=triangles;mesh.RecalculateBounds();
             material.mainTexture=sprite.texture;
         }
+        void OnEnable()
+        {
+            if (health == null) return;
+            health.Damaged += BeginHit;
+            health.Died += BeginDeath;
+        }
+
+        void BeginHit()
+        {
+            hitDirection = GetDamageDirection();
+            hitStartedAt = Time.timeAsDouble;
+        }
+
+        void BeginDeath()
+        {
+            deathDirection = GetDamageDirection();
+            deathStartedAt = Time.unscaledTimeAsDouble;
+        }
+
+        int GetDamageDirection()
+        {
+            Vector3 direction = player.FacingDirection;
+            return Mathf.Abs(direction.x) > Mathf.Abs(direction.z)
+                ? (direction.x > 0f ? 0 : 1) : (direction.z > 0f ? 3 : 2);
+        }
+
+        bool DrawDamagePose()
+        {
+            if (health == null) return false;
+            if (health.IsDead)
+            {
+                if (double.IsNegativeInfinity(deathStartedAt)) return false;
+                int frame = (int)System.Math.Min(5d, (Time.unscaledTimeAsDouble - deathStartedAt) / DeathFrameDuration);
+                return DrawDamageSprite(deathFrames, deathDirection, 6, frame);
+            }
+
+            double elapsed = Time.timeAsDouble - hitStartedAt;
+            if (!player.isActiveAndEnabled || elapsed >= HitDuration || player.Attacking || player.IsDashing ||
+                player.IsCastingAzureSlash || player.IsCastingCloneSlash || player.IsCastingSwordTyphoon)
+                return false;
+
+            int hitFrame = (int)(elapsed / HitDuration * 4);
+            return DrawDamageSprite(hitFrames, hitDirection, 4, hitFrame);
+        }
+
+        bool DrawDamageSprite(Sprite[] frames, int direction, int count, int frame)
+        {
+            if (frames.Length != count * 4 || frames[direction * count + frame] == null) return false;
+            Stop();
+            body.sprite = frames[direction * count + frame];
+            body.flipX = false;
+            body.enabled = true;
+            return true;
+        }
+
         void LateUpdate()
         {
+            if (DrawDamagePose()) return;
             bool eligible=player!=null && player.isActiveAndEnabled && !player.Attacking && !player.IsCastingAzureSlash && !player.IsCastingCloneSlash && !player.IsCastingSwordTyphoon && !player.IsDashing && !player.HasMoveDestination
                 && body.gameObject.activeInHierarchy && (body.sprite==idleFront || body.sprite==idleBack);
             if(!eligible || (!rendering && !body.enabled)){spriteClock=0f;Stop();return;}
@@ -136,7 +201,15 @@ namespace Storybook
             if(rendering && body!=null)body.enabled=true;
             rendering=false;
         }
-        void OnDisable(){Stop();}
+        void OnDisable()
+        {
+            if (health != null)
+            {
+                health.Damaged -= BeginHit;
+                health.Died -= BeginDeath;
+            }
+            Stop();
+        }
         void OnDestroy(){if(surface!=null)Destroy(surface.gameObject);if(mesh!=null)Destroy(mesh);if(material!=null)Destroy(material);}
     }
 }

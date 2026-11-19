@@ -20,7 +20,8 @@ namespace Storybook
         int nextTick = 1, tickCount;
 
         public static SwordTyphoon Create(Transform owner, Vector3 center, float radius, float duration,
-            float interval, int tickCount, float tickDamage, float burstDamage, float pullSpeed, LayerMask targetMask)
+            float interval, int tickCount, float tickDamage, float burstDamage, float pullSpeed, LayerMask targetMask,
+            Sprite[] groundFrames = null)
         {
             var root = new GameObject("Sword Typhoon");
             root.transform.position = center;
@@ -36,7 +37,7 @@ namespace Storybook
             vortex.targetMask = targetMask;
             vortex.startedAt = Time.timeAsDouble;
             vortex.visuals = root.AddComponent<SwordTyphoonVisual>();
-            vortex.visuals.Configure(radius);
+            vortex.visuals.Configure(radius, duration, groundFrames);
             return vortex;
         }
 

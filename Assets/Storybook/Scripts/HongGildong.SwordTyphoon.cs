@@ -18,6 +18,9 @@ namespace Storybook
         [SerializeField, Min(0f)] float swordTyphoonCastTime = .4f;
         [SerializeField, Min(0f)] float swordTyphoonPullSpeed = 2.6f;
 
+        [SerializeField] Sprite[] swordTyphoonCastFrames = new Sprite[16];
+        [SerializeField] Sprite[] swordTyphoonGroundFrames = new Sprite[8];
+
         InputAction swordTyphoonInput;
         Vector3 swordTyphoonCenter;
         double swordTyphoonStartedAt, swordTyphoonReadyAt;
@@ -34,6 +37,7 @@ namespace Storybook
                 return false;
 
             if (!TrySpendSkillMana(HudSkill.SwordTyphoon, swordTyphoonManaCost)) return false;
+            EnterCombatStance();
 
             Vector3 origin = transform.position;
             origin.y = ground.y;
@@ -54,10 +58,23 @@ namespace Storybook
         {
             MoveOnGround(Vector3.zero);
             float elapsed = (float)(Time.timeAsDouble - swordTyphoonStartedAt);
-            Sprite[] frames = back ? swingBack : swingFront;
             float progress = swordTyphoonCastTime > 0f ? elapsed / swordTyphoonCastTime : 1f;
-            body.flipX = left;
-            body.sprite = frames[Mathf.Clamp((int)(progress * frames.Length), 0, frames.Length - 1)];
+            int direction = Mathf.Abs(facing.x) > Mathf.Abs(facing.z)
+                ? (facing.x > 0f ? 0 : 1) : (facing.z > 0f ? 3 : 2);
+            Sprite pose = swordTyphoonCastFrames.Length == 16
+                ? swordTyphoonCastFrames[direction * 4 + Mathf.Clamp((int)(progress * 4), 0, 3)]
+                : null;
+            if (pose != null)
+            {
+                body.flipX = false;
+                body.sprite = pose;
+            }
+            else
+            {
+                Sprite[] frames = back ? swingBack : swingFront;
+                body.flipX = left;
+                body.sprite = frames[Mathf.Clamp((int)(progress * frames.Length), 0, frames.Length - 1)];
+            }
             body.transform.localPosition = Vector3.up * artworkGroundOffset;
             if (elapsed < swordTyphoonCastTime) return;
 
@@ -70,7 +87,7 @@ namespace Storybook
             swordTyphoons.Add(SwordTyphoon.Create(transform, center, swordTyphoonRadius,
                 swordTyphoonDuration, swordTyphoonTickInterval, swordTyphoonTickCount,
                 attackDamage * swordTyphoonTickDamageMultiplier, attackDamage * swordTyphoonBurstDamageMultiplier,
-                swordTyphoonPullSpeed, targetMask));
+                swordTyphoonPullSpeed, targetMask, swordTyphoonGroundFrames));
         }
 
         void CancelSwordTyphoon()

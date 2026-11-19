@@ -1,0 +1,749 @@
+fileFormatVersion: 2
+guid: 356030e271d37014f9973b73fb7b85a6
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6997737287743806707
+    second: HongGildong_Dash_4Directions_0
+  - first:
+      213: -3483977360907557362
+    second: HongGildong_Dash_4Directions_1
+  - first:
+      213: 1656747164738558714
+    second: HongGildong_Dash_4Directions_2
+  - first:
+      213: -1880853011190118984
+    second: HongGildong_Dash_4Directions_3
+  - first:
+      213: -8219256552258012304
+    second: HongGildong_Dash_4Directions_4
+  - first:
+      213: 8316068573703200555
+    second: HongGildong_Dash_4Directions_5
+  - first:
+      213: 5623058844503041945
+    second: HongGildong_Dash_4Directions_6
+  - first:
+      213: 2126194708114363996
+    second: HongGildong_Dash_4Directions_7
+  - first:
+      213: -5825470304964949004
+    second: HongGildong_Dash_4Directions_8
+  - first:
+      213: -7775702381483958325
+    second: HongGildong_Dash_4Directions_9
+  - first:
+      213: -2549538700384786812
+    second: HongGildong_Dash_4Directions_10
+  - first:
+      213: 4112822758659815538
+    second: HongGildong_Dash_4Directions_11
+  - first:
+      213: -8756517933773314572
+    second: HongGildong_Dash_4Directions_12
+  - first:
+      213: -4064814687879810780
+    second: HongGildong_Dash_4Directions_13
+  - first:
+      213: 402342764380282616
+    second: HongGildong_Dash_4Directions_14
+  - first:
+      213: -4542553630674481460
+    second: HongGildong_Dash_4Directions_15
+  - first:
+      213: 6786300980161113775
+    second: HongGildong_Dash_4Directions_16
+  - first:
+      213: 7536631035629265890
+    second: HongGildong_Dash_4Directions_17
+  - first:
+      213: -291887285347341538
+    second: HongGildong_Dash_4Directions_18
+  - first:
+      213: 2898544682283354842
+    second: HongGildong_Dash_4Directions_19
+  - first:
+      213: 4483880316796479383
+    second: HongGildong_Dash_4Directions_20
+  - first:
+      213: -3291080720388030136
+    second: HongDash_Right_0
+  - first:
+      213: 6200415784681279501
+    second: HongDash_Right_1
+  - first:
+      213: 5922865763924274765
+    second: HongDash_Right_2
+  - first:
+      213: -5134971025047642946
+    second: HongDash_Right_3
+  - first:
+      213: -8429570214492358235
+    second: HongDash_Right_4
+  - first:
+      213: -2640183668841914260
+    second: HongDash_Left_0
+  - first:
+      213: -4806204222877967102
+    second: HongDash_Left_1
+  - first:
+      213: -2592711305540765197
+    second: HongDash_Left_2
+  - first:
+      213: 5521044774499083755
+    second: HongDash_Left_3
+  - first:
+      213: -2203302186888611854
+    second: HongDash_Left_4
+  - first:
+      213: -3627081150269482495
+    second: HongDash_Front_0
+  - first:
+      213: 5072038338445691723
+    second: HongDash_Front_1
+  - first:
+      213: 1497951577818225281
+    second: HongDash_Front_2
+  - first:
+      213: -5451207815125915452
+    second: HongDash_Front_3
+  - first:
+      213: 7327762862801002701
+    second: HongDash_Front_4
+  - first:
+      213: 8727970040956930004
+    second: HongDash_Back_0
+  - first:
+      213: 8906788165030298519
+    second: HongDash_Back_1
+  - first:
+      213: -7057302162031189512
+    second: HongDash_Back_2
+  - first:
+      213: 6920413430551819653
+    second: HongDash_Back_3
+  - first:
+      213: -2867158662389521524
+    second: HongDash_Back_4
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 87.43077
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HongDash_Right_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 549
+        width: 270
+        height: 175
+      alignment: 9
+      pivot: {x: 0.45555556, y: 0.07933214}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 841822e858bb352d0800000000000000
+      internalID: -3291080720388030136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Right_1
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 549
+        width: 365
+        height: 175
+      alignment: 9
+      pivot: {x: 0.5753425, y: 0.11933214}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0017a11e4d4c0650800000000000000
+      internalID: 6200415784681279501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Right_2
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 549
+        width: 390
+        height: 175
+      alignment: 9
+      pivot: {x: 0.61538464, y: 0.176475}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4e6707180f323250800000000000000
+      internalID: 5922865763924274765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Right_3
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 549
+        width: 365
+        height: 175
+      alignment: 9
+      pivot: {x: 0.63013697, y: 0.1707607}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebc9c181f0becb8b0800000000000000
+      internalID: -5134971025047642946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Right_4
+      rect:
+        serializedVersion: 2
+        x: 1390
+        y: 549
+        width: 340
+        height: 175
+      alignment: 9
+      pivot: {x: 0.47058824, y: 0.085046425}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5a938fb3d86240b80800000000000000
+      internalID: -8429570214492358235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Left_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 377
+        width: 270
+        height: 172
+      alignment: 9
+      pivot: {x: 0.42962962, y: 0.07490189}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c60e3e401fe2c5bd0800000000000000
+      internalID: -2640183668841914260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Left_1
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 377
+        width: 365
+        height: 172
+      alignment: 9
+      pivot: {x: 0.5150685, y: 0.14466932}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 20d506149beec4db0800000000000000
+      internalID: -4806204222877967102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Left_2
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 377
+        width: 390
+        height: 172
+      alignment: 9
+      pivot: {x: 0.33846155, y: 0.19118096}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f97a1cedc6d40cd0800000000000000
+      internalID: -2592711305540765197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Left_3
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 377
+        width: 365
+        height: 172
+      alignment: 9
+      pivot: {x: 0.4849315, y: 0.185367}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: be56b0d78f0be9c40800000000000000
+      internalID: 5521044774499083755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Left_4
+      rect:
+        serializedVersion: 2
+        x: 1390
+        y: 377
+        width: 340
+        height: 172
+      alignment: 9
+      pivot: {x: 0.49117646, y: 0.07490189}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f7b9a9a55c4c61e0800000000000000
+      internalID: -2203302186888611854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Front_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 199
+        width: 270
+        height: 178
+      alignment: 9
+      pivot: {x: 0.44074073, y: 0.077995084}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10a1ca239e40aadc0800000000000000
+      internalID: -3627081150269482495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Front_1
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 199
+        width: 365
+        height: 178
+      alignment: 9
+      pivot: {x: 0.5150685, y: 0.08923104}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b4bc73afeff736640800000000000000
+      internalID: 5072038338445691723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Front_2
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 199
+        width: 390
+        height: 178
+      alignment: 9
+      pivot: {x: 0.45897436, y: 0.100467}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 18a5796060bc9c410800000000000000
+      internalID: 1497951577818225281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Front_3
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 199
+        width: 365
+        height: 178
+      alignment: 9
+      pivot: {x: 0.49863014, y: 0.08361306}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c82696bf5b6954b0800000000000000
+      internalID: -5451207815125915452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Front_4
+      rect:
+        serializedVersion: 2
+        x: 1390
+        y: 199
+        width: 340
+        height: 178
+      alignment: 9
+      pivot: {x: 0.4882353, y: 0.077995084}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc0ad83ef7171b560800000000000000
+      internalID: 7327762862801002701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Back_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 19
+        width: 270
+        height: 180
+      alignment: 9
+      pivot: {x: 0.44074073, y: 0.06601736}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d74d7d628aff1970800000000000000
+      internalID: 8727970040956930004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Back_1
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 19
+        width: 365
+        height: 180
+      alignment: 9
+      pivot: {x: 0.50136983, y: 0.09935069}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 793c84a55a44b9b70800000000000000
+      internalID: 8906788165030298519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Back_2
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 19
+        width: 390
+        height: 180
+      alignment: 9
+      pivot: {x: 0.43333334, y: 0.071572915}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8f1e887231d6f0e90800000000000000
+      internalID: -7057302162031189512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Back_3
+      rect:
+        serializedVersion: 2
+        x: 1025
+        y: 19
+        width: 365
+        height: 180
+      alignment: 9
+      pivot: {x: 0.4849315, y: 0.09935069}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58532e2695f3a0060800000000000000
+      internalID: 6920413430551819653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongDash_Back_4
+      rect:
+        serializedVersion: 2
+        x: 1390
+        y: 19
+        width: 340
+        height: 180
+      alignment: 9
+      pivot: {x: 0.4882353, y: 0.060461804}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c83a69d236ec538d0800000000000000
+      internalID: -2867158662389521524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HongDash_Back_0: 8727970040956930004
+      HongDash_Back_1: 8906788165030298519
+      HongDash_Back_2: -7057302162031189512
+      HongDash_Back_3: 6920413430551819653
+      HongDash_Back_4: -2867158662389521524
+      HongDash_Front_0: -3627081150269482495
+      HongDash_Front_1: 5072038338445691723
+      HongDash_Front_2: 1497951577818225281
+      HongDash_Front_3: -5451207815125915452
+      HongDash_Front_4: 7327762862801002701
+      HongDash_Left_0: -2640183668841914260
+      HongDash_Left_1: -4806204222877967102
+      HongDash_Left_2: -2592711305540765197
+      HongDash_Left_3: 5521044774499083755
+      HongDash_Left_4: -2203302186888611854
+      HongDash_Right_0: -3291080720388030136
+      HongDash_Right_1: 6200415784681279501
+      HongDash_Right_2: 5922865763924274765
+      HongDash_Right_3: -5134971025047642946
+      HongDash_Right_4: -8429570214492358235
+      HongGildong_Dash_4Directions_0: -6997737287743806707
+      HongGildong_Dash_4Directions_1: -3483977360907557362
+      HongGildong_Dash_4Directions_10: -2549538700384786812
+      HongGildong_Dash_4Directions_11: 4112822758659815538
+      HongGildong_Dash_4Directions_12: -8756517933773314572
+      HongGildong_Dash_4Directions_13: -4064814687879810780
+      HongGildong_Dash_4Directions_14: 402342764380282616
+      HongGildong_Dash_4Directions_15: -4542553630674481460
+      HongGildong_Dash_4Directions_16: 6786300980161113775
+      HongGildong_Dash_4Directions_17: 7536631035629265890
+      HongGildong_Dash_4Directions_18: -291887285347341538
+      HongGildong_Dash_4Directions_19: 2898544682283354842
+      HongGildong_Dash_4Directions_2: 1656747164738558714
+      HongGildong_Dash_4Directions_20: 4483880316796479383
+      HongGildong_Dash_4Directions_3: -1880853011190118984
+      HongGildong_Dash_4Directions_4: -8219256552258012304
+      HongGildong_Dash_4Directions_5: 8316068573703200555
+      HongGildong_Dash_4Directions_6: 5623058844503041945
+      HongGildong_Dash_4Directions_7: 2126194708114363996
+      HongGildong_Dash_4Directions_8: -5825470304964949004
+      HongGildong_Dash_4Directions_9: -7775702381483958325
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

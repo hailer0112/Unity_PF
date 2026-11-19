@@ -14,12 +14,28 @@ namespace Storybook
         [SerializeField] Sprite idleFront, idleBack;
         [SerializeField] Sprite[] sheathedRun = new Sprite[32];
         [SerializeField] Sprite[] sheathedRunFrontOverride = new Sprite[4];
+        [SerializeField] Sprite[] sheathedRunBackOverride = new Sprite[4];
+        [SerializeField] Sprite[] sheathedRunLeftOverride = new Sprite[4];
+        [SerializeField] Sprite[] sheathedRunRightOverride = new Sprite[4];
         [SerializeField, Min(1f)] float sheathedRunFramesPerSecond = 8f;
         float sheathedRunTime;
         [SerializeField] Sprite[] swingFront, swingBack;
+        [SerializeField] Sprite[] swingRight = new Sprite[4];
+        [SerializeField] Sprite[] swingLeft = new Sprite[4];
+        [SerializeField] Sprite[] swingFrontBasic = new Sprite[4];
+        [SerializeField] Sprite[] swingBackBasic = new Sprite[4];
+        [SerializeField] Sprite[] drawnIdle = new Sprite[4];
+        [SerializeField] Sprite[] drawnRun = new Sprite[16];
+        const float DrawnRunFramesPerSecond = 8f;
+        float drawnRunTime;
         [SerializeField] Sprite[] walkFront, walkBack;
         [SerializeField] Sprite[] runFront, runBack;
         [SerializeField] LineRenderer bladeTrail;
+        const int WhiteSweepSegments = 24;
+        readonly Vector3[] whiteSweepVertices = new Vector3[(WhiteSweepSegments + 1) * 3];
+        readonly Color[] whiteSweepColors = new Color[(WhiteSweepSegments + 1) * 3];
+        Mesh whiteSweepMesh;
+        MeshRenderer whiteSweepRenderer;
         [SerializeField, Min(.1f)] float walkSpeed = 1.8f;
         [SerializeField] float reach = 1.36f;
         [SerializeField, Min(0)] float attackDamage = 25f;
@@ -32,6 +48,7 @@ namespace Storybook
         [SerializeField, Min(0f)] float invulnerabilityDuration = .2f;
         [SerializeField, Min(0f)] float dashCooldown = 2f;
         [SerializeField] Sprite dashFront, dashBack;
+        [SerializeField] Sprite[] dashFrames = new Sprite[20];
         [Header("Q - Azure Slash")]
         [SerializeField, Min(.01f)] float azureSlashRange = 6f;
         [SerializeField, Min(.01f)] float azureSlashSpeed = 12f;
@@ -39,6 +56,8 @@ namespace Storybook
         [SerializeField, Min(0f)] float azureSlashDamageMultiplier = 2f;
         [SerializeField, Min(0f)] float azureSlashCooldown = 5f;
         [SerializeField, Min(0f)] float azureSlashCastTime = .3f;
+        [SerializeField] Sprite[] azureSlashFrames = new Sprite[16];
+        [SerializeField] Sprite azureSlashProjectileRight, azureSlashProjectileLeft;
         [Header("Move Marker")]
         [SerializeField, Min(.01f)] float markerRadius = .22f;
         [SerializeField, Min(.001f)] float markerWidth = .035f;
@@ -47,8 +66,16 @@ namespace Storybook
         [SerializeField] Material markerMaterial;
 
         const float Windup = .12f, ContactEnd = .29f, RecoveryEnd = .42f;
-        const float SlashTrailFade = .075f;
         const float KnockbackSpeed = 8f;
+        const double CombatStanceDuration = 20d, SheatheDuration = .18d;
+
+        enum WeaponStance { Sheathed, Drawn, Sheathing }
+        WeaponStance weaponStance;
+        double weaponStanceChangeAt;
+        bool basicSwingDrawsWeapon;
+
+        public bool IsWeaponDrawn => weaponStance != WeaponStance.Sheathed;
+        public bool IsSheathingWeapon => weaponStance == WeaponStance.Sheathing;
         CharacterController controller;
         Vector3 knockbackDirection;
         float knockbackRemaining;
@@ -65,9 +92,6 @@ namespace Storybook
         Vector3 azureSlashDirection;
         bool back, left, attackBack, attackLeft;
         readonly HashSet<AttackTarget> hitThisSwing = new HashSet<AttackTarget>();
-        readonly Gradient slashGradient = new Gradient();
-        readonly GradientAlphaKey[] slashAlpha = new GradientAlphaKey[4];
-        float lastTrailOpacity = -1f;
         float SweepSign => attackLeft == attackBack ? -1f : 1f;
         public bool Attacking => attackTime < RecoveryEnd;
         public bool IsCastingAzureSlash { get; private set; }
@@ -113,7 +137,7 @@ namespace Storybook
             var bladeVisual = body.gameObject.AddComponent<HongGildongBladeVisual>();
             bladeVisual.Bind(runFront != null && runFront.Length > 1 ? runFront[1] : null,
                 runBack != null && runBack.Length > 1 ? runBack[1] : null);
-            ConfigureSlashTrail();
+            bladeTrail.enabled = false;
             CreateMoveMarker();
             if (allowCombat && TryGetComponent<PlayerHealth>(out _)) gameObject.AddComponent<HongGildongHud>();
         }
@@ -145,6 +169,7 @@ namespace Storybook
             invulnerableUntil = 0;
             attackTime = RecoveryEnd;
             bladeTrail.enabled = false;
+            if (whiteSweepRenderer != null) whiteSweepRenderer.enabled = false;
         }
         void OnDestroy()
         {
@@ -153,6 +178,8 @@ namespace Storybook
             windstepInput.Dispose();
             swordTyphoonInput.Dispose();
             if (moveMarker != null) Destroy(moveMarker.gameObject);
+            if (whiteSweepMesh != null) Destroy(whiteSweepMesh);
+            if (whiteSweepRenderer != null) Destroy(whiteSweepRenderer.gameObject);
         }
 
         void Update()
@@ -160,6 +187,7 @@ namespace Storybook
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (PalaceDeveloperMenu.BlocksGameplay) return;
 #endif
+            UpdateWeaponStance();
             RegenerateMana();
             Vector2 cursor = point.ReadValue<Vector2>();
             bool acceptInput = knockbackRemaining <= 0f;
@@ -189,9 +217,9 @@ namespace Storybook
                 BeginDash(cursor);
             if (IsDashing)
             {
+                float remaining = dashTimeLeft;
                 MoveDash();
-                body.flipX = left;
-                body.sprite = back ? dashBack : dashFront;
+                body.sprite = DashPose(remaining);
                 return;
             }
             if (acceptInput && azureSlash.WasPressedThisFrame() && BeginAzureSlash(cursor))
@@ -219,10 +247,80 @@ namespace Storybook
                 if (attackTime >= Windup && previousTime < ContactEnd)
                     StrikeTargets(SweepAngle(previousTime), SweepAngle(attackTime));
             }
-            DrawTrail();
             body.flipX = Attacking ? attackLeft : left;
             body.sprite = Attacking ? SwingPose() : TravelPose();
             body.transform.localPosition = Vector3.up * artworkGroundOffset;
+        }
+
+        void LateUpdate()
+        {
+            Sprite[] directionalSwing = DirectionalBasicSwingFrames();
+            bool showWhiteSweep = attackTime >= Windup && attackTime < ContactEnd &&
+                !IsDashing && !IsCastingAzureSlash && !IsCastingCloneSlash && !IsCastingSwordTyphoon &&
+                body.enabled && directionalSwing != null && body.sprite == directionalSwing[2];
+            if (!showWhiteSweep)
+            {
+                if (whiteSweepRenderer != null) whiteSweepRenderer.enabled = false;
+                return;
+            }
+
+            if (whiteSweepMesh == null) CreateWhiteSweep();
+
+            float head = SweepAngle(attackTime);
+            float tail = Mathf.Max(-halfArc, head - 84f);
+            float progress = Mathf.InverseLerp(Windup, ContactEnd, attackTime);
+            float opacity = (1f - Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(.72f, 1f, progress))) *
+                Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0f, .12f, progress));
+            Vector3 height = Vector3.up * .40f;
+            for (int i = 0; i <= WhiteSweepSegments; i++)
+            {
+                float t = i / (float)WhiteSweepSegments;
+                float taper = Mathf.Sin(t * Mathf.PI);
+                Vector3 radial = Quaternion.AngleAxis(Mathf.Lerp(tail, head, t) * SweepSign, Vector3.up) *
+                    slashDirection;
+                int index = i * 3;
+                float width = reach * (.04f + .25f * taper);
+                whiteSweepVertices[index] = transform.InverseTransformVector(height + radial * (reach - width));
+                whiteSweepVertices[index + 1] = transform.InverseTransformVector(height + radial * (reach - width * .25f));
+                whiteSweepVertices[index + 2] = transform.InverseTransformVector(height + radial * reach);
+                whiteSweepColors[index] = new Color(.74f, .84f, 1f, 0f);
+                whiteSweepColors[index + 1] = new Color(1f, 1f, 1f, opacity * taper * .92f);
+                whiteSweepColors[index + 2] = new Color(.85f, .92f, 1f, opacity * taper * .62f);
+            }
+            whiteSweepMesh.vertices = whiteSweepVertices;
+            whiteSweepMesh.colors = whiteSweepColors;
+            whiteSweepMesh.RecalculateBounds();
+            whiteSweepRenderer.sortingLayerID = body.sortingLayerID;
+            // Keep the sweep behind the sprite, including the hat in rear attacks.
+            whiteSweepRenderer.sortingOrder = body.sortingOrder - 1;
+            whiteSweepRenderer.enabled = true;
+        }
+
+        void CreateWhiteSweep()
+        {
+            var effect = new GameObject("White basic attack sweep", typeof(MeshFilter), typeof(MeshRenderer));
+            effect.transform.SetParent(transform, false);
+            whiteSweepMesh = new Mesh { name = "White basic attack sweep" };
+            whiteSweepMesh.MarkDynamic();
+            whiteSweepMesh.vertices = whiteSweepVertices;
+            var triangles = new int[WhiteSweepSegments * 12];
+            for (int i = 0; i < WhiteSweepSegments * 2; i++)
+            {
+                int inner = i / 2 * 3 + i % 2;
+                int offset = i * 6;
+                triangles[offset] = inner;
+                triangles[offset + 1] = inner + 1;
+                triangles[offset + 2] = inner + 3;
+                triangles[offset + 3] = inner + 1;
+                triangles[offset + 4] = inner + 4;
+                triangles[offset + 5] = inner + 3;
+            }
+            whiteSweepMesh.triangles = triangles;
+            effect.GetComponent<MeshFilter>().sharedMesh = whiteSweepMesh;
+            whiteSweepRenderer = effect.GetComponent<MeshRenderer>();
+            whiteSweepRenderer.sharedMaterial = bladeTrail.sharedMaterial;
+            whiteSweepRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            whiteSweepRenderer.receiveShadows = false;
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -362,6 +460,24 @@ namespace Storybook
             PrepareForAction();
         }
 
+        Sprite DashPose(float remaining)
+        {
+            if (dashFrames.Length == 20)
+            {
+                int direction = Mathf.Abs(dashDirection.x) > Mathf.Abs(dashDirection.z)
+                    ? (dashDirection.x > 0f ? 0 : 1) : (dashDirection.z > 0f ? 3 : 2);
+                int frame = Mathf.Clamp((int)((1f - remaining / dashDuration) * 5f), 0, 4);
+                Sprite pose = dashFrames[direction * 5 + frame];
+                if (pose != null)
+                {
+                    body.flipX = false;
+                    return pose;
+                }
+            }
+            body.flipX = left;
+            return back ? dashBack : dashFront;
+        }
+
         void MoveDash()
         {
             float dt = Mathf.Min(Time.deltaTime, dashTimeLeft);
@@ -380,6 +496,7 @@ namespace Storybook
                 return false;
 
             if (!TrySpendSkillMana(HudSkill.AzureSlash, azureSlashManaCost)) return false;
+            EnterCombatStance();
 
             Vector3 direction = Vector3.ProjectOnPlane(ground - transform.position, Vector3.up);
             azureSlashDirection = direction.sqrMagnitude > .0025f ? direction.normalized : facing.normalized;
@@ -396,22 +513,38 @@ namespace Storybook
         {
             MoveOnGround(Vector3.zero);
             float elapsed = (float)(Time.timeAsDouble - azureSlashStartedAt);
-            Sprite[] frames = back ? swingBack : swingFront;
+            bool horizontal = Mathf.Abs(azureSlashDirection.x) > Mathf.Abs(azureSlashDirection.z);
+            bool aimLeft = horizontal && azureSlashDirection.x < 0f;
+            int direction = horizontal ? (aimLeft ? 1 : 0) : (azureSlashDirection.z > 0f ? 3 : 2);
             float progress = azureSlashCastTime > 0f ? elapsed / azureSlashCastTime : 1f;
-            body.flipX = left;
-            body.sprite = frames[Mathf.Clamp((int)(progress * frames.Length), 0, frames.Length - 1)];
+            Sprite pose = azureSlashFrames.Length == 16
+                ? azureSlashFrames[direction * 4 + Mathf.Clamp((int)(progress * 4), 0, 3)]
+                : null;
+            if (pose != null)
+            {
+                body.flipX = false;
+                body.sprite = pose;
+            }
+            else
+            {
+                Sprite[] frames = back ? swingBack : swingFront;
+                body.flipX = left;
+                body.sprite = frames[Mathf.Clamp((int)(progress * frames.Length), 0, frames.Length - 1)];
+            }
             body.transform.localPosition = Vector3.up * artworkGroundOffset;
 
             if (elapsed < azureSlashCastTime) return;
 
             IsCastingAzureSlash = false;
             AzureSlashProjectile.Launch(transform, azureSlashDirection, azureSlashRange, azureSlashSpeed,
-                azureSlashWidth, attackDamage * azureSlashDamageMultiplier, targetMask);
+                azureSlashWidth, attackDamage * azureSlashDamageMultiplier, targetMask,
+                aimLeft ? azureSlashProjectileLeft : azureSlashProjectileRight, aimLeft);
         }
 
         void BeginSwing(Vector2 cursor)
         {
             if (!TryGroundPoint(cursor, out Vector3 aim)) return;
+            basicSwingDrawsWeapon = EnterCombatStance();
             Vector3 offset = Vector3.ProjectOnPlane(aim - transform.position, Vector3.up);
             PrepareForAction();
             slashDirection = offset.sqrMagnitude > .0025f ? offset.normalized : facing;
@@ -423,13 +556,71 @@ namespace Storybook
             gaitPhase = 0f;
         }
 
+        Sprite[] DirectionalBasicSwingFrames()
+        {
+            Sprite[] frames;
+            if (Mathf.Abs(slashDirection.x) > Mathf.Abs(slashDirection.z))
+                frames = slashDirection.x > 0f ? swingRight : swingLeft;
+            else
+                frames = attackBack ? swingBackBasic : swingFrontBasic;
+            return frames != null && frames.Length == 4 && System.Array.TrueForAll(frames, frame => frame != null) ? frames : null;
+        }
+
         Sprite SwingPose()
         {
-            Sprite[] frames = attackBack ? swingBack : swingFront;
-            if (attackTime < Windup * .62f) return frames[0];
-            if (attackTime < Mathf.Lerp(Windup, ContactEnd, .30f)) return frames[1];
+            Sprite[] directionalSwing = DirectionalBasicSwingFrames();
+            Sprite[] frames = directionalSwing ?? (attackBack ? swingBack : swingFront);
+            if (directionalSwing != null) body.flipX = false;
+            if (attackTime < Windup * .62f)
+                return !basicSwingDrawsWeapon && directionalSwing != null ? frames[3] : frames[0];
+            float strikePoseStart = directionalSwing != null ? Windup : Mathf.Lerp(Windup, ContactEnd, .30f);
+            if (attackTime < strikePoseStart)
+                return !basicSwingDrawsWeapon && directionalSwing != null ? frames[3] : frames[1];
             if (attackTime < ContactEnd) return frames[2];
             return frames[3];
+        }
+
+        bool EnterCombatStance()
+        {
+            bool drawsWeapon = !IsWeaponDrawn;
+            weaponStance = WeaponStance.Drawn;
+            weaponStanceChangeAt = Time.timeAsDouble + CombatStanceDuration;
+            return drawsWeapon;
+        }
+
+        void UpdateWeaponStance()
+        {
+            double now = Time.timeAsDouble;
+            if (!IsWeaponDrawn || now < weaponStanceChangeAt || IsDashing || Attacking ||
+                IsCastingAzureSlash || IsCastingCloneSlash || IsWindstepActive || IsCastingSwordTyphoon ||
+                swordTyphoons.Exists(typhoon => typhoon != null && typhoon.isActiveAndEnabled))
+                return;
+
+            if (IsSheathingWeapon)
+            {
+                weaponStance = WeaponStance.Sheathed;
+                return;
+            }
+
+            weaponStance = WeaponStance.Sheathing;
+            weaponStanceChangeAt = now + SheatheDuration;
+        }
+
+        Sprite DrawnIdlePose()
+        {
+            int direction = Mathf.Abs(facing.x) > Mathf.Abs(facing.z)
+                ? (facing.x > 0f ? 3 : 2) : (facing.z > 0f ? 1 : 0);
+            if (drawnIdle.Length == 4 && drawnIdle[direction] != null)
+                return drawnIdle[direction];
+
+            Sprite[] frames = direction switch
+            {
+                0 => swingFrontBasic,
+                1 => swingBackBasic,
+                2 => swingLeft,
+                _ => swingRight
+            };
+            return frames != null && frames.Length == 4 ? frames[3] : null;
         }
 
         Sprite TravelPose()
@@ -439,27 +630,68 @@ namespace Storybook
             {
                 gaitPhase = 0f;
                 sheathedRunTime = 0f;
+                drawnRunTime = 0f;
+                Sprite armedIdle = IsWeaponDrawn ? DrawnIdlePose() : null;
+                if (armedIdle != null)
+                {
+                    body.flipX = false;
+                    return armedIdle;
+                }
                 return back ? idleBack : idleFront;
             }
-            if (!IsWindstepActive && sheathedRun.Length == 32 &&
+            bool windstep = IsWindstepActive;
+            bool hasWindstepSheet = windstep && windstepFrames.Length == 20 &&
+                System.Array.TrueForAll(windstepFrames, frame => frame != null);
+            if (hasWindstepSheet)
+            {
+                Sprite windstepPose = WindstepMotionPose(velocity);
+                if (windstepPose != null)
+                {
+                    body.flipX = false;
+                    return windstepPose;
+                }
+            }
+            if (!windstep && IsWeaponDrawn && drawnRun.Length == 16)
+            {
+                int direction = Mathf.Abs(facing.x) > Mathf.Abs(facing.z)
+                    ? (facing.x > 0f ? 0 : 1) : (facing.z > 0f ? 3 : 2);
+                int frame = (int)(drawnRunTime * DrawnRunFramesPerSecond);
+                Sprite pose = drawnRun[direction * 4 + frame];
+                if (pose != null)
+                {
+                    drawnRunTime = Mathf.Repeat(drawnRunTime + Time.deltaTime, 4f / DrawnRunFramesPerSecond);
+                    body.flipX = false;
+                    return pose;
+                }
+            }
+            drawnRunTime = 0f;
+            if ((!windstep || hasWindstepSheet) && sheathedRun.Length == 32 &&
                 System.Array.TrueForAll(sheathedRun, frame => frame != null))
             {
                 int direction = Mathf.Abs(facing.x) > Mathf.Abs(facing.z)
                     ? (facing.x > 0f ? 3 : 2) : (facing.z > 0f ? 1 : 0);
-                bool useFrontOverride = direction == 0 && sheathedRunFrontOverride.Length == 4 &&
-                    System.Array.TrueForAll(sheathedRunFrontOverride, frame => frame != null);
-                int frameCount = useFrontOverride ? sheathedRunFrontOverride.Length : 8;
+                Sprite[] directionOverride = direction switch
+                {
+                    0 => sheathedRunFrontOverride,
+                    1 => sheathedRunBackOverride,
+                    2 => sheathedRunLeftOverride,
+                    3 => sheathedRunRightOverride,
+                    _ => null
+                };
+                bool useOverride = directionOverride != null && directionOverride.Length == 4 &&
+                    System.Array.TrueForAll(directionOverride, frame => frame != null);
+                int frameCount = useOverride ? directionOverride.Length : 8;
                 sheathedRunTime = Mathf.Repeat(sheathedRunTime + Time.deltaTime,
                     frameCount / sheathedRunFramesPerSecond);
                 int frameIndex = Mathf.Min(frameCount - 1, Mathf.FloorToInt(
                     sheathedRunTime * sheathedRunFramesPerSecond));
                 body.flipX = false;
-                return useFrontOverride ? sheathedRunFrontOverride[frameIndex]
+                return useOverride ? directionOverride[frameIndex]
                     : sheathedRun[direction * 8 + frameIndex];
             }
             Sprite[] frames = back ? walkBack : walkFront;
             float cycleDistance = WalkCycleDistance;
-            if (IsWindstepActive)
+            if (windstep && !hasWindstepSheet)
             {
                 Sprite[] runFrames = back ? runBack : runFront;
                 if (runFrames != null && runFrames.Length > 0)
@@ -509,44 +741,5 @@ namespace Storybook
             Gizmos.DrawLine(previous, origin);
         }
 
-        void ConfigureSlashTrail()
-        {
-            bladeTrail.widthMultiplier = .19f;
-            bladeTrail.widthCurve = new AnimationCurve(
-                new Keyframe(0f, .01f), new Keyframe(.34f, .62f),
-                new Keyframe(.70f, 1f), new Keyframe(1f, .02f));
-            slashGradient.colorKeys = new[]
-            {
-                new GradientColorKey(new Color(.52f, .80f, 1f), 0f),
-                new GradientColorKey(new Color(.76f, .92f, 1f), .48f),
-                new GradientColorKey(Color.white, .77f)
-            };
-        }
-
-        void SetSlashTrailOpacity(float opacity)
-        {
-            if (Mathf.Approximately(lastTrailOpacity, opacity)) return;
-            lastTrailOpacity = opacity;
-            slashAlpha[0] = new GradientAlphaKey(0f, 0f);
-            slashAlpha[1] = new GradientAlphaKey(.55f * opacity, .40f);
-            slashAlpha[2] = new GradientAlphaKey(.88f * opacity, .78f);
-            slashAlpha[3] = new GradientAlphaKey(0f, 1f);
-            slashGradient.alphaKeys = slashAlpha;
-            bladeTrail.colorGradient = slashGradient;
-        }
-
-        void DrawTrail()
-        {
-            bladeTrail.enabled = attackTime >= Windup && attackTime < ContactEnd + SlashTrailFade;
-            if (!bladeTrail.enabled) return;
-            SetSlashTrailOpacity(1f - Mathf.InverseLerp(ContactEnd, ContactEnd + SlashTrailFade, attackTime));
-            float head = SweepAngle(attackTime);
-            for (int i = 0; i < bladeTrail.positionCount; i++)
-            {
-                float angle = Mathf.Lerp(Mathf.Max(-halfArc, head - 62f), head, i / (bladeTrail.positionCount - 1f));
-                Vector3 radial = Quaternion.AngleAxis(angle * SweepSign, Vector3.up) * slashDirection;
-                bladeTrail.SetPosition(i, transform.position + Vector3.up * .30f + radial * reach);
-            }
-        }
     }
 }

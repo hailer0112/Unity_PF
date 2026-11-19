@@ -11,6 +11,10 @@ namespace Storybook
         [SerializeField, Min(0f)] float windstepSpeedBonus = .4f;
         [SerializeField, Min(0f)] float windstepCooldown = 12f;
 
+        [SerializeField] Sprite[] windstepFrames = new Sprite[20];
+        const float WindstepFrameDuration = .12f;
+        float windstepMotionTime;
+
         InputAction windstepInput;
         double windstepEndsAt, windstepReadyAt;
         bool windstepVisualActive;
@@ -31,7 +35,9 @@ namespace Storybook
             if (acceptInput && !IsCastingSwordTyphoon && windstepInput.WasPressedThisFrame() && !IsWindstepActive &&
                 WindstepCooldownRemaining <= 0f && TrySpendSkillMana(HudSkill.Windstep, windstepManaCost))
             {
+                EnterCombatStance();
                 double now = Time.timeAsDouble;
+                windstepMotionTime = 0f;
                 windstepEndsAt = now + windstepDuration;
                 windstepReadyAt = now + windstepCooldown;
                 BeginWindstepVisual();
@@ -50,6 +56,20 @@ namespace Storybook
             }
 
             RestoreWindstepBodies(false);
+        }
+
+        Sprite WindstepMotionPose(Vector3 velocity)
+        {
+            int frame = (int)(windstepMotionTime / WindstepFrameDuration);
+            if (WindstepTimeRemaining <= WindstepFrameDuration)
+                frame = 4;
+            else if (frame >= 4)
+                return null;
+
+            windstepMotionTime += Time.deltaTime;
+            int direction = Mathf.Abs(velocity.x) > Mathf.Abs(velocity.z)
+                ? (velocity.x > 0f ? 0 : 1) : (velocity.z > 0f ? 3 : 2);
+            return windstepFrames[direction * 5 + frame];
         }
 
         internal double SuspendForFloorTransition()

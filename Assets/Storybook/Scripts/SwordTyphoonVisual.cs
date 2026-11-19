@@ -14,11 +14,26 @@ namespace Storybook
         Material lineMaterial, particleMaterial;
         LineRenderer ring;
         ParticleSystem particles;
-        float radius;
+        float radius, duration;
+        SpriteRenderer ground;
+        Sprite[] frames;
 
-        public void Configure(float effectRadius)
+        public void Configure(float effectRadius, float effectDuration, Sprite[] groundFrames)
         {
             radius = effectRadius;
+            duration = effectDuration;
+            if (groundFrames != null && groundFrames.Length == 8 &&
+                System.Array.TrueForAll(groundFrames, frame => frame != null))
+            {
+                frames = groundFrames;
+                ground = new GameObject("Typhoon Ground Animation").AddComponent<SpriteRenderer>();
+                ground.transform.SetParent(transform, false);
+                ground.transform.localPosition = Vector3.up * .035f;
+                ground.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                ground.sortingOrder = 1;
+                Spin(0f);
+                return;
+            }
             lineMaterial = new Material(Shader.Find("Sprites/Default"));
             ring = MakeLine("Typhoon Ground Ring", 64, .034f, Aqua, Aqua, true);
             for (int i = 0; i < ring.positionCount; i++)
@@ -80,6 +95,11 @@ namespace Storybook
 
         public void Spin(float elapsed)
         {
+            if (ground != null)
+            {
+                AnimateGround(elapsed);
+                return;
+            }
             for (int i = 0; i < spirals.Length; i++)
             {
                 LineRenderer line = spirals[i];
@@ -103,8 +123,33 @@ namespace Storybook
             }
         }
 
+        void AnimateGround(float elapsed)
+        {
+            const float phaseDuration = .24f;
+            float remaining = duration - elapsed;
+            int frame;
+            if (remaining <= phaseDuration)
+                frame = remaining > phaseDuration * .5f ? 6 : 7;
+            else if (elapsed < phaseDuration)
+                frame = elapsed < phaseDuration * .5f ? 0 : 1;
+            else
+                frame = 2 + (int)((elapsed - phaseDuration) * 10f) % 4;
+
+            ground.sprite = frames[frame];
+            float scale = 2f * radius / ground.sprite.rect.width * ground.sprite.pixelsPerUnit;
+            ground.transform.localScale = new Vector3(scale, scale * 1.7f, 1f);
+            float opacity = .77f * Mathf.Clamp01(remaining / phaseDuration);
+            ground.color = new Color(1f, 1f, 1f, opacity);
+        }
+
         public void Pulse(bool burst)
         {
+            if (ground != null)
+            {
+                if (burst) ground.enabled = false;
+                return;
+            }
+
             int count = burst ? 26 : 7;
             float phase = Random.value * FullTurn;
             for (int i = 0; i < count; i++)

@@ -10,14 +10,15 @@ namespace Storybook
         Sprite[] frames;
         float opacity, leadTime, animationTime, fadeTime;
         float impactTime;
-        bool impacted;
+        bool impacted, renewed;
         public Vector3 AttackOrigin { get; private set; }
 
         public void Initialize(Vector3 origin, Sprite[] frames, bool flip, float opacity, float leadTime,
-            float animationTime, float fadeTime, Vector3 direction, float range, float halfArc)
+            float animationTime, float fadeTime, Vector3 direction, float range, float halfArc, bool renewed = false)
         {
             AttackOrigin = origin;
             this.frames = frames;
+            this.renewed = renewed;
             this.opacity = opacity;
             this.leadTime = leadTime;
             this.animationTime = animationTime;
@@ -37,7 +38,7 @@ namespace Storybook
         {
             impacted = true;
             impactTime = Time.time;
-            body.sprite = frames[frames.Length - 1];
+            body.sprite = frames[renewed ? 2 : frames.Length - 1];
             SetOpacity(opacity);
             sweep.enabled = true;
         }
@@ -47,7 +48,8 @@ namespace Storybook
             if (frames == null) return;
             if (!impacted)
             {
-                body.sprite = frames[FrameAt(animationTime, leadTime, frames.Length)];
+                int pose = renewed ? (animationTime < leadTime * .5f ? 0 : 1) : FrameAt(animationTime, leadTime, frames.Length);
+                body.sprite = frames[pose];
                 SetOpacity(opacity * Mathf.Clamp01(animationTime / .06f));
                 animationTime += Time.deltaTime;
                 return;
@@ -61,8 +63,8 @@ namespace Storybook
 
         void SetOpacity(float alpha)
         {
-            body.color = new Color(1f, 1f, 1f, alpha);
-            sweep.startColor = sweep.endColor = new Color(.87f, .9f, .92f, alpha);
+            body.color = renewed ? new Color(.68f, .55f, .82f, alpha) : new Color(1f, 1f, 1f, alpha);
+            sweep.startColor = sweep.endColor = renewed ? new Color(.77f, .48f, 1f, alpha) : new Color(.87f, .9f, .92f, alpha);
         }
 
         public static int FrameAt(float elapsed, float impactAt, int count)

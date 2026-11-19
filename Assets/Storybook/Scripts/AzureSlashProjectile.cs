@@ -14,12 +14,14 @@ namespace Storybook
         float damage;
         LayerMask targetMask;
         Vector3 halfExtents;
+        Transform spriteVisual;
+        float spriteWidthScale, spriteLength;
         Mesh crescent;
         Material crescentMaterial;
         static ParticleSystem impactPrefab;
 
         public static void Launch(Transform owner, Vector3 direction, float range, float speed,
-            float width, float damage, LayerMask targetMask)
+            float width, float damage, LayerMask targetMask, Sprite sprite = null, bool pointsLeft = false)
         {
             var root = new GameObject("Azure Slash");
             root.transform.SetPositionAndRotation(owner.position + Vector3.up * .42f,
@@ -33,7 +35,8 @@ namespace Storybook
             projectile.damage = damage;
             projectile.targetMask = targetMask;
             projectile.halfExtents = new Vector3(width * .5f, .25f, .04f);
-            projectile.CreateVisual(width);
+            if (sprite != null) projectile.CreateSpriteVisual(width, sprite, pointsLeft);
+            else projectile.CreateVisual(width);
         }
 
         void Update() => Advance(Time.deltaTime);
@@ -73,6 +76,7 @@ namespace Storybook
             float travelled = Mathf.Min(step, wallDistance);
             transform.position += direction * travelled;
             remainingDistance -= travelled;
+            if (spriteVisual != null) UpdateSpriteLength();
             if (wallDistance <= step || remainingDistance <= .0001f)
                 Destroy(gameObject);
         }
@@ -81,6 +85,28 @@ namespace Storybook
         {
             if (impactPrefab == null) impactPrefab = Resources.Load<ParticleSystem>("AzureSlashImpact");
             if (impactPrefab != null) Instantiate(impactPrefab, contact, Quaternion.identity);
+        }
+
+        void CreateSpriteVisual(float width, Sprite sprite, bool pointsLeft)
+        {
+            var renderer = new GameObject("Piercing slash sprite").AddComponent<SpriteRenderer>();
+            spriteVisual = renderer.transform;
+            spriteVisual.SetParent(transform, false);
+            // Keep the painted tip facing along the projectile's forward axis.
+            spriteVisual.localRotation = Quaternion.LookRotation(Vector3.up, pointsLeft ? Vector3.left : Vector3.right);
+            renderer.sprite = sprite;
+            renderer.sortingOrder = 4;
+            spriteWidthScale = width / sprite.bounds.size.y;
+            spriteLength = sprite.bounds.size.x * spriteWidthScale;
+            UpdateSpriteLength();
+        }
+
+        void UpdateSpriteLength()
+        {
+            // Reveal the trailing art behind the tip as it moves away from the caster.
+            float distance = Vector3.Dot(transform.position - castOrigin, transform.forward);
+            float lengthScale = Mathf.Clamp(distance / spriteLength, .08f, 1f);
+            spriteVisual.localScale = new Vector3(spriteWidthScale * lengthScale, spriteWidthScale, 1f);
         }
 
         void CreateVisual(float width)

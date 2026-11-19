@@ -1,0 +1,445 @@
+fileFormatVersion: 2
+guid: fdacd725f8e8df347b96e4ac52d2b6e4
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7998878549644276581
+    second: HongGildong_SwordTyphoon_Ground_0
+  - first:
+      213: -7898518018064075317
+    second: HongGildong_SwordTyphoon_Ground_1
+  - first:
+      213: 6555329038612480400
+    second: HongGildong_SwordTyphoon_Ground_2
+  - first:
+      213: 8378506104458611823
+    second: HongGildong_SwordTyphoon_Ground_3
+  - first:
+      213: 8558088690051596836
+    second: HongGildong_SwordTyphoon_Ground_4
+  - first:
+      213: -2908920507959493985
+    second: HongGildong_SwordTyphoon_Ground_5
+  - first:
+      213: -3530701101301032311
+    second: HongGildong_SwordTyphoon_Ground_6
+  - first:
+      213: -7002954206531650143
+    second: HongGildong_SwordTyphoon_Ground_7
+  - first:
+      213: 821975424197730296
+    second: HongGildong_SwordTyphoon_Ground_8
+  - first:
+      213: 4795392458139903348
+    second: HongGildong_SwordTyphoon_Ground_9
+  - first:
+      213: 1058619274373663040
+    second: HongGildong_SwordTyphoon_Ground_10
+  - first:
+      213: 3867934102608432196
+    second: HongGildong_SwordTyphoon_Ground_11
+  - first:
+      213: 8727807542975453210
+    second: HongGildong_SwordTyphoon_Ground_12
+  - first:
+      213: 7614219794814480918
+    second: HongGildong_SwordTyphoon_Ground_13
+  - first:
+      213: -2388274945232218995
+    second: HongGildong_SwordTyphoon_Ground_14
+  - first:
+      213: 7522761621662093195
+    second: HongGildong_SwordTyphoon_Ground_15
+  - first:
+      213: 6661746223970801697
+    second: HongGildong_SwordTyphoon_Ground_16
+  - first:
+      213: -2808482073369900725
+    second: HongGildong_SwordTyphoon_Ground_17
+  - first:
+      213: -2383371454911213021
+    second: HongGildong_SwordTyphoon_Ground_18
+  - first:
+      213: 4855510618998860968
+    second: HongGildong_SwordTyphoon_Ground_19
+  - first:
+      213: -9042562239615948671
+    second: HongGildong_SwordTyphoon_Ground_20
+  - first:
+      213: 4711851656545130893
+    second: HongGildong_SwordTyphoon_Ground_21
+  - first:
+      213: 6823987377169096444
+    second: HongGildong_SwordTyphoon_Ground_22
+  - first:
+      213: -5779808679574835668
+    second: HongTyphoonGround_0
+  - first:
+      213: 9030091981592903921
+    second: HongTyphoonGround_1
+  - first:
+      213: -4228958718229862030
+    second: HongTyphoonGround_2
+  - first:
+      213: -969575061811925911
+    second: HongTyphoonGround_3
+  - first:
+      213: 1087198260813359134
+    second: HongTyphoonGround_4
+  - first:
+      213: 2318153861333106459
+    second: HongTyphoonGround_5
+  - first:
+      213: -6574350452601393144
+    second: HongTyphoonGround_6
+  - first:
+      213: -6934652063035544227
+    second: HongTyphoonGround_7
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HongTyphoonGround_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 400
+        width: 362
+        height: 400
+      alignment: 9
+      pivot: {x: 0.5055249, y: 0.4325}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2ee830f0aef9cfa0800000000000000
+      internalID: -5779808679574835668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonGround_1
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 400
+        width: 362
+        height: 400
+      alignment: 9
+      pivot: {x: 0.49723756, y: 0.4425}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f0c2f350d4515d70800000000000000
+      internalID: 9030091981592903921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonGround_2
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 400
+        width: 362
+        height: 400
+      alignment: 9
+      pivot: {x: 0.49723756, y: 0.4475}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2792e16a378bf45c0800000000000000
+      internalID: -4228958718229862030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonGround_3
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 400
+        width: 362
+        height: 400
+      alignment: 9
+      pivot: {x: 0.50276244, y: 0.44}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96c6f994e906b82f0800000000000000
+      internalID: -969575061811925911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonGround_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 362
+        height: 400
+      alignment: 9
+      pivot: {x: 0.5055249, y: 0.3925}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e18e338de01861f00800000000000000
+      internalID: 1087198260813359134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonGround_5
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 0
+        width: 362
+        height: 400
+      alignment: 9
+      pivot: {x: 0.49723756, y: 0.395}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1fb57f97acbb2020800000000000000
+      internalID: 2318153861333106459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonGround_6
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 0
+        width: 362
+        height: 400
+      alignment: 9
+      pivot: {x: 0.49723756, y: 0.3875}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 800f3c3881733c4a0800000000000000
+      internalID: -6574350452601393144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongTyphoonGround_7
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 0
+        width: 362
+        height: 400
+      alignment: 9
+      pivot: {x: 0.50276244, y: 0.395}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5d26d5a0ba23cf90800000000000000
+      internalID: -6934652063035544227
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HongGildong_SwordTyphoon_Ground_0: -7998878549644276581
+      HongGildong_SwordTyphoon_Ground_1: -7898518018064075317
+      HongGildong_SwordTyphoon_Ground_10: 1058619274373663040
+      HongGildong_SwordTyphoon_Ground_11: 3867934102608432196
+      HongGildong_SwordTyphoon_Ground_12: 8727807542975453210
+      HongGildong_SwordTyphoon_Ground_13: 7614219794814480918
+      HongGildong_SwordTyphoon_Ground_14: -2388274945232218995
+      HongGildong_SwordTyphoon_Ground_15: 7522761621662093195
+      HongGildong_SwordTyphoon_Ground_16: 6661746223970801697
+      HongGildong_SwordTyphoon_Ground_17: -2808482073369900725
+      HongGildong_SwordTyphoon_Ground_18: -2383371454911213021
+      HongGildong_SwordTyphoon_Ground_19: 4855510618998860968
+      HongGildong_SwordTyphoon_Ground_2: 6555329038612480400
+      HongGildong_SwordTyphoon_Ground_20: -9042562239615948671
+      HongGildong_SwordTyphoon_Ground_21: 4711851656545130893
+      HongGildong_SwordTyphoon_Ground_22: 6823987377169096444
+      HongGildong_SwordTyphoon_Ground_3: 8378506104458611823
+      HongGildong_SwordTyphoon_Ground_4: 8558088690051596836
+      HongGildong_SwordTyphoon_Ground_5: -2908920507959493985
+      HongGildong_SwordTyphoon_Ground_6: -3530701101301032311
+      HongGildong_SwordTyphoon_Ground_7: -7002954206531650143
+      HongGildong_SwordTyphoon_Ground_8: 821975424197730296
+      HongGildong_SwordTyphoon_Ground_9: 4795392458139903348
+      HongTyphoonGround_0: -5779808679574835668
+      HongTyphoonGround_1: 9030091981592903921
+      HongTyphoonGround_2: -4228958718229862030
+      HongTyphoonGround_3: -969575061811925911
+      HongTyphoonGround_4: 1087198260813359134
+      HongTyphoonGround_5: 2318153861333106459
+      HongTyphoonGround_6: -6574350452601393144
+      HongTyphoonGround_7: -6934652063035544227
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

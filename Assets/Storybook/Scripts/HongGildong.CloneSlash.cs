@@ -18,6 +18,9 @@ namespace Storybook
         [SerializeField, Range(0f, 1f)] float cloneSlashOpacity = .8f;
         [SerializeField, Min(.01f)] float cloneSlashFadeTime = .15f;
         [SerializeField] CloneSlashVisual cloneSlashPrefab;
+        [SerializeField] Sprite[] cloneSlashChargeSprites = new Sprite[4];
+
+        SpriteRenderer cloneSlashCharge;
 
         readonly List<CloneSlashVisual> cloneSlashVisuals = new List<CloneSlashVisual>();
         readonly HashSet<AttackTarget> cloneSlashHitTargets = new HashSet<AttackTarget>();
@@ -27,6 +30,7 @@ namespace Storybook
         int cloneSlashHitIndex;
         Vector3 cloneSlashDirection, cloneSlashOrigin;
         CloneSlashVisual nextClone;
+        bool cloneCastDrawsWeapon;
 
         public bool IsCastingCloneSlash { get; private set; }
 
@@ -48,6 +52,7 @@ namespace Storybook
             }
 
             if (!TrySpendSkillMana(HudSkill.CloneSlash, cloneSlashManaCost)) return false;
+            cloneCastDrawsWeapon = EnterCombatStance();
 
             Vector3 direction = Vector3.ProjectOnPlane(ground - transform.position, Vector3.up);
             cloneSlashDirection = direction.sqrMagnitude > .0025f ? direction.normalized : facing.normalized;
@@ -70,10 +75,25 @@ namespace Storybook
         {
             MoveOnGround(Vector3.zero);
             float elapsed = (float)(Time.timeAsDouble - cloneSlashStartedAt);
-            Sprite[] frames = back ? swingBack : swingFront;
-            body.flipX = left;
+            int direction = Mathf.Abs(cloneSlashDirection.x) > Mathf.Abs(cloneSlashDirection.z)
+                ? (cloneSlashDirection.x > 0f ? 0 : 1) : (cloneSlashDirection.z > 0f ? 3 : 2);
+            Sprite[] frames = direction switch
+            {
+                0 => swingRight,
+                1 => swingLeft,
+                2 => swingFrontBasic,
+                _ => swingBackBasic
+            };
+            bool renewed = frames != null && frames.Length == 4 && Array.TrueForAll(frames, frame => frame != null);
+            if (!renewed) frames = back ? swingBack : swingFront;
+            float firstHit = activeCloneSlashTimes[0];
+            int pose = renewed
+                ? (elapsed < firstHit ? (elapsed < firstHit * .5f ? 0 : 1) : (elapsed < firstHit + .10f ? 2 : 3))
+                : CloneSlashVisual.FrameAt(elapsed, firstHit, frames.Length);
+            body.flipX = !renewed && left;
             body.transform.localPosition = Vector3.up * artworkGroundOffset;
-            body.sprite = frames[CloneSlashVisual.FrameAt(elapsed, activeCloneSlashTimes[0], frames.Length)];
+            body.sprite = frames[renewed && !cloneCastDrawsWeapon && pose < 2 ? 3 : pose];
+            UpdateCloneSlashCharge(direction, elapsed, firstHit);
 
             while (IsCastingCloneSlash && cloneSlashHitIndex < activeCloneSlashTimes.Length &&
                    elapsed >= activeCloneSlashTimes[cloneSlashHitIndex])
@@ -85,14 +105,14 @@ namespace Storybook
 
                 float previous = activeCloneSlashTimes[cloneSlashHitIndex++];
                 nextClone = cloneSlashHitIndex < activeCloneSlashTimes.Length
-                    ? SpawnCloneSlash(frames, previous, elapsed)
+                    ? SpawnCloneSlash(frames, previous, elapsed, renewed)
                     : null;
             }
 
             if (elapsed >= cloneSlashCastTime) CancelCloneSlash();
         }
 
-        CloneSlashVisual SpawnCloneSlash(Sprite[] frames, float previousHit, float elapsed)
+        CloneSlashVisual SpawnCloneSlash(Sprite[] frames, float previousHit, float elapsed, bool renewed)
         {
             Vector3 right = Vector3.Cross(Vector3.up, cloneSlashDirection);
             Vector3 side = cloneSlashHitIndex % 2 == 1 ? -right : right;
@@ -102,10 +122,32 @@ namespace Storybook
             float fade = Mathf.Min(cloneSlashFadeTime, Mathf.Max(0f, cloneSlashCastTime - hitTime));
             var clone = Instantiate(cloneSlashPrefab, origin + Vector3.up * artworkGroundOffset, body.transform.rotation);
             clone.transform.localScale = body.transform.lossyScale;
-            clone.Initialize(origin, frames, left, cloneSlashOpacity, lead, Mathf.Max(0f, elapsed - previousHit),
-                fade, cloneSlashDirection, cloneSlashRange, cloneSlashHalfArc);
+            clone.Initialize(origin, frames, !renewed && left, cloneSlashOpacity, lead, Mathf.Max(0f, elapsed - previousHit),
+                fade, cloneSlashDirection, cloneSlashRange, cloneSlashHalfArc, renewed);
             cloneSlashVisuals.Add(clone);
             return clone;
+        }
+
+        void UpdateCloneSlashCharge(int direction, float elapsed, float firstHit)
+        {
+            Sprite sprite = cloneSlashChargeSprites.Length == 4 ? cloneSlashChargeSprites[direction] : null;
+            if (sprite == null || elapsed >= firstHit)
+            {
+                if (cloneSlashCharge != null) cloneSlashCharge.enabled = false;
+                return;
+            }
+
+            if (cloneSlashCharge == null)
+            {
+                cloneSlashCharge = new GameObject("Clone Slash Charge").AddComponent<SpriteRenderer>();
+                cloneSlashCharge.transform.SetParent(body.transform, false);
+            }
+            cloneSlashCharge.sprite = sprite;
+            cloneSlashCharge.sortingLayerID = body.sortingLayerID;
+            cloneSlashCharge.sortingOrder = body.sortingOrder - 1;
+            float strength = Mathf.SmoothStep(0f, 1f, elapsed / firstHit);
+            cloneSlashCharge.color = new Color(1f, 1f, 1f, strength);
+            cloneSlashCharge.enabled = true;
         }
 
         float SafeCloneOffset(Vector3 side)
@@ -183,6 +225,7 @@ namespace Storybook
         void CancelCloneSlash()
         {
             IsCastingCloneSlash = false;
+            if (cloneSlashCharge != null) cloneSlashCharge.enabled = false;
             nextClone = null;
             foreach (var clone in cloneSlashVisuals)
                 if (clone != null) Destroy(clone.gameObject);

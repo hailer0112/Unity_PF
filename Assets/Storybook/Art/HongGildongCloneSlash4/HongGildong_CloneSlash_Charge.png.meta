@@ -1,0 +1,313 @@
+fileFormatVersion: 2
+guid: dcf147af3fdd7084dab8c91e553042ba
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4161617685292435776
+    second: HongGildong_CloneSlash_Charge_0
+  - first:
+      213: 8580103356532052638
+    second: HongGildong_CloneSlash_Charge_1
+  - first:
+      213: 8793129234959838359
+    second: HongGildong_CloneSlash_Charge_2
+  - first:
+      213: -835479973352894139
+    second: HongGildong_CloneSlash_Charge_3
+  - first:
+      213: 839326839643493041
+    second: HongGildong_CloneSlash_Charge_4
+  - first:
+      213: 2225462192187725692
+    second: HongGildong_CloneSlash_Charge_5
+  - first:
+      213: 6618027623334244522
+    second: HongGildong_CloneSlash_Charge_6
+  - first:
+      213: 7437986067438300296
+    second: HongGildong_CloneSlash_Charge_7
+  - first:
+      213: -6956573785591316376
+    second: HongGildong_CloneSlash_Charge_8
+  - first:
+      213: 2986104854318870156
+    second: HongGildong_CloneSlash_Charge_9
+  - first:
+      213: 8899562322408015595
+    second: HongGildong_CloneSlash_Charge_10
+  - first:
+      213: -3357803134270354443
+    second: HongGildong_CloneSlash_Charge_11
+  - first:
+      213: -199216013401936759
+    second: HongGildong_CloneSlash_Charge_12
+  - first:
+      213: -2736930041914046945
+    second: HongGildong_CloneSlash_Charge_13
+  - first:
+      213: 4068666663514155320
+    second: HongGildong_CloneSlash_Charge_14
+  - first:
+      213: 1958595751162866471
+    second: HongGildong_CloneSlash_Charge_15
+  - first:
+      213: -7891215611335008629
+    second: HongCloneCharge_Right
+  - first:
+      213: -2652563903541361037
+    second: HongCloneCharge_Left
+  - first:
+      213: -5245840183360897425
+    second: HongCloneCharge_Front
+  - first:
+      213: -1506142104102278121
+    second: HongCloneCharge_Back
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 102
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HongCloneCharge_Right
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 320
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.14453125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8e1c500635cc7290800000000000000
+      internalID: -7891215611335008629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongCloneCharge_Left
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 320
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.14453125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 376c4610f23303bd0800000000000000
+      internalID: -2652563903541361037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongCloneCharge_Front
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 320
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.14453125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6ebd4a95280337b0800000000000000
+      internalID: -5245840183360897425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongCloneCharge_Back
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 320
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.14453125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71c69b77cbb191be0800000000000000
+      internalID: -1506142104102278121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HongCloneCharge_Back: -1506142104102278121
+      HongCloneCharge_Front: -5245840183360897425
+      HongCloneCharge_Left: -2652563903541361037
+      HongCloneCharge_Right: -7891215611335008629
+      HongGildong_CloneSlash_Charge_0: 4161617685292435776
+      HongGildong_CloneSlash_Charge_1: 8580103356532052638
+      HongGildong_CloneSlash_Charge_10: 8899562322408015595
+      HongGildong_CloneSlash_Charge_11: -3357803134270354443
+      HongGildong_CloneSlash_Charge_12: -199216013401936759
+      HongGildong_CloneSlash_Charge_13: -2736930041914046945
+      HongGildong_CloneSlash_Charge_14: 4068666663514155320
+      HongGildong_CloneSlash_Charge_15: 1958595751162866471
+      HongGildong_CloneSlash_Charge_2: 8793129234959838359
+      HongGildong_CloneSlash_Charge_3: -835479973352894139
+      HongGildong_CloneSlash_Charge_4: 839326839643493041
+      HongGildong_CloneSlash_Charge_5: 2225462192187725692
+      HongGildong_CloneSlash_Charge_6: 6618027623334244522
+      HongGildong_CloneSlash_Charge_7: 7437986067438300296
+      HongGildong_CloneSlash_Charge_8: -6956573785591316376
+      HongGildong_CloneSlash_Charge_9: 2986104854318870156
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
