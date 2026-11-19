@@ -7,8 +7,8 @@ namespace Storybook
     {
         public const float BurstLifetime = .48f;
         const float FullTurn = 2f * Mathf.PI;
-        static readonly Color Aqua = new Color(.19f, .91f, .9f, .78f);
-        static readonly Color Ice = new Color(.75f, .95f, 1f, .85f);
+        static readonly Color Aqua = new Color32(114, 229, 242, 199);
+        static readonly Color Ice = new Color32(224, 248, 255, 217);
 
         readonly LineRenderer[] spirals = new LineRenderer[2], blades = new LineRenderer[3];
         Material lineMaterial, particleMaterial;
@@ -41,10 +41,10 @@ namespace Storybook
 
             for (int i = 0; i < spirals.Length; i++)
                 spirals[i] = MakeLine("Rising Wind", 32, .065f,
-                    new Color(.22f, .86f, 1f, .32f), new Color(.45f, .92f, 1f, .02f));
+                    new Color32(23, 105, 210, 82), new Color32(53, 185, 255, 5));
             for (int i = 0; i < blades.Length; i++)
                 blades[i] = MakeLine("Orbiting Wind Blade", 12, .095f,
-                    new Color(.31f, .85f, 1f, .06f), Ice);
+                    new Color32(53, 185, 255, 15), Ice);
 
             particles = gameObject.AddComponent<ParticleSystem>();
             particles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);

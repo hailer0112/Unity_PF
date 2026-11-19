@@ -37,6 +37,7 @@ namespace Storybook
         [SerializeField, Range(4f,6f)] float idleFramesPerSecond = 5f;
         float spriteClock;
         public bool IsPlaying => rendering;
+        internal bool IsHitPoseActive => Time.timeAsDouble - hitStartedAt < HitDuration;
         void Awake()
         {
             if (player != null) health = player.GetComponent<PlayerHealth>();
@@ -132,7 +133,7 @@ namespace Storybook
         void LateUpdate()
         {
             if (DrawDamagePose()) return;
-            bool eligible=player!=null && player.isActiveAndEnabled && !player.Attacking && !player.IsCastingAzureSlash && !player.IsCastingCloneSlash && !player.IsCastingSwordTyphoon && !player.IsDashing && !player.HasMoveDestination
+            bool eligible=player!=null && player.isActiveAndEnabled && !player.IsSheathingWeapon && !player.Attacking && !player.IsCastingAzureSlash && !player.IsCastingCloneSlash && !player.IsCastingSwordTyphoon && !player.IsDashing && !player.HasMoveDestination
                 && body.gameObject.activeInHierarchy && (body.sprite==idleFront || body.sprite==idleBack);
             if(!eligible || (!rendering && !body.enabled)){spriteClock=0f;Stop();return;}
             if(renewedIdle.Length==4 && System.Array.TrueForAll(renewedIdle,sprite=>sprite!=null))

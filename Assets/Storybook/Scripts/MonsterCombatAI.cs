@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -6,6 +7,7 @@ namespace Storybook
     [RequireComponent(typeof(MonsterHealth), typeof(CharacterController))]
     public abstract class MonsterCombatAI : MonoBehaviour
     {
+        static readonly List<MonsterCombatAI> ActiveMonsters = new();
         protected enum AttackPhase { Windup, Active, Recovery, Finished }
 
         [SerializeField] protected PlayerHealth target;
@@ -43,10 +45,15 @@ namespace Storybook
             if (target == null) target = FindAnyObjectByType<PlayerHealth>();
         }
 
-        protected virtual void OnEnable() => health.Died += OnDeath;
+        protected virtual void OnEnable()
+        {
+            health.Died += OnDeath;
+            ActiveMonsters.Add(this);
+        }
 
         protected virtual void OnDisable()
         {
+            ActiveMonsters.Remove(this);
             health.Died -= OnDeath;
             ResetTrackingAndAction(health.IsDead);
         }
@@ -96,7 +103,7 @@ namespace Storybook
         protected bool MoveOnGround(Vector3 direction, float distance = float.PositiveInfinity, bool stayInRoom = false)
         {
             Vector3 before = transform.position;
-            Vector3 offset = direction * Mathf.Min(distance, moveSpeed * Time.deltaTime);
+            Vector3 offset = SteerAroundMonsters(direction) * Mathf.Min(distance, moveSpeed * Time.deltaTime);
             if (stayInRoom && roomBounds is Bounds bounds)
             {
                 // Keep the capsule inside the encounter footprint, even near open passages.
@@ -111,6 +118,30 @@ namespace Storybook
 
             controller.Move(offset + Vector3.down * (2f * Time.deltaTime));
             return Vector3.Dot(transform.position - before, direction) > .0001f;
+        }
+
+        Vector3 SteerAroundMonsters(Vector3 direction)
+        {
+            if (direction.sqrMagnitude < .0001f) return direction;
+            Vector3 right = Vector3.Cross(Vector3.up, direction);
+            float strongest = 0f, avoidance = 0f;
+            foreach (var other in ActiveMonsters)
+            {
+                if (other == this || !other.controller.enabled || other.gameObject.scene != gameObject.scene) continue;
+                Vector3 offset = PlanarOffset(other.transform.position);
+                float ahead = Vector3.Dot(offset, direction);
+                if (ahead <= 0f || Mathf.Abs(other.transform.position.y - transform.position.y) > controller.height) continue;
+
+                float spacing = controller.bounds.extents.x + other.controller.bounds.extents.x + .12f;
+                float across = Vector3.Dot(offset, right);
+                float weight = (1f - Mathf.Clamp01(ahead / (spacing + .3f))) *
+                    (1f - Mathf.Clamp01(Mathf.Abs(across) / spacing));
+                if (weight <= strongest) continue;
+                strongest = weight;
+                // Keep a consistent side when following directly behind another body.
+                avoidance = weight * (across < -.02f ? 1f : -1f);
+            }
+            return (direction + right * (avoidance * .8f)).normalized;
         }
 
         protected void BeginAttackTiming()

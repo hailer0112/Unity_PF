@@ -1,0 +1,753 @@
+fileFormatVersion: 2
+guid: bb802f54a0ed4be485e4b4875386edce
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1776804523065426209
+    second: HongGildong_AzureSlash_4Directions_0
+  - first:
+      213: 8437538549689403801
+    second: HongGildong_AzureSlash_4Directions_1
+  - first:
+      213: 3997698229740348287
+    second: HongGildong_AzureSlash_4Directions_2
+  - first:
+      213: 267471257967822797
+    second: HongGildong_AzureSlash_4Directions_3
+  - first:
+      213: -9156691815332103203
+    second: HongGildong_AzureSlash_4Directions_4
+  - first:
+      213: 3194139885438836422
+    second: HongGildong_AzureSlash_4Directions_5
+  - first:
+      213: 479595129957210547
+    second: HongGildong_AzureSlash_4Directions_6
+  - first:
+      213: 1830565050012961236
+    second: HongGildong_AzureSlash_4Directions_7
+  - first:
+      213: -6935505419875122600
+    second: HongGildong_AzureSlash_4Directions_8
+  - first:
+      213: 8352488165664119156
+    second: HongGildong_AzureSlash_4Directions_9
+  - first:
+      213: -6602832350238322393
+    second: HongGildong_AzureSlash_4Directions_10
+  - first:
+      213: -403454219133431926
+    second: HongGildong_AzureSlash_4Directions_11
+  - first:
+      213: 3642463471049867343
+    second: HongGildong_AzureSlash_4Directions_12
+  - first:
+      213: 2413342185359572623
+    second: HongGildong_AzureSlash_4Directions_13
+  - first:
+      213: -5933976434450173468
+    second: HongGildong_AzureSlash_4Directions_14
+  - first:
+      213: 2546965879562759238
+    second: HongGildong_AzureSlash_4Directions_15
+  - first:
+      213: 7150212849278748838
+    second: HongGildong_AzureSlash_4Directions_16
+  - first:
+      213: 1894882380215752146
+    second: HongGildong_AzureSlash_4Directions_17
+  - first:
+      213: 3858441690737550661
+    second: HongGildong_AzureSlash_4Directions_18
+  - first:
+      213: -8394865945795495355
+    second: HongGildong_AzureSlash_4Directions_19
+  - first:
+      213: -1965361996989166033
+    second: HongGildong_AzureSlash_4Directions_20
+  - first:
+      213: -6982852243907725655
+    second: HongGildong_AzureSlash_4Directions_21
+  - first:
+      213: 407234736498179554
+    second: HongGildong_AzureSlash_4Directions_22
+  - first:
+      213: 8731730383469470313
+    second: HongGildong_AzureSlash_4Directions_23
+  - first:
+      213: -4710399758227659924
+    second: HongGildong_AzureSlash_4Directions_24
+  - first:
+      213: -6972198359926900849
+    second: HongGildong_AzureSlash_4Directions_25
+  - first:
+      213: -1064049228465905209
+    second: HongGildong_AzureSlash_4Directions_26
+  - first:
+      213: -4182136154710059649
+    second: HongGildong_AzureSlash_4Directions_27
+  - first:
+      213: 8900977197507701346
+    second: HongGildong_AzureSlash_4Directions_28
+  - first:
+      213: -6977438503964131349
+    second: HongGildong_AzureSlash_4Directions_29
+  - first:
+      213: -9089858340939145745
+    second: HongGildong_AzureSlash_4Directions_30
+  - first:
+      213: -9017998282669587389
+    second: HongGildong_AzureSlash_4Directions_31
+  - first:
+      213: 2827891773750383840
+    second: HongGildong_AzureSlash_4Directions_32
+  - first:
+      213: -8985240351322506634
+    second: HongGildong_AzureSlash_4Directions_33
+  - first:
+      213: -5096626221933547397
+    second: HongGildong_AzureSlash_4Directions_34
+  - first:
+      213: 4051540349827034129
+    second: HongAzureSlash_Right_0
+  - first:
+      213: -5052867303191809601
+    second: HongAzureSlash_Right_1
+  - first:
+      213: -5569497652734629766
+    second: HongAzureSlash_Right_2
+  - first:
+      213: 8364313291925768183
+    second: HongAzureSlash_Right_3
+  - first:
+      213: -2830509996149166573
+    second: HongAzureSlash_Left_0
+  - first:
+      213: -7893294552984091932
+    second: HongAzureSlash_Left_1
+  - first:
+      213: 415065366264488257
+    second: HongAzureSlash_Left_2
+  - first:
+      213: -3842178726447793036
+    second: HongAzureSlash_Left_3
+  - first:
+      213: -5953313771722059313
+    second: HongAzureSlash_Front_0
+  - first:
+      213: 4631749963195912154
+    second: HongAzureSlash_Front_1
+  - first:
+      213: 8573522150249600767
+    second: HongAzureSlash_Front_2
+  - first:
+      213: -8862033505640722749
+    second: HongAzureSlash_Front_3
+  - first:
+      213: 8000812618285965640
+    second: HongAzureSlash_Back_0
+  - first:
+      213: -8184065636545222054
+    second: HongAzureSlash_Back_1
+  - first:
+      213: -8894222795898751785
+    second: HongAzureSlash_Back_2
+  - first:
+      213: -5000361354265974209
+    second: HongAzureSlash_Back_3
+  - first:
+      213: 5694217771728632780
+    second: HongAzureSlash_Projectile_Right
+  - first:
+      213: -3658804496384331647
+    second: HongAzureSlash_Projectile_Left
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100.57571
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: HongAzureSlash_Right_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11c2a907b76f93830800000000000000
+      internalID: 4051540349827034129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Right_1
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 768
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb1f01085fb90e9b0800000000000000
+      internalID: -5052867303191809601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Right_2
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 768
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a78616fa46b25b2b0800000000000000
+      internalID: -5569497652734629766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Right_3
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 768
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f7405b7f92041470800000000000000
+      internalID: 8364313291925768183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Left_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31e265ab72208b8d0800000000000000
+      internalID: -2830509996149166573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Left_1
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 512
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e28bddac62657290800000000000000
+      internalID: -7893294552984091932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Left_2
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 512
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14123c260cb92c500800000000000000
+      internalID: 415065366264488257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Left_3
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 512
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47c34861ec6ddaac0800000000000000
+      internalID: -3842178726447793036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Front_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fc1d018aaa4916da0800000000000000
+      internalID: -5953313771722059313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Front_1
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 256
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: adf88bc2d08474040800000000000000
+      internalID: 4631749963195912154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Front_2
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 256
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff6129f98f44bf670800000000000000
+      internalID: 8573522150249600767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Front_3
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 256
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ceccacca7bb30580800000000000000
+      internalID: -8862033505640722749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Back_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 841e56bafa8980f60800000000000000
+      internalID: 8000812618285965640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Back_1
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5aad332aab5c6e80800000000000000
+      internalID: -8184065636545222054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Back_2
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d4f541ad7f519480800000000000000
+      internalID: -8894222795898751785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Back_3
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 0
+        width: 576
+        height: 256
+      alignment: 9
+      pivot: {x: 0.5, y: 0.16471191}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3aa26267d52b9ab0800000000000000
+      internalID: -5000361354265974209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Projectile_Right
+      rect:
+        serializedVersion: 2
+        x: 2304
+        y: 871
+        width: 389
+        height: 153
+      alignment: 9
+      pivot: {x: 0.9588689, y: 0.44444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ccbf995e4ece50f40800000000000000
+      internalID: 5694217771728632780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: HongAzureSlash_Projectile_Left
+      rect:
+        serializedVersion: 2
+        x: 2304
+        y: 613
+        width: 389
+        height: 155
+      alignment: 9
+      pivot: {x: 0.028277636, y: 0.42580646}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 180f86a12b0593dc0800000000000000
+      internalID: -3658804496384331647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HongAzureSlash_Back_0: 8000812618285965640
+      HongAzureSlash_Back_1: -8184065636545222054
+      HongAzureSlash_Back_2: -8894222795898751785
+      HongAzureSlash_Back_3: -5000361354265974209
+      HongAzureSlash_Front_0: -5953313771722059313
+      HongAzureSlash_Front_1: 4631749963195912154
+      HongAzureSlash_Front_2: 8573522150249600767
+      HongAzureSlash_Front_3: -8862033505640722749
+      HongAzureSlash_Left_0: -2830509996149166573
+      HongAzureSlash_Left_1: -7893294552984091932
+      HongAzureSlash_Left_2: 415065366264488257
+      HongAzureSlash_Left_3: -3842178726447793036
+      HongAzureSlash_Projectile_Left: -3658804496384331647
+      HongAzureSlash_Projectile_Right: 5694217771728632780
+      HongAzureSlash_Right_0: 4051540349827034129
+      HongAzureSlash_Right_1: -5052867303191809601
+      HongAzureSlash_Right_2: -5569497652734629766
+      HongAzureSlash_Right_3: 8364313291925768183
+      HongGildong_AzureSlash_4Directions_0: 1776804523065426209
+      HongGildong_AzureSlash_4Directions_1: 8437538549689403801
+      HongGildong_AzureSlash_4Directions_10: -6602832350238322393
+      HongGildong_AzureSlash_4Directions_11: -403454219133431926
+      HongGildong_AzureSlash_4Directions_12: 3642463471049867343
+      HongGildong_AzureSlash_4Directions_13: 2413342185359572623
+      HongGildong_AzureSlash_4Directions_14: -5933976434450173468
+      HongGildong_AzureSlash_4Directions_15: 2546965879562759238
+      HongGildong_AzureSlash_4Directions_16: 7150212849278748838
+      HongGildong_AzureSlash_4Directions_17: 1894882380215752146
+      HongGildong_AzureSlash_4Directions_18: 3858441690737550661
+      HongGildong_AzureSlash_4Directions_19: -8394865945795495355
+      HongGildong_AzureSlash_4Directions_2: 3997698229740348287
+      HongGildong_AzureSlash_4Directions_20: -1965361996989166033
+      HongGildong_AzureSlash_4Directions_21: -6982852243907725655
+      HongGildong_AzureSlash_4Directions_22: 407234736498179554
+      HongGildong_AzureSlash_4Directions_23: 8731730383469470313
+      HongGildong_AzureSlash_4Directions_24: -4710399758227659924
+      HongGildong_AzureSlash_4Directions_25: -6972198359926900849
+      HongGildong_AzureSlash_4Directions_26: -1064049228465905209
+      HongGildong_AzureSlash_4Directions_27: -4182136154710059649
+      HongGildong_AzureSlash_4Directions_28: 8900977197507701346
+      HongGildong_AzureSlash_4Directions_29: -6977438503964131349
+      HongGildong_AzureSlash_4Directions_3: 267471257967822797
+      HongGildong_AzureSlash_4Directions_30: -9089858340939145745
+      HongGildong_AzureSlash_4Directions_31: -9017998282669587389
+      HongGildong_AzureSlash_4Directions_32: 2827891773750383840
+      HongGildong_AzureSlash_4Directions_33: -8985240351322506634
+      HongGildong_AzureSlash_4Directions_34: -5096626221933547397
+      HongGildong_AzureSlash_4Directions_4: -9156691815332103203
+      HongGildong_AzureSlash_4Directions_5: 3194139885438836422
+      HongGildong_AzureSlash_4Directions_6: 479595129957210547
+      HongGildong_AzureSlash_4Directions_7: 1830565050012961236
+      HongGildong_AzureSlash_4Directions_8: -6935505419875122600
+      HongGildong_AzureSlash_4Directions_9: 8352488165664119156
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

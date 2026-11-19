@@ -64,7 +64,7 @@ namespace Storybook
         void SetOpacity(float alpha)
         {
             body.color = renewed ? new Color(.68f, .55f, .82f, alpha) : new Color(1f, 1f, 1f, alpha);
-            sweep.startColor = sweep.endColor = renewed ? new Color(.77f, .48f, 1f, alpha) : new Color(.87f, .9f, .92f, alpha);
+            sweep.startColor = sweep.endColor = renewed ? new Color(53f / 255f, 185f / 255f, 1f, alpha) : new Color(.87f, .9f, .92f, alpha);
         }
 
         public static int FrameAt(float elapsed, float impactAt, int count)

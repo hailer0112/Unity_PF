@@ -111,17 +111,6 @@ namespace Storybook
             if (forward < 0f || forward > attackSize.y || sideways > attackSize.x * .5f) return;
 
             Vector3 center = attackOrigin + Vector3.up * .4f + attackDirection * (attackSize.y * .5f);
-            // CharacterController movement can omit an ignored player body from
-            // the overlap query. Its ground position already passed the exact footprint.
-            if (target.TryGetComponent(out CharacterController playerBody) && playerBody.enabled &&
-                Physics.GetIgnoreCollision(controller, playerBody))
-            {
-                Bounds body = playerBody.bounds;
-                if (body.max.y >= center.y - .6f && body.min.y <= center.y + .6f)
-                    ApplyHit();
-                return;
-            }
-
             foreach(var collider in Physics.OverlapBox(center,new Vector3(attackSize.x * .5f, .6f, attackSize.y * .5f),Quaternion.LookRotation(attackDirection),~0,QueryTriggerInteraction.Ignore))
             {
                 if(collider.GetComponentInParent<PlayerHealth>()!=target)continue;

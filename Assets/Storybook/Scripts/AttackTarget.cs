@@ -11,7 +11,10 @@ namespace Storybook
         {
             useSurface = collider.TryGetComponent<DragonKingHurtbox>(out _);
             if (collider.isTrigger && !useSurface) return null;
-            return collider.GetComponentInParent<AttackTarget>();
+            var target = collider.GetComponentInParent<AttackTarget>();
+            if (!useSurface && target != null && target.TryGetComponent<DragonKingPhase>(out _))
+                return null;
+            return target;
         }
     }
 }

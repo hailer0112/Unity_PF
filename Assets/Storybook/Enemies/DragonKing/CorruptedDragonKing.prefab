@@ -788,6 +788,7 @@ GameObject:
   - component: {fileID: 3310245856661331268}
   - component: {fileID: 6324440691993899727}
   - component: {fileID: 5408913304494654338}
+  - component: {fileID: 6631579073227080165}
   m_Layer: 0
   m_Name: CorruptedDragonKing
   m_TagString: Untagged
@@ -812,6 +813,27 @@ Transform:
   - {fileID: 7566035810673841448}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6631579073227080165
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4884347727166550737}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.5, y: 0.9, z: 1}
+  m_Center: {x: 0, y: 0.45, z: -0.03}
 --- !u!114 &3310245856661331268
 MonoBehaviour:
   m_ObjectHideFlags: 0

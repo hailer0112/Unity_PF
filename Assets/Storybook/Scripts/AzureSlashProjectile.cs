@@ -127,9 +127,9 @@ namespace Storybook
                 vertices[row] = new Vector3(x, 0f, edge - width * .18f * curve);
                 vertices[row + 1] = new Vector3(x, 0f, edge - width * .035f * curve);
                 vertices[row + 2] = new Vector3(x, 0f, edge);
-                colors[row] = new Color(.05f, .3f, 1f, 0f);
-                colors[row + 1] = new Color(.2f, .8f, 1f, .95f);
-                colors[row + 2] = new Color(.8f, .96f, 1f, .9f);
+                colors[row] = new Color32(23, 105, 210, 0);
+                colors[row + 1] = new Color32(53, 185, 255, 242);
+                colors[row + 2] = new Color32(224, 248, 255, 230);
 
                 if (i == segments) continue;
                 for (int strip = 0; strip < 2; strip++)

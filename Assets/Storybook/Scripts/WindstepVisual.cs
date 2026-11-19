@@ -5,8 +5,8 @@ namespace Storybook
 {
     public sealed class WindstepVisual : MonoBehaviour
     {
-        static readonly Color WindColor = new Color(.48f, .93f, 1f, .8f);
-        static readonly Color TrailColor = new Color(.25f, .8f, 1f, .65f);
+        static readonly Color WindColor = new Color32(114, 229, 242, 204);
+        static readonly Color TrailColor = new Color32(53, 185, 255, 166);
 
         ParticleSystem particles;
         Material material;

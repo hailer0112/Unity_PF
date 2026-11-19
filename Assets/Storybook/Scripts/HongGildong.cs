@@ -26,6 +26,7 @@ namespace Storybook
         [SerializeField] Sprite[] swingBackBasic = new Sprite[4];
         [SerializeField] Sprite[] drawnIdle = new Sprite[4];
         [SerializeField] Sprite[] drawnRun = new Sprite[16];
+        [SerializeField] Sprite[] sheatheFrames = new Sprite[16];
         const float DrawnRunFramesPerSecond = 8f;
         float drawnRunTime;
         [SerializeField] Sprite[] walkFront, walkBack;
@@ -67,16 +68,22 @@ namespace Storybook
 
         const float Windup = .12f, ContactEnd = .29f, RecoveryEnd = .42f;
         const float KnockbackSpeed = 8f;
-        const double CombatStanceDuration = 20d, SheatheDuration = .18d;
+        const double CombatStanceDuration = 20d;
+        const int SheatheFramesPerDirection = 4;
+        const double SheatheFrameDuration = .125d;
 
         enum WeaponStance { Sheathed, Drawn, Sheathing }
         WeaponStance weaponStance;
         double weaponStanceChangeAt;
+        double sheatheStartedAt;
+        int sheatheDirection;
+        HongGildongIdleVisual idleVisual;
         bool basicSwingDrawsWeapon;
 
         public bool IsWeaponDrawn => weaponStance != WeaponStance.Sheathed;
         public bool IsSheathingWeapon => weaponStance == WeaponStance.Sheathing;
         CharacterController controller;
+        readonly RaycastHit[] dashBodyHits = new RaycastHit[16];
         Vector3 knockbackDirection;
         float knockbackRemaining;
         InputAction move, point, strike, dash, azureSlash;
@@ -125,6 +132,7 @@ namespace Storybook
         void Awake()
         {
             controller = GetComponent<CharacterController>();
+            idleVisual = body.GetComponent<HongGildongIdleVisual>();
             InitializeMana();
             move = new InputAction("Move To", InputActionType.Button, "<Mouse>/rightButton");
             point = new InputAction("Aim", InputActionType.PassThrough, "<Mouse>/position");
@@ -156,6 +164,7 @@ namespace Storybook
         }
         void OnDisable()
         {
+            InterruptSheathing();
             move.Disable(); point.Disable(); strike.Disable(); dash.Disable(); azureSlash.Disable();
             cloneSlashInput.Disable();
             windstepInput.Disable();
@@ -187,7 +196,6 @@ namespace Storybook
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (PalaceDeveloperMenu.BlocksGameplay) return;
 #endif
-            UpdateWeaponStance();
             RegenerateMana();
             Vector2 cursor = point.ReadValue<Vector2>();
             bool acceptInput = knockbackRemaining <= 0f;
@@ -217,6 +225,7 @@ namespace Storybook
                 BeginDash(cursor);
             if (IsDashing)
             {
+                InterruptSheathing();
                 float remaining = dashTimeLeft;
                 MoveDash();
                 body.sprite = DashPose(remaining);
@@ -235,7 +244,8 @@ namespace Storybook
             }
 
             if (acceptInput && !Attacking && strike.WasPressedThisFrame()) BeginSwing(cursor);
-            Vector3 offset = Attacking ? Vector3.zero : WalkOffset();
+            UpdateWeaponStance();
+            Vector3 offset = Attacking || IsSheathingWeapon ? Vector3.zero : WalkOffset();
             if (offset.sqrMagnitude > 0f) Face(offset.normalized);
             float step = EffectiveWalkSpeed * Time.deltaTime;
             MoveOnGround(Vector3.ClampMagnitude(offset, step));
@@ -248,7 +258,7 @@ namespace Storybook
                     StrikeTargets(SweepAngle(previousTime), SweepAngle(attackTime));
             }
             body.flipX = Attacking ? attackLeft : left;
-            body.sprite = Attacking ? SwingPose() : TravelPose();
+            body.sprite = Attacking ? SwingPose() : IsSheathingWeapon ? SheathingPose() : TravelPose();
             body.transform.localPosition = Vector3.up * artworkGroundOffset;
         }
 
@@ -482,11 +492,41 @@ namespace Storybook
         {
             float dt = Mathf.Min(Time.deltaTime, dashTimeLeft);
             float step = dashDistance * (dt / dashDuration);
+            float allowedStep = DashDistanceBeforeMonster(step);
             Vector3 before = transform.position;
-            CollisionFlags flags = MoveOnGround(dashDirection * step);
+            CollisionFlags flags = MoveOnGround(dashDirection * allowedStep);
             float travelled = Vector3.Dot(transform.position - before, dashDirection);
-            bool blocked = (flags & CollisionFlags.Sides) != 0 || travelled + .001f < step;
+            bool blocked = allowedStep < step || (flags & CollisionFlags.Sides) != 0 || travelled + .001f < step;
             dashTimeLeft = blocked ? 0f : Mathf.Max(0f, dashTimeLeft - dt);
+        }
+
+        float DashDistanceBeforeMonster(float step)
+        {
+            if (step <= 0f) return step;
+            Vector3 scale = transform.lossyScale;
+            float radius = controller.radius * Mathf.Max(Mathf.Abs(scale.x), Mathf.Abs(scale.z));
+            float axis = Mathf.Max(0f, controller.height * Mathf.Abs(scale.y) * .5f - radius);
+            Vector3 center = transform.TransformPoint(controller.center);
+            Vector3 end = transform.up * axis;
+            RaycastHit[] hits = dashBodyHits;
+            int count = Physics.CapsuleCastNonAlloc(center - end, center + end, radius, dashDirection,
+                hits, step, ~0, QueryTriggerInteraction.Ignore);
+            if (count == hits.Length)
+            {
+                hits = Physics.CapsuleCastAll(center - end, center + end, radius, dashDirection,
+                    step, ~0, QueryTriggerInteraction.Ignore);
+                count = hits.Length;
+            }
+            float allowed = step;
+            for (int i = 0; i < count; i++)
+            {
+                var hit = hits[i];
+                if (Vector3.Dot(dashDirection, hit.normal) >= -.001f) continue;
+                var monster = hit.collider.GetComponentInParent<MonsterHealth>();
+                if (monster != null && !monster.IsDead)
+                    allowed = Mathf.Min(allowed, Mathf.Max(0f, hit.distance - .005f));
+            }
+            return allowed;
         }
 
         bool BeginAzureSlash(Vector2 cursor)
@@ -590,20 +630,54 @@ namespace Storybook
 
         void UpdateWeaponStance()
         {
-            double now = Time.timeAsDouble;
-            if (!IsWeaponDrawn || now < weaponStanceChangeAt || IsDashing || Attacking ||
+            if (!IsWeaponDrawn) return;
+            if (knockbackRemaining > 0f || (idleVisual != null && idleVisual.IsHitPoseActive) ||
+                IsDashing || Attacking ||
                 IsCastingAzureSlash || IsCastingCloneSlash || IsWindstepActive || IsCastingSwordTyphoon ||
                 swordTyphoons.Exists(typhoon => typhoon != null && typhoon.isActiveAndEnabled))
+            {
+                InterruptSheathing();
+                return;
+            }
+
+            double now = Time.timeAsDouble;
+            if (IsSheathingWeapon)
+            {
+                if (now - sheatheStartedAt >= SheatheFramesPerDirection * SheatheFrameDuration)
+                    weaponStance = WeaponStance.Sheathed;
+                return;
+            }
+
+            if (now < weaponStanceChangeAt || HasMoveDestination ||
+                Vector3.ProjectOnPlane(controller.velocity, Vector3.up).sqrMagnitude >= .01f)
                 return;
 
-            if (IsSheathingWeapon)
+            if (sheatheFrames == null || sheatheFrames.Length != SheatheFramesPerDirection * 4 ||
+                !System.Array.TrueForAll(sheatheFrames, frame => frame != null))
             {
                 weaponStance = WeaponStance.Sheathed;
                 return;
             }
 
+            sheatheDirection = ArmedSpriteDirection();
+            sheatheStartedAt = now;
             weaponStance = WeaponStance.Sheathing;
-            weaponStanceChangeAt = now + SheatheDuration;
+        }
+
+        void InterruptSheathing()
+        {
+            if (IsSheathingWeapon) weaponStance = WeaponStance.Drawn;
+        }
+
+        int ArmedSpriteDirection() => Mathf.Abs(facing.x) > Mathf.Abs(facing.z)
+            ? (facing.x > 0f ? 0 : 1) : (facing.z > 0f ? 3 : 2);
+
+        Sprite SheathingPose()
+        {
+            body.flipX = false;
+            int frame = Mathf.Clamp((int)((Time.timeAsDouble - sheatheStartedAt) / SheatheFrameDuration),
+                0, SheatheFramesPerDirection - 1);
+            return sheatheFrames[sheatheDirection * SheatheFramesPerDirection + frame];
         }
 
         Sprite DrawnIdlePose()
@@ -653,8 +727,7 @@ namespace Storybook
             }
             if (!windstep && IsWeaponDrawn && drawnRun.Length == 16)
             {
-                int direction = Mathf.Abs(facing.x) > Mathf.Abs(facing.z)
-                    ? (facing.x > 0f ? 0 : 1) : (facing.z > 0f ? 3 : 2);
+                int direction = ArmedSpriteDirection();
                 int frame = (int)(drawnRunTime * DrawnRunFramesPerSecond);
                 Sprite pose = drawnRun[direction * 4 + frame];
                 if (pose != null)
