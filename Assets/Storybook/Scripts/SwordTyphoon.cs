@@ -14,6 +14,7 @@ namespace Storybook
         readonly HashSet<MonsterHealth> targets = new HashSet<MonsterHealth>();
         Transform owner;
         SwordTyphoonVisual visuals;
+        ClearingCamera hitCamera;
         LayerMask targetMask;
         double startedAt;
         float radius, duration, interval, tickDamage, burstDamage, pullSpeed;
@@ -21,12 +22,13 @@ namespace Storybook
 
         public static SwordTyphoon Create(Transform owner, Vector3 center, float radius, float duration,
             float interval, int tickCount, float tickDamage, float burstDamage, float pullSpeed, LayerMask targetMask,
-            Sprite[] groundFrames = null)
+            Sprite[] groundFrames = null, ClearingCamera camera = null)
         {
             var root = new GameObject("Sword Typhoon");
             root.transform.position = center;
             var vortex = root.AddComponent<SwordTyphoon>();
             vortex.owner = owner;
+            vortex.hitCamera = camera;
             vortex.radius = radius;
             vortex.duration = duration;
             vortex.interval = interval;
@@ -101,7 +103,7 @@ namespace Storybook
             foreach (MonsterHealth enemy in targets)
             {
                 if (!isActiveAndEnabled) return;
-                if (enemy != null && enemy.CanTakeDamage) enemy.ReceiveDamage(damage, transform.position);
+                if (enemy != null && enemy.CanTakeDamage) enemy.ReceiveSkillDamage(damage, transform.position, SkillHit.SwordTyphoon, camera: hitCamera);
             }
         }
 

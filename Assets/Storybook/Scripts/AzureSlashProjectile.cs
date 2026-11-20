@@ -19,9 +19,10 @@ namespace Storybook
         Mesh crescent;
         Material crescentMaterial;
         static ParticleSystem impactPrefab;
+        ClearingCamera hitCamera;
 
         public static void Launch(Transform owner, Vector3 direction, float range, float speed,
-            float width, float damage, LayerMask targetMask, Sprite sprite = null, bool pointsLeft = false)
+            float width, float damage, LayerMask targetMask, Sprite sprite = null, bool pointsLeft = false, Camera camera = null)
         {
             var root = new GameObject("Azure Slash");
             root.transform.SetPositionAndRotation(owner.position + Vector3.up * .42f,
@@ -29,6 +30,7 @@ namespace Storybook
 
             var projectile = root.AddComponent<AzureSlashProjectile>();
             projectile.owner = owner;
+            if (camera != null) camera.TryGetComponent(out projectile.hitCamera);
             projectile.castOrigin = owner.position;
             projectile.remainingDistance = range;
             projectile.speed = speed;
@@ -69,8 +71,15 @@ namespace Storybook
                 if (target == null || !target.CanTakeDamage || !hitTargets.Add(target)) continue;
 
                 Vector3 contact = hit.distance > 0f ? hit.point : hit.collider.ClosestPoint(transform.position);
+                if (target is MonsterHealth { HasSkillHitFeedback: true } monster)
+                {
+                    monster.ReceiveSkillDamage(damage, castOrigin, SkillHit.AzureSlash, contact, hitCamera);
+                    continue;
+                }
+
                 target.ReceiveDamage(damage, castOrigin);
-                PlayImpact(contact);
+                if (target is not MonsterHealth { HasDefeatPresentation: true })
+                    PlayImpact(contact);
             }
 
             float travelled = Mathf.Min(step, wallDistance);

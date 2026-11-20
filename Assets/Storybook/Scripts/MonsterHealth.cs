@@ -32,21 +32,44 @@ namespace Storybook
         public event Action Died;
         public event Action<MonsterDeathCause> Defeated;
         public MonsterDeathCause? DeathCause { get; private set; }
+        internal bool HasDefeatPresentation { get; private set; }
+        internal bool HasSkillHitFeedback => combatAI != null;
         TurtleGuardAI guard;
+        MonsterCombatAI combatAI;
 
         void Awake()
         {
             currentHP = maxHP;
             TryGetComponent(out guard);
+            TryGetComponent(out combatAI);
         }
 
         public override void ReceiveDamage(float damage, Vector3 source)
         {
-            ReceiveDamage(guard != null ? guard.GuardDamage(damage, source) : damage);
+            ApplyDamage(guard != null ? guard.GuardDamage(damage, source) : damage, source);
         }
-        public override void ReceiveDamage(float damage)
+        public override void ReceiveDamage(float damage) => ApplyDamage(damage, null);
+
+        internal void ReceiveSkillDamage(float damage, Vector3 source, SkillHit skill, Vector3? contact = null,
+            ClearingCamera camera = null)
+        {
+            float before = currentHP;
+            ReceiveDamage(damage, source);
+            if (currentHP >= before || combatAI == null) return;
+            if (!IsDead) combatAI.ReactToSkillHit(source, skill, contact);
+            ShowCombatShake(camera, skill);
+        }
+
+        internal void ShowCombatShake(ClearingCamera camera, SkillHit? skill = null)
+        {
+            if (camera != null && (HasDefeatPresentation || skill == null || skill == SkillHit.AzureSlash))
+                camera.RequestCombatShake(HasDefeatPresentation, skill == SkillHit.AzureSlash);
+        }
+
+        void ApplyDamage(float damage, Vector3? source)
         {
             if (!CanTakeDamage || damage <= 0 || float.IsNaN(damage) || float.IsInfinity(damage)) return;
+            if (source.HasValue && combatAI != null) combatAI.TrackDamageDirection(source.Value);
             currentHP = Mathf.Max(0, currentHP - damage);
             if (!IsDead) { Damaged?.Invoke(); return; }
             FinishDeath(MonsterDeathCause.PlayerKilled);
@@ -67,14 +90,18 @@ namespace Storybook
             fragmentRecipient = null;
             if (cause == MonsterDeathCause.PlayerKilled && recipient != null)
                 recipient.AwardStoryFragments(minimumFragments, maximumFragments);
+            float visualDuration = 0f;
+            if (cause == MonsterDeathCause.PlayerKilled && combatAI != null)
+                visualDuration = combatAI.ShowDefeat();
+            HasDefeatPresentation = visualDuration > 0f;
             foreach (var collider in GetComponentsInChildren<Collider>()) collider.enabled = false;
             Defeated?.Invoke(cause);
             Died?.Invoke();
-            if (despawnOnDeath) StartCoroutine(DisableAfterDeath());
+            if (despawnOnDeath) StartCoroutine(DisableAfterDeath(Mathf.Max(deathDelay, visualDuration)));
         }
-        IEnumerator DisableAfterDeath()
+        IEnumerator DisableAfterDeath(float delay)
         {
-            yield return new WaitForSeconds(deathDelay);
+            yield return new WaitForSeconds(delay);
             gameObject.SetActive(false);
         }
     }

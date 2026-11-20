@@ -15,6 +15,10 @@ namespace Storybook
         [SerializeField] Rect groundViewBounds;
         Camera view;
         Vector3 velocity;
+        double hitShakeStartedAt, hitShakeUntil;
+        float hitShakeStrength, hitShakeDuration;
+        float pendingShakeStrength, pendingShakeDuration;
+        bool renderingHitShake;
         bool? dungeonBossView;
         internal void SetDungeonRoom(bool bossView, bool snap)
         {
@@ -71,7 +75,56 @@ namespace Storybook
         static float ClampAxis(float position, float min, float max) =>
             min <= max ? Mathf.Clamp(position, min, max) : (min + max) * .5f;
 
-        void OnPreCull() => UpdateZoom();
+        internal void RequestCombatShake(bool defeated, bool piercing)
+        {
+            float strength = defeated ? .111f : piercing ? .062f : .052f;
+            if (strength <= pendingShakeStrength) return;
+            pendingShakeStrength = strength;
+            pendingShakeDuration = defeated ? .14f : .085f;
+        }
+
+        void OnPreCull()
+        {
+            RestoreHitShakeView();
+            UpdateZoom();
+            double now = Time.unscaledTimeAsDouble;
+            if (pendingShakeStrength > 0f)
+            {
+                // Start on the first rendered frame. Keep the strongest impulse without stacking offsets.
+                if (now >= hitShakeUntil || pendingShakeStrength > hitShakeStrength ||
+                    (pendingShakeStrength == hitShakeStrength && now - hitShakeStartedAt >= .045d))
+                {
+                    hitShakeStrength = pendingShakeStrength;
+                    hitShakeDuration = pendingShakeDuration;
+                    hitShakeStartedAt = now;
+                    hitShakeUntil = now + hitShakeDuration;
+                }
+                pendingShakeStrength = 0f;
+            }
+
+            float remaining = (float)(hitShakeUntil - now);
+            if (remaining <= 0f) return;
+            float weight = remaining / hitShakeDuration;
+            float angle = (1f - weight) * Mathf.PI * 3f;
+            Vector3 offset = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle) * .45f, 0f) * (hitShakeStrength * weight);
+            view.worldToCameraMatrix = Matrix4x4.Translate(offset) * view.worldToCameraMatrix;
+            renderingHitShake = true;
+        }
+
+        void OnPostRender() => RestoreHitShakeView();
+        void OnDisable()
+        {
+            pendingShakeStrength = 0f;
+            hitShakeUntil = 0d;
+            RestoreHitShakeView();
+        }
+
+        void RestoreHitShakeView()
+        {
+            if (!renderingHitShake) return;
+            view.ResetWorldToCameraMatrix();
+            renderingHitShake = false;
+        }
 
         void UpdateZoom()
         {

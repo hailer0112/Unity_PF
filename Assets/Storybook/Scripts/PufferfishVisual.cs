@@ -86,7 +86,7 @@ namespace Storybook
                     body.enabled = elapsed < 5f / explode.frameRate;
                     if (body.enabled) Sample(explode, elapsed, ExplosionScale);
                 }
-                else Sample(die, now - deathAt, ReactionScale);
+                else Sample(die, BasicHitPose.DefeatMotionProgress(now - deathAt, die.length) * die.length, ReactionScale);
                 return;
             }
 

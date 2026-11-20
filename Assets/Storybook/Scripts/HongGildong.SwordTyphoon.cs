@@ -87,7 +87,7 @@ namespace Storybook
             swordTyphoons.Add(SwordTyphoon.Create(transform, center, swordTyphoonRadius,
                 swordTyphoonDuration, swordTyphoonTickInterval, swordTyphoonTickCount,
                 attackDamage * swordTyphoonTickDamageMultiplier, attackDamage * swordTyphoonBurstDamageMultiplier,
-                swordTyphoonPullSpeed, targetMask, swordTyphoonGroundFrames));
+                swordTyphoonPullSpeed, targetMask, swordTyphoonGroundFrames, CombatCamera));
         }
 
         void CancelSwordTyphoon()

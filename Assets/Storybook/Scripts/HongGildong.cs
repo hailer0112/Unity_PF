@@ -578,7 +578,7 @@ namespace Storybook
             IsCastingAzureSlash = false;
             AzureSlashProjectile.Launch(transform, azureSlashDirection, azureSlashRange, azureSlashSpeed,
                 azureSlashWidth, attackDamage * azureSlashDamageMultiplier, targetMask,
-                aimLeft ? azureSlashProjectileLeft : azureSlashProjectileRight, aimLeft);
+                aimLeft ? azureSlashProjectileLeft : azureSlashProjectileRight, aimLeft, fieldCamera);
         }
 
         void BeginSwing(Vector2 cursor)
@@ -592,6 +592,7 @@ namespace Storybook
             attackLeft = Mathf.Abs(slashDirection.x) > .08f ? slashDirection.x < 0f : left;
             hitThisSwing.Clear();
             restoredManaThisSwing = false;
+            basicHitPoseUntil = 0d;
             attackTime = 0f;
             gaitPhase = 0f;
         }
@@ -608,15 +609,16 @@ namespace Storybook
 
         Sprite SwingPose()
         {
+            float poseTime = Time.unscaledTimeAsDouble < basicHitPoseUntil ? basicHitPoseTime : attackTime;
             Sprite[] directionalSwing = DirectionalBasicSwingFrames();
             Sprite[] frames = directionalSwing ?? (attackBack ? swingBack : swingFront);
             if (directionalSwing != null) body.flipX = false;
-            if (attackTime < Windup * .62f)
+            if (poseTime < Windup * .62f)
                 return !basicSwingDrawsWeapon && directionalSwing != null ? frames[3] : frames[0];
             float strikePoseStart = directionalSwing != null ? Windup : Mathf.Lerp(Windup, ContactEnd, .30f);
-            if (attackTime < strikePoseStart)
+            if (poseTime < strikePoseStart)
                 return !basicSwingDrawsWeapon && directionalSwing != null ? frames[3] : frames[1];
-            if (attackTime < ContactEnd) return frames[2];
+            if (poseTime < ContactEnd) return frames[2];
             return frames[3];
         }
 
@@ -781,6 +783,21 @@ namespace Storybook
 
         float SweepAngle(float time) => Mathf.Lerp(-halfArc, halfArc, Mathf.InverseLerp(Windup, ContactEnd, time));
 
+        ClearingCamera CombatCamera => fieldCamera != null ? fieldCamera.GetComponent<ClearingCamera>() : null;
+
+        double basicHitPoseUntil;
+        float basicHitPoseTime;
+
+        void PlayBasicHitFeedback(float stopSeconds, float effectScale, Vector3 point, MonsterHealth monster)
+        {
+            bool killingBlow = monster.HasDefeatPresentation;
+            monster.ShowCombatShake(CombatCamera);
+            if (!killingBlow) BasicHitPose.SpawnImpact(point, effectScale);
+            if (!killingBlow && basicHitPoseUntil != 0d) return;
+            basicHitPoseTime = Mathf.Min(attackTime, ContactEnd - .001f);
+            basicHitPoseUntil = Time.unscaledTimeAsDouble + (killingBlow ? BasicHitPose.DefeatHitStop : stopSeconds);
+        }
+
         void StrikeTargets(float start, float end)
         {
             Vector3 center = transform.position + Vector3.up * .45f;
@@ -793,7 +810,12 @@ namespace Storybook
                 float angle = SweepSign * Vector3.SignedAngle(slashDirection, offset, Vector3.up);
                 if (offset.sqrMagnitude > reach * reach || angle < start || angle > end || !hitThisSwing.Add(target))
                     continue;
-                if (DealsBasicDamage(target, attackDamage, transform.position)) RestoreManaOnBasicHit();
+                Vector3 impact = other.bounds.ClosestPoint(center);
+                if (!DealsBasicDamage(target, attackDamage, transform.position)) continue;
+                RestoreManaOnBasicHit();
+                if (target is MonsterHealth monster && target.TryGetComponent(out MonsterCombatAI enemy) &&
+                    enemy.ReactToBasicHit(transform.position, out float stopSeconds, out float effectScale))
+                    PlayBasicHitFeedback(stopSeconds, effectScale, impact, monster);
             }
         }
 

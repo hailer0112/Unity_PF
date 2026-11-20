@@ -217,7 +217,11 @@ namespace Storybook
                 }
 
                 if (!blocked && cloneSlashHitTargets.Add(target))
-                    target.ReceiveDamage(attackDamage * cloneSlashDamageMultiplier, origin);
+                {
+                    float damage = attackDamage * cloneSlashDamageMultiplier;
+                    if (target is MonsterHealth monster) monster.ReceiveSkillDamage(damage, origin, SkillHit.CloneSlash, camera: CombatCamera);
+                    else target.ReceiveDamage(damage, origin);
+                }
                 if (!IsCastingCloneSlash) return;
             }
         }

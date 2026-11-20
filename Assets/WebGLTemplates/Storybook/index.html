@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>뒤틀린 동화</title>
+  <style>
+    html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #0b0811; }
+    canvas { display: block; width: 100%; height: 100%; outline: none; }
+    #status {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      max-width: 85%; text-align: center; color: #ffe8c0; font: 16px system-ui, sans-serif;
+    }
+    progress { display: block; margin: .75rem auto 0; accent-color: #f1c782; }
+  </style>
+</head>
+<body>
+  <canvas id="unity-canvas" width="{{{ WIDTH }}}" height="{{{ HEIGHT }}}" tabindex="-1" aria-label="뒤틀린 동화"></canvas>
+  <div id="status" role="status">게임을 불러오는 중입니다.<progress max="1" value="0"></progress></div>
+  <script>
+    const canvas = document.querySelector("#unity-canvas");
+    const status = document.querySelector("#status");
+    const progressBar = status.querySelector("progress");
+    const buildUrl = "Build";
+
+    function showError(message) {
+      status.hidden = false;
+      status.textContent = "게임을 불러오지 못했습니다. " + message;
+    }
+
+    const config = {
+      arguments: [],
+#if PROGRESSIVE_ASSET_LOADING
+      primaryDataUrls: {{{ JSON.stringify(PRIMARY_DATA_FILES) }}},
+      secondaryDataUrls: {{{ JSON.stringify(SECONDARY_DATA_FILES) }}},
+#else
+      dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+#endif
+      frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+#if USE_WASM
+      codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+#endif
+#if SYMBOLS_FILENAME
+      symbolsUrl: buildUrl + "/{{{ SYMBOLS_FILENAME }}}",
+#endif
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
+      productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
+      productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},
+      showBanner: (message, type) => {
+        if (type === "error") showError(message);
+        else console.warn(message);
+      }
+    };
+
+    const loader = document.createElement("script");
+    loader.src = buildUrl + "/{{{ LOADER_FILENAME }}}";
+    loader.onerror = () => showError("로더 파일을 찾을 수 없습니다.");
+    loader.onload = () => createUnityInstance(canvas, config, progress => {
+      progressBar.value = progress;
+    }).then(() => {
+      status.hidden = true;
+    }).catch(showError);
+    document.body.appendChild(loader);
+  </script>
+</body>
+</html>
