@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Storybook/Scenes/TitleScene.unity
     guid: a160697399e7cbf439c6a14275112fd1
   - enabled: 1
+    path: Assets/Storybook/Scenes/CharacterSelectScene.unity
+    guid: 8869e034afcfd644788c798e3ffdbf7f
+  - enabled: 1
     path: Assets/Storybook/Scenes/StorybookArchive.unity
     guid: b7d2a74d34e34bd41babe5e1e86410fc
   - enabled: 1

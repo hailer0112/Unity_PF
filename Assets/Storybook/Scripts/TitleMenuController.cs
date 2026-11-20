@@ -32,9 +32,9 @@ namespace Storybook
         void StartGame()
         {
             if (leaving) return;
-            if (!Application.CanStreamedLevelBeLoaded(StorybookTransition.ArchiveScene))
+            if (!Application.CanStreamedLevelBeLoaded(CharacterSelectScreen.SceneName))
             {
-                Debug.LogError("StorybookArchive must be enabled in the build scene list.", this);
+                Debug.LogError("CharacterSelectScene must be enabled in the build scene list.", this);
                 return;
             }
 
@@ -42,10 +42,10 @@ namespace Storybook
             menu.interactable = false;
             quitNotice.SetActive(false);
             startButton.targetGraphic.CrossFadeColor(startButton.colors.pressedColor, .025f, true, true);
-            StartCoroutine(EnterArchive());
+            StartCoroutine(EnterCharacterSelect());
         }
 
-        IEnumerator EnterArchive()
+        IEnumerator EnterCharacterSelect()
         {
             yield return new WaitForSecondsRealtime(.08f);
             const float fadeDuration = .18f;
@@ -57,7 +57,7 @@ namespace Storybook
                 yield return null;
             }
 
-            yield return SceneManager.LoadSceneAsync(StorybookTransition.ArchiveScene, LoadSceneMode.Single);
+            yield return SceneManager.LoadSceneAsync(CharacterSelectScreen.SceneName, LoadSceneMode.Single);
         }
 
         void QuitGame()
