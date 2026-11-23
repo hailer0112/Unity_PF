@@ -24,6 +24,8 @@ namespace Storybook
         [SerializeField, Min(1f), Tooltip("Distance between the north and south doorways of neighboring rooms.")]
         float northSouthPassageLength = 5f;
         [SerializeField] GameObject floorPortalEffect;
+        [SerializeField] PalaceRewardChest rewardChestPrefab;
+        [SerializeField] PalaceChestRewards chestRewards = new();
         [SerializeField] PalaceRoomWaves.Settings encounterWaves = new();
         [SerializeField, Min(3)] int minimumCombatRooms = 5;
         [SerializeField, Min(3)] int maximumCombatRooms = 7;
@@ -37,6 +39,7 @@ namespace Storybook
 
         readonly List<PalaceDungeonRoom> rooms = new();
         readonly HashSet<string> floorLayouts = new();
+        readonly System.Random chestRandom = new();
         PalaceDungeonMinimap minimap;
         PlayerHealth health;
         Transform floorRoot;
@@ -52,6 +55,12 @@ namespace Storybook
         public int Floor { get; private set; } = 1;
         public bool IsBossFloor => Floor > LastRegularFloor;
         internal string PortalPrompt => CanUsePortal() ? "F - 다음 구역으로 이동" : null;
+        internal string ChestPrompt => !CanUseChest() ? null :
+            Current.RewardChest.CanCollect(player.transform.position) ? Current.RewardChest.PickupPrompt :
+            Current.RewardChest.CanOpen(player.transform.position) ? "F - 보상 상자 열기" : null;
+        internal string ChestResult => Time.unscaledTimeAsDouble < chestResultUntil ? chestResult : null;
+        string chestResult;
+        double chestResultUntil;
 
         internal static Vector2Int Direction(int side) => Directions[side];
 
@@ -161,7 +170,7 @@ namespace Storybook
             PalaceDungeonRoom room = Instantiate(prefab, position, Quaternion.identity, floorRoot);
             room.name = $"{node.Id:00} {node.Type} ({node.Grid.x}, {node.Grid.y})";
             rooms.Add(room);
-            room.Initialize(node, health, recoveryAmount, encounterWaves, Seed);
+            room.Initialize(node, health, recoveryAmount, encounterWaves, Seed, rewardChestPrefab);
             return room;
         }
 
@@ -200,8 +209,48 @@ namespace Storybook
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (PalaceDeveloperMenu.BlocksGameplay) return;
 #endif
-            if (Keyboard.current?.fKey.wasPressedThisFrame == true && CanUsePortal())
+            if (Keyboard.current?.fKey.wasPressedThisFrame != true || NpcDialogue.BlocksInteraction) return;
+            if (CanUsePortal())
                 StorybookTransition.TryBeginFloor(player, IntensifyPortal, AdvanceFloor);
+            else
+                TryInteractWithChest();
+        }
+
+        bool CanUseChest()
+        {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (PalaceDeveloperMenu.BlocksGameplay) return false;
+#endif
+            return Current?.RewardChest != null && player != null && player.isActiveAndEnabled &&
+                !health.IsDead && !StorybookTransition.IsBusy && !NpcDialogue.BlocksInteraction;
+        }
+
+        internal bool TryInteractWithChest()
+        {
+            if (!CanUseChest()) return false;
+            var chest = Current.RewardChest;
+            Vector3 position = player.transform.position;
+            if (chest.TryCollect(position, out var collected))
+            {
+                ShowChestReward(chestRewards.GrantLoot(collected, health, player));
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+                Debug.Log($"[Palace chest] collected {chestResult}", this);
+#endif
+                return true;
+            }
+            if (!chest.CanOpen(position) || !Current.TryRewardDropPosition(position, out var drop)) return false;
+            var reward = chestRewards.Roll(chestRandom);
+            chest.BeginOpening(chestRewards.CreateLoot(reward, health, chestRandom), drop);
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            Debug.Log($"[Palace chest] {chestRewards.DescribeOdds()}, rolled {reward}", this);
+#endif
+            return true;
+        }
+
+        void ShowChestReward(string result)
+        {
+            chestResult = result;
+            chestResultUntil = Time.unscaledTimeAsDouble + 2.4d;
         }
 
         void IntensifyPortal()

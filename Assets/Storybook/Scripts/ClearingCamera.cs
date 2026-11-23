@@ -4,6 +4,9 @@ namespace Storybook
     [RequireComponent(typeof(Camera))]
     public sealed class ClearingCamera : MonoBehaviour
     {
+        const float BasicHitShakeStrength = .052f;
+        const float BasicHitShakeDuration = .085f;
+
         [SerializeField] Transform followTarget;
         [SerializeField, Min(.5f)] float verticalSize = 2.6f;
         [SerializeField, Min(.5f)] float minimumHalfWidth = 3.9f;
@@ -13,6 +16,9 @@ namespace Storybook
         [SerializeField] bool limitGroundView;
         [SerializeField] Transform groundViewEntrance;
         [SerializeField] Rect groundViewBounds;
+        [Header("Clone Slash Hit Shake")]
+        [SerializeField, Range(0f, BasicHitShakeStrength)] float cloneSlashShakeStrength = .04f;
+        [SerializeField, Range(0f, BasicHitShakeDuration)] float cloneSlashShakeDuration = .065f;
         Camera view;
         Vector3 velocity;
         double hitShakeStartedAt, hitShakeUntil;
@@ -77,10 +83,18 @@ namespace Storybook
 
         internal void RequestCombatShake(bool defeated, bool piercing)
         {
-            float strength = defeated ? .111f : piercing ? .062f : .052f;
-            if (strength <= pendingShakeStrength) return;
+            float strength = defeated ? .111f : piercing ? .062f : BasicHitShakeStrength;
+            QueueHitShake(strength, defeated ? .14f : BasicHitShakeDuration);
+        }
+
+        internal void RequestCloneSlashShake() =>
+            QueueHitShake(cloneSlashShakeStrength, cloneSlashShakeDuration);
+
+        void QueueHitShake(float strength, float duration)
+        {
+            if (strength <= pendingShakeStrength || duration <= 0f) return;
             pendingShakeStrength = strength;
-            pendingShakeDuration = defeated ? .14f : .085f;
+            pendingShakeDuration = duration;
         }
 
         void OnPreCull()

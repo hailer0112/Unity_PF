@@ -8,6 +8,21 @@ namespace Storybook
 
     public sealed partial class PalaceDungeon
     {
+        internal bool TestRewardChest() => Current != null && Current.EnsureRewardChest();
+
+        internal string TestChestReward(PalaceChestReward reward) =>
+            health == null || health.IsDead ? "살아 있는 플레이어가 필요합니다." :
+            chestRewards.Grant(reward, health, player, new System.Random());
+
+        internal string TestChestOdds()
+        {
+            const int samples = 10000;
+            var random = new System.Random();
+            var results = new int[4];
+            for (int i = 0; i < samples; i++) results[(int)chestRewards.Roll(random)]++;
+            return $"{chestRewards.DescribeOdds()} | {samples} rolls: {string.Join("/", results)}";
+        }
+
         PalaceDungeonRoom testBossTemplate;
         GameObject testMonsterRoot;
         MonsterHealth testMonster;

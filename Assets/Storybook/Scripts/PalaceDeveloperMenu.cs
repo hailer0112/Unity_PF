@@ -150,7 +150,7 @@ namespace Storybook
             shade.anchorMax = Vector2.one;
             shade.offsetMin = shade.offsetMax = Vector2.zero;
             Paint(shade, new Color(.015f, .025f, .045f, .76f));
-            var panel = Rectangle(shade, "Developer panel", 0, 0, 760, 482);
+            var panel = Rectangle(shade, "Developer panel", 0, 0, 760, 565);
             panel.anchorMin = panel.anchorMax = panel.pivot = new Vector2(.5f, .5f);
             panel.anchoredPosition = Vector2.zero;
             Paint(panel, new Color(.075f, .105f, .15f));
@@ -197,7 +197,25 @@ namespace Storybook
             AddSummon(panel, "복어 자폭병", 564, 361, TestMonsterKind.Pufferfish);
             Label(panel, "일반 시작방·전투방에서 한 마리씩 소환합니다.", 394, 403, 341, 22, 13, Muted);
 
-            status = Label(panel, "", 24, 438, 704, 28, 15, Accent);
+            Label(panel, "보상 상자 · 강제 지급", 24, 426, 340, 20, 16, Accent);
+            AddButton(panel, "클리어방 상자 확인", 24, 451, 162, () =>
+                ChestTest(() => dungeon.TestRewardChest() ? "클리어 상자 1개 확인" : "클리어된 일반 전투방이 필요합니다."));
+            AddButton(panel, "확률 10,000회 추첨", 194, 451, 162, () => ChestTest(dungeon.TestChestOdds));
+            AddButton(panel, "보유 유물 확인", 394, 451, 162, () => ChestTest(() =>
+                "보유 유물: " + (health.Relics.Owned.Count == 0 ? "없음" :
+                    string.Join(", ", System.Linq.Enumerable.Select(health.Relics.Owned, relic => relic.DisplayName)))));
+            AddButton(panel, "파편", 24, 490, 162, () => ChestTest(() => dungeon.TestChestReward(PalaceChestReward.Fragments)));
+            AddButton(panel, "HP", 194, 490, 162, () => ChestTest(() => dungeon.TestChestReward(PalaceChestReward.Health)));
+            AddButton(panel, "MP", 394, 490, 162, () => ChestTest(() => dungeon.TestChestReward(PalaceChestReward.Mana)));
+            AddButton(panel, "유물", 564, 490, 162, () => ChestTest(() => dungeon.TestChestReward(PalaceChestReward.Relic)));
+            status = Label(panel, "", 24, 530, 704, 28, 15, Accent);
+        }
+
+        void ChestTest(System.Func<string> test)
+        {
+            string message = test();
+            status.text = message;
+            Debug.Log($"[Palace chest test] {message}", this);
         }
 
         void AddSummon(Transform panel, string title, float x, float y, TestMonsterKind kind) =>

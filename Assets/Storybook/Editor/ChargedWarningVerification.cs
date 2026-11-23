@@ -39,14 +39,27 @@ namespace Storybook.Editor
             try
             {
                 float windup=(float)Get(ai,"windupTime"),active=(float)Get(ai,"activeTime");
-                Check(Mathf.Abs(windup-.6f)<.001f && Mathf.Abs((float)Get(ai,"hitLength")-1.35f)<.001f && Mathf.Abs((float)Get(ai,"hitWidth")-.825f)<.001f,"Windup is unchanged and the reduced rectangle is configured");
+                float radius = (float)Get(ai, "hitRadius");
+                float centerOffset = (float)Get(ai, "hitCenterOffset");
+                Check(Mathf.Abs(windup-.6f)<.001f && Mathf.Abs(radius-.65f)<.001f &&
+                    Mathf.Abs(centerOffset-.7f)<.001f, "Windup and forward circle configuration");
                 Begin();Check(warning.Progress==0 && warning.IsVisible,"Attack begins at zero with original outline visible");
                 var fill=(MeshRenderer)Get(warning,"fillRenderer");
+                var outline = (LineRenderer)Get(ai, "warning");
+                Vector3 center = (Vector3)Get(ai, "attackCenter");
+                for (int i = 0; i < outline.positionCount; i++)
+                    if (Mathf.Abs(Vector3.ProjectOnPlane(outline.GetPosition(i) - center, Vector3.up).magnitude - radius) > .001f)
+                        throw new Exception("Outline deviates from damage circle");
+                Check(outline.loop && outline.positionCount == 64 &&
+                    Vector3.ProjectOnPlane(fill.transform.position - center, Vector3.up).sqrMagnitude < .000001f,
+                    "Outline, fill and damage share a center");
                 Check(fill.sharedMaterial!=null && !ShaderUtil.ShaderHasError(fill.sharedMaterial.shader),"Transparent fill shader compiles without errors");
                 foreach(float fraction in new[]{.25f,.5f,.75f})
                 {
                     At(windup*fraction);Check(Mathf.Abs(warning.Progress-fraction)<.001f,"Windup progress matches "+fraction);
-                    var mesh=(Mesh)Get(warning,"mesh");Check(Mathf.Abs(mesh.bounds.size.z-(float)Get(ai,"hitLength")*fraction)<.001f,"Filled length matches actual range times progress");
+                    Check(Mathf.Abs(fill.bounds.size.z - 2f * radius * fraction) < .001f &&
+                        Mathf.Abs(fill.bounds.size.x - 2f * radius * fraction) < .001f,
+                        "Fill radius matches damage radius times progress");
                     if(fraction==.5f)Capture();
                 }
                 Quaternion rotation=fill.transform.rotation;Vector3 position=fill.transform.position;

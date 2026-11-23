@@ -55,15 +55,18 @@ namespace Storybook
         {
             float before = currentHP;
             ReceiveDamage(damage, source);
-            if (currentHP >= before || combatAI == null) return;
-            if (!IsDead) combatAI.ReactToSkillHit(source, skill, contact);
+            if (currentHP >= before || (combatAI == null && skill != SkillHit.CloneSlash)) return;
+            if (!IsDead) combatAI?.ReactToSkillHit(source, skill, contact);
             ShowCombatShake(camera, skill);
         }
 
         internal void ShowCombatShake(ClearingCamera camera, SkillHit? skill = null)
         {
-            if (camera != null && (HasDefeatPresentation || skill == null || skill == SkillHit.AzureSlash))
+            if (camera == null) return;
+            if (HasDefeatPresentation || skill == null || skill == SkillHit.AzureSlash)
                 camera.RequestCombatShake(HasDefeatPresentation, skill == SkillHit.AzureSlash);
+            else if (skill == SkillHit.CloneSlash)
+                camera.RequestCloneSlashShake();
         }
 
         void ApplyDamage(float damage, Vector3? source)

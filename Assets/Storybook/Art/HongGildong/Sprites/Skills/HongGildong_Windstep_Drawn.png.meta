@@ -1,0 +1,832 @@
+fileFormatVersion: 2
+guid: 55b3e2c42303af84eb0a9069e3efa822
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8925391386041753883
+    second: HongGildong_Windstep_Drawn_0
+  - first:
+      213: 2282299917068948132
+    second: HongGildong_Windstep_Drawn_1
+  - first:
+      213: 5801190978833317557
+    second: HongGildong_Windstep_Drawn_2
+  - first:
+      213: -1868076531872300456
+    second: HongGildong_Windstep_Drawn_3
+  - first:
+      213: -1619086277918707696
+    second: HongGildong_Windstep_Drawn_4
+  - first:
+      213: 6646063259981133516
+    second: HongGildong_Windstep_Drawn_5
+  - first:
+      213: -2355788851041526487
+    second: HongGildong_Windstep_Drawn_6
+  - first:
+      213: 2734129907343744014
+    second: HongGildong_Windstep_Drawn_7
+  - first:
+      213: 6892935981906729855
+    second: HongGildong_Windstep_Drawn_8
+  - first:
+      213: -1771088650583403086
+    second: HongGildong_Windstep_Drawn_9
+  - first:
+      213: -4134528703923125645
+    second: HongGildong_Windstep_Drawn_10
+  - first:
+      213: -4131722050612635120
+    second: HongGildong_Windstep_Drawn_11
+  - first:
+      213: -3858073572435783008
+    second: HongGildong_Windstep_Drawn_12
+  - first:
+      213: -7595480276260289925
+    second: HongGildong_Windstep_Drawn_13
+  - first:
+      213: 194465257085851201
+    second: HongGildong_Windstep_Drawn_14
+  - first:
+      213: -4662561691339515262
+    second: HongGildong_Windstep_Drawn_15
+  - first:
+      213: -7052706539709552465
+    second: HongGildong_Windstep_Drawn_16
+  - first:
+      213: -6776036179073851039
+    second: HongGildong_Windstep_Drawn_17
+  - first:
+      213: 6056599533321585015
+    second: HongGildong_Windstep_Drawn_18
+  - first:
+      213: -713051148527142164
+    second: HongGildong_Windstep_Drawn_19
+  - first:
+      213: 4219280350531402367
+    second: HongGildong_Windstep_Drawn_20
+  - first:
+      213: -4695705670897817763
+    second: HongGildong_Windstep_Drawn_21
+  - first:
+      213: 1031018013344864506
+    second: HongGildong_Windstep_Drawn_22
+  - first:
+      213: -2341214633284414589
+    second: HongGildong_Windstep_Drawn_23
+  - first:
+      213: 5703013938734529135
+    second: HongGildong_Windstep_Drawn_24
+  - first:
+      213: 5711073145586489367
+    second: HongGildong_Windstep_Drawn_25
+  - first:
+      213: -7142117279282780805
+    second: HongGildong_Windstep_Drawn_26
+  - first:
+      213: -5023294220619820365
+    second: HongGildong_Windstep_Drawn_27
+  - first:
+      213: -3408889400467755636
+    second: HongGildong_Windstep_Drawn_28
+  - first:
+      213: 2250983478984778665
+    second: HongGildong_Windstep_Drawn_29
+  - first:
+      213: 2751064811734416725
+    second: HongGildong_Windstep_Drawn_30
+  - first:
+      213: 1917717190218306221
+    second: HongGildong_Windstep_Drawn_31
+  - first:
+      213: 6592458970779280640
+    second: HongGildong_Windstep_Drawn_32
+  - first:
+      213: 4010670957254568859
+    second: HongGildong_Windstep_Drawn_33
+  - first:
+      213: -3480565815573757370
+    second: HongGildong_Windstep_Drawn_34
+  - first:
+      213: 3203671054919957044
+    second: HongGildong_Windstep_Drawn_35
+  - first:
+      213: -123946125935043729
+    second: HongGildong_Windstep_Drawn_36
+  - first:
+      213: -3750196316483032938
+    second: HongGildong_Windstep_Drawn_37
+  - first:
+      213: -484687367628383087
+    second: HongGildong_Windstep_Drawn_38
+  - first:
+      213: -7503655440967564313
+    second: HongGildong_Windstep_Drawn_39
+  - first:
+      213: -5443517723095711277
+    second: HongGildong_Windstep_Drawn_40
+  - first:
+      213: -9044784058238792031
+    second: HongGildong_Windstep_Drawn_41
+  - first:
+      213: 3580864524264891321
+    second: HongGildong_Windstep_Drawn_42
+  - first:
+      213: 2128536892713830430
+    second: HongGildong_Windstep_Drawn_43
+  - first:
+      213: 3853400913611246460
+    second: HongGildong_Windstep_Drawn_44
+  - first:
+      213: -4251851392647866280
+    second: Windstep_Drawn_Right_0
+  - first:
+      213: 6836422702743684012
+    second: Windstep_Drawn_Right_1
+  - first:
+      213: 3026699855881518520
+    second: Windstep_Drawn_Right_2
+  - first:
+      213: -4074896638587065923
+    second: Windstep_Drawn_Right_3
+  - first:
+      213: 895198969592127957
+    second: Windstep_Drawn_Right_4
+  - first:
+      213: 9125035155745137808
+    second: Windstep_Drawn_Left_0
+  - first:
+      213: 3047198083001498453
+    second: Windstep_Drawn_Left_1
+  - first:
+      213: -7647320134887596647
+    second: Windstep_Drawn_Left_2
+  - first:
+      213: -1640202446120608678
+    second: Windstep_Drawn_Left_3
+  - first:
+      213: -3419627961232212030
+    second: Windstep_Drawn_Left_4
+  - first:
+      213: 4143900453627188777
+    second: Windstep_Drawn_Front_0
+  - first:
+      213: 5082045721557872598
+    second: Windstep_Drawn_Front_1
+  - first:
+      213: 3673353706858516709
+    second: Windstep_Drawn_Front_2
+  - first:
+      213: -6545491247939448159
+    second: Windstep_Drawn_Front_3
+  - first:
+      213: -8510868369645427960
+    second: Windstep_Drawn_Front_4
+  - first:
+      213: 7794260573133076621
+    second: Windstep_Drawn_Back_0
+  - first:
+      213: 801505276048402633
+    second: Windstep_Drawn_Back_1
+  - first:
+      213: -802505459714422236
+    second: Windstep_Drawn_Back_2
+  - first:
+      213: 1789541687674222771
+    second: Windstep_Drawn_Back_3
+  - first:
+      213: -3157261968871742337
+    second: Windstep_Drawn_Back_4
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 66.5
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationMethod: 0
+  spriteTessellationDetail: -1
+  spriteGeometrySubdivision: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Windstep_Drawn_Right_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 540
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85859778fa36ef4c0800000000000000
+      internalID: -4251851392647866280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Right_1
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 540
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ca3047b2a3adfde50800000000000000
+      internalID: 6836422702743684012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Right_2
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 540
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bd3b879b7ff00a20800000000000000
+      internalID: 3026699855881518520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Right_3
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 540
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db9a590d81f0377c0800000000000000
+      internalID: -4074896638587065923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Right_4
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 540
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d1a5d948b26c6c00800000000000000
+      internalID: 895198969592127957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Left_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 360
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 094e32da023a2ae70800000000000000
+      internalID: 9125035155745137808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Left_1
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 360
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55b3e810382d94a20800000000000000
+      internalID: 3047198083001498453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Left_2
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 360
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 99d1554cad24fd590800000000000000
+      internalID: -7647320134887596647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Left_3
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 360
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5c114fb094dc39e0800000000000000
+      internalID: -1640202446120608678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Left_4
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 360
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2cfb2cabc7a0b80d0800000000000000
+      internalID: -3419627961232212030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Front_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 926570bd187128930800000000000000
+      internalID: 4143900453627188777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Front_1
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 180
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6df20cd68ad078640800000000000000
+      internalID: 5082045721557872598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Front_2
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 180
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e09aafebbf5af230800000000000000
+      internalID: 3673353706858516709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Front_3
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 180
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a21426b36eb925a0800000000000000
+      internalID: -6545491247939448159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Front_4
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 180
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8032d217f4253e980800000000000000
+      internalID: -8510868369645427960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Back_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d88fd6c02b6ca2c60800000000000000
+      internalID: 7794260573133076621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Back_1
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 0
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c867705dc48f1b00800000000000000
+      internalID: 801505276048402633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Back_2
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42a0967498decd4f0800000000000000
+      internalID: -802505459714422236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Back_3
+      rect:
+        serializedVersion: 2
+        x: 1080
+        y: 0
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b8339cfeaab5d810800000000000000
+      internalID: 1789541687674222771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Windstep_Drawn_Back_4
+      rect:
+        serializedVersion: 2
+        x: 1440
+        y: 0
+        width: 360
+        height: 180
+      alignment: 9
+      pivot: {x: 0.5, y: 0.19444445}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f74ac8a97f62f24d0800000000000000
+      internalID: -3157261968871742337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      HongGildong_Windstep_Drawn_0: 8925391386041753883
+      HongGildong_Windstep_Drawn_1: 2282299917068948132
+      HongGildong_Windstep_Drawn_10: -4134528703923125645
+      HongGildong_Windstep_Drawn_11: -4131722050612635120
+      HongGildong_Windstep_Drawn_12: -3858073572435783008
+      HongGildong_Windstep_Drawn_13: -7595480276260289925
+      HongGildong_Windstep_Drawn_14: 194465257085851201
+      HongGildong_Windstep_Drawn_15: -4662561691339515262
+      HongGildong_Windstep_Drawn_16: -7052706539709552465
+      HongGildong_Windstep_Drawn_17: -6776036179073851039
+      HongGildong_Windstep_Drawn_18: 6056599533321585015
+      HongGildong_Windstep_Drawn_19: -713051148527142164
+      HongGildong_Windstep_Drawn_2: 5801190978833317557
+      HongGildong_Windstep_Drawn_20: 4219280350531402367
+      HongGildong_Windstep_Drawn_21: -4695705670897817763
+      HongGildong_Windstep_Drawn_22: 1031018013344864506
+      HongGildong_Windstep_Drawn_23: -2341214633284414589
+      HongGildong_Windstep_Drawn_24: 5703013938734529135
+      HongGildong_Windstep_Drawn_25: 5711073145586489367
+      HongGildong_Windstep_Drawn_26: -7142117279282780805
+      HongGildong_Windstep_Drawn_27: -5023294220619820365
+      HongGildong_Windstep_Drawn_28: -3408889400467755636
+      HongGildong_Windstep_Drawn_29: 2250983478984778665
+      HongGildong_Windstep_Drawn_3: -1868076531872300456
+      HongGildong_Windstep_Drawn_30: 2751064811734416725
+      HongGildong_Windstep_Drawn_31: 1917717190218306221
+      HongGildong_Windstep_Drawn_32: 6592458970779280640
+      HongGildong_Windstep_Drawn_33: 4010670957254568859
+      HongGildong_Windstep_Drawn_34: -3480565815573757370
+      HongGildong_Windstep_Drawn_35: 3203671054919957044
+      HongGildong_Windstep_Drawn_36: -123946125935043729
+      HongGildong_Windstep_Drawn_37: -3750196316483032938
+      HongGildong_Windstep_Drawn_38: -484687367628383087
+      HongGildong_Windstep_Drawn_39: -7503655440967564313
+      HongGildong_Windstep_Drawn_4: -1619086277918707696
+      HongGildong_Windstep_Drawn_40: -5443517723095711277
+      HongGildong_Windstep_Drawn_41: -9044784058238792031
+      HongGildong_Windstep_Drawn_42: 3580864524264891321
+      HongGildong_Windstep_Drawn_43: 2128536892713830430
+      HongGildong_Windstep_Drawn_44: 3853400913611246460
+      HongGildong_Windstep_Drawn_5: 6646063259981133516
+      HongGildong_Windstep_Drawn_6: -2355788851041526487
+      HongGildong_Windstep_Drawn_7: 2734129907343744014
+      HongGildong_Windstep_Drawn_8: 6892935981906729855
+      HongGildong_Windstep_Drawn_9: -1771088650583403086
+      Windstep_Drawn_Back_0: 7794260573133076621
+      Windstep_Drawn_Back_1: 801505276048402633
+      Windstep_Drawn_Back_2: -802505459714422236
+      Windstep_Drawn_Back_3: 1789541687674222771
+      Windstep_Drawn_Back_4: -3157261968871742337
+      Windstep_Drawn_Front_0: 4143900453627188777
+      Windstep_Drawn_Front_1: 5082045721557872598
+      Windstep_Drawn_Front_2: 3673353706858516709
+      Windstep_Drawn_Front_3: -6545491247939448159
+      Windstep_Drawn_Front_4: -8510868369645427960
+      Windstep_Drawn_Left_0: 9125035155745137808
+      Windstep_Drawn_Left_1: 3047198083001498453
+      Windstep_Drawn_Left_2: -7647320134887596647
+      Windstep_Drawn_Left_3: -1640202446120608678
+      Windstep_Drawn_Left_4: -3419627961232212030
+      Windstep_Drawn_Right_0: -4251851392647866280
+      Windstep_Drawn_Right_1: 6836422702743684012
+      Windstep_Drawn_Right_2: 3026699855881518520
+      Windstep_Drawn_Right_3: -4074896638587065923
+      Windstep_Drawn_Right_4: 895198969592127957
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

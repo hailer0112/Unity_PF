@@ -8,13 +8,13 @@ namespace Storybook
     {
         static readonly List<PalaceCover> active = new();
         BoxCollider obstacle;
-        SpriteRenderer artwork;
+        [SerializeField] SpriteRenderer artwork;
         HongGildong player;
 
         void Awake()
         {
             obstacle = GetComponent<BoxCollider>();
-            artwork = GetComponent<SpriteRenderer>();
+            if (artwork == null) artwork = GetComponent<SpriteRenderer>();
         }
 
         void Start() => player = FindAnyObjectByType<HongGildong>();

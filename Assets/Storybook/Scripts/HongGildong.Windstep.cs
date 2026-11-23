@@ -11,8 +11,11 @@ namespace Storybook
         [SerializeField, Min(0f)] float windstepCooldown = 12f;
 
         [SerializeField] Sprite[] windstepFrames = new Sprite[20];
+        [SerializeField] Sprite[] drawnWindstepFrames = new Sprite[20];
+        const int WindstepFramesPerDirection = 5;
         const float WindstepFrameDuration = .12f;
         float windstepMotionTime;
+        double drawnWindstepStartedAt = double.NegativeInfinity;
 
         InputAction windstepInput;
         double windstepEndsAt, windstepReadyAt;
@@ -32,8 +35,10 @@ namespace Storybook
             if (acceptInput && !IsCastingSwordTyphoon && windstepInput.WasPressedThisFrame() && !IsWindstepActive &&
                 WindstepCooldownRemaining <= 0f && TrySpendSkillMana(HudSkill.Windstep, windstepManaCost))
             {
-                EnterCombatStance();
                 double now = Time.timeAsDouble;
+                drawnWindstepStartedAt = weaponStance == WeaponStance.Drawn ? now : double.NegativeInfinity;
+                if (weaponStance == WeaponStance.Drawn)
+                    weaponStanceChangeAt = now + CombatStanceDuration;
                 windstepMotionTime = 0f;
                 windstepEndsAt = now + windstepDuration;
                 windstepReadyAt = now + windstepCooldown;
@@ -48,6 +53,21 @@ namespace Storybook
                 windstepVisualActive = false;
             }
 
+        }
+
+        Sprite DrawnWindstepPose()
+        {
+            if (!IsWindstepActive || weaponStance != WeaponStance.Drawn ||
+                drawnWindstepFrames.Length != WindstepFramesPerDirection * 4)
+                return null;
+            float elapsed = (float)(Time.timeAsDouble - drawnWindstepStartedAt);
+            if (elapsed >= WindstepFramesPerDirection * WindstepFrameDuration) return null;
+
+            int frame = Mathf.FloorToInt(elapsed / WindstepFrameDuration);
+            Sprite pose = drawnWindstepFrames[ArmedSpriteDirection() * WindstepFramesPerDirection + frame];
+            if (pose == null) return null;
+            body.flipX = false;
+            return pose;
         }
 
         Sprite WindstepMotionPose(Vector3 velocity)
@@ -89,6 +109,7 @@ namespace Storybook
         void ClearWindstep()
         {
             windstepEndsAt = 0d;
+            drawnWindstepStartedAt = double.NegativeInfinity;
             windstepVisualActive = false;
             if (windstepVisual != null) windstepVisual.Clear();
         }

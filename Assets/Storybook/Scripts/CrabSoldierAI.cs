@@ -7,9 +7,10 @@ namespace Storybook
         public enum State { Idle, Chase, Windup, Slam, Recovery, Dead }
         [SerializeField, Min(.1f), FormerlySerializedAs("attackRange")] float attackStartRange = 1.3f;
 
-        [Header("Attack Hitbox Size (meters)")]
-        [SerializeField, Min(.1f), InspectorName("Length")] float hitLength = 1.35f;
-        [SerializeField, Min(.1f), InspectorName("Width")] float hitWidth = .825f;
+        const int WarningSegments = 64;
+        [Header("Attack Circle (meters)")]
+        [SerializeField, Min(.1f)] float hitCenterOffset = .70f;
+        [SerializeField, Min(.1f)] float hitRadius = .65f;
 
         [SerializeField, Min(0)] float attackDamage=15;
         [SerializeField] State state;
@@ -17,8 +18,8 @@ namespace Storybook
         LineRenderer warning;
         ChargedAttackWarning chargedWarning;
         float previousElapsed;
-        Vector3 attackOrigin, attackDirection, attackRight;
-        Vector2 attackSize;
+        Vector3 attackCenter, attackDirection;
+        float attackRadius;
         bool attemptedHit;
         public State CurrentState => state;
         public Vector3 LockedDirection => attackDirection;
@@ -27,7 +28,7 @@ namespace Storybook
             base.Awake();
             visual=GetComponentInChildren<CrabAttackVisual>();
             var go=new GameObject("Claw Slam Warning");go.transform.SetParent(transform,false);warning=go.AddComponent<LineRenderer>();
-            warning.useWorldSpace=true;warning.loop=true;warning.positionCount=4;warning.startWidth=warning.endWidth=.025f;
+            warning.useWorldSpace=true;warning.loop=true;warning.positionCount=WarningSegments;warning.startWidth=warning.endWidth=.025f;
             warning.sharedMaterial=GetComponentInChildren<SpriteRenderer>().sharedMaterial;warning.startColor=warning.endColor=new Color(1,.25f,.05f,.85f);
             warning.enabled=false;warning.shadowCastingMode=UnityEngine.Rendering.ShadowCastingMode.Off;
             chargedWarning=GetComponent<ChargedAttackWarning>();if(chargedWarning==null)chargedWarning=gameObject.AddComponent<ChargedAttackWarning>();chargedWarning.BindOutline(warning);
@@ -65,20 +66,22 @@ namespace Storybook
         void BeginAttack(Vector3 delta)
         {
             attackDirection=delta.sqrMagnitude>.0001f?delta.normalized:Vector3.forward;
-            attackOrigin = transform.position;
-            attackRight = Vector3.Cross(Vector3.up, attackDirection);
-            attackSize = new Vector2(hitWidth, hitLength);
+            attackRadius = hitRadius;
+            attackCenter = transform.position + attackDirection * hitCenterOffset;
             BeginAttackTiming();previousElapsed=0;attemptedHit=false;state=State.Windup;
             visual.Begin(attackDirection);DrawWarning();
         }
         void DrawWarning()
         {
-            Vector3 side = attackRight * (attackSize.x * .5f);
-            Vector3 origin = attackOrigin + Vector3.up * .025f;
-            Vector3 end = origin + attackDirection * attackSize.y;
-            warning.SetPositions(new[] { origin - side, origin + side, end + side, end - side });
+            Vector3 groundCenter = attackCenter + Vector3.up * .025f;
+            for (int i = 0; i < WarningSegments; i++)
+            {
+                float angle = i * (2f * Mathf.PI / WarningSegments);
+                Vector3 radial = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle));
+                warning.SetPosition(i, groundCenter + radial * attackRadius);
+            }
             warning.enabled = true;
-            chargedWarning.Begin(origin, attackDirection, attackSize.x, attackSize.y);
+            chargedWarning.BeginCircle(groundCenter, attackRadius);
         }
         void TickAttack()
         {
@@ -105,13 +108,11 @@ namespace Storybook
         {
             // The same ground footprint drives the warning and the damage check.
             // Checking the target root prevents its capsule rim from extending the range.
-            Vector3 offset = target.transform.position - attackOrigin;
-            float forward = Vector3.Dot(offset, attackDirection);
-            float sideways = Mathf.Abs(Vector3.Dot(offset, attackRight));
-            if (forward < 0f || forward > attackSize.y || sideways > attackSize.x * .5f) return;
+            Vector3 offset = Vector3.ProjectOnPlane(target.transform.position - attackCenter, Vector3.up);
+            if (offset.sqrMagnitude > attackRadius * attackRadius) return;
 
-            Vector3 center = attackOrigin + Vector3.up * .4f + attackDirection * (attackSize.y * .5f);
-            foreach(var collider in Physics.OverlapBox(center,new Vector3(attackSize.x * .5f, .6f, attackSize.y * .5f),Quaternion.LookRotation(attackDirection),~0,QueryTriggerInteraction.Ignore))
+            foreach (var collider in Physics.OverlapCapsule(attackCenter + Vector3.up * .35f,
+                attackCenter + Vector3.up * .45f, attackRadius, ~0, QueryTriggerInteraction.Ignore))
             {
                 if(collider.GetComponentInParent<PlayerHealth>()!=target)continue;
                 ApplyHit();

@@ -130,17 +130,23 @@ namespace Storybook
             GUI.matrix = Matrix4x4.Scale(new Vector3(scale, scale, 1f));
 
             var recovery = currentRoom.Recovery;
-            string prompt = dungeon.PortalPrompt ?? (recovery != null ? recovery.Prompt : null);
+            string prompt = dungeon.PortalPrompt ?? (recovery != null ? recovery.Prompt : null) ?? dungeon.ChestPrompt;
             if (prompt != null)
-            {
-                var bounds = new Rect(width * .5f - 155f, height - 150f, 310f, 33f);
-                Fill(bounds, Trim);
-                Fill(new Rect(bounds.x + 2, bounds.y + 2, bounds.width - 4, bounds.height - 4), Panel);
-                GUI.Label(bounds, prompt, promptStyle);
-            }
+                DrawMessage(prompt.Contains('\n')
+                    ? new Rect(width * .5f - 210f, height - 185f, 420f, 68f)
+                    : new Rect(width * .5f - 155f, height - 150f, 310f, 33f), prompt);
+            if (dungeon.ChestResult is string result)
+                DrawMessage(new Rect(width * .5f - 210f, height - 215f, 420f, 33f), result);
 
             GUI.color = tint;
             GUI.matrix = matrix;
+        }
+
+        void DrawMessage(Rect bounds, string message)
+        {
+            Fill(bounds, Trim);
+            Fill(new Rect(bounds.x + 2, bounds.y + 2, bounds.width - 4, bounds.height - 4), Panel);
+            GUI.Label(bounds, message, promptStyle);
         }
 
         void InitializeStyles()

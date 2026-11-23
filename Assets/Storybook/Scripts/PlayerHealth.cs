@@ -14,10 +14,16 @@ namespace Storybook
         public int MonsterKillCount { get; private set; }
         readonly System.Random fragmentRandom = new(Guid.NewGuid().GetHashCode());
         public long StoryFragments { get; private set; }
+        public FairyTaleRelicInventory Relics { get; private set; }
         internal event Action<int> StoryFragmentsGained;
         public event Action Damaged, Died;
         internal bool ChapterClearProtected { get; set; }
-        void Awake() { player=GetComponent<HongGildong>();currentHP=maxHP; }
+        void Awake()
+        {
+            player = GetComponent<HongGildong>();
+            currentHP = maxHP;
+            Relics = new FairyTaleRelicInventory(this);
+        }
         internal void RecordMonsterKill() => MonsterKillCount++;
 
         internal void AwardStoryFragments(int minimum, int maximum)

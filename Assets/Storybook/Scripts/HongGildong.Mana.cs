@@ -7,7 +7,6 @@ namespace Storybook
         [Header("Mana")]
         [SerializeField, Min(1f)] float maxMP = 100f;
         [SerializeField, Min(0f)] float startingMP = 100f;
-        [SerializeField, Min(0f)] float manaRegenPerSecond = 3f;
         [SerializeField, Min(0f)] float manaPerBasicAttack = 5f;
         [SerializeField, Min(0f)] float azureSlashManaCost = 15f;
         [SerializeField, Min(0f)] float cloneSlashManaCost = 25f;
@@ -30,13 +29,12 @@ namespace Storybook
 
         internal void RefillMana() => CurrentMP = MaxMP;
 
-        void RegenerateMana()
+        internal float RestoreMana(float amount)
         {
-            if (!allowCombat || (manaHealth != null && manaHealth.IsDead)) return;
-            RestoreMana(manaRegenPerSecond * Time.deltaTime);
+            float before = CurrentMP;
+            CurrentMP = Mathf.Clamp(CurrentMP + amount, 0f, MaxMP);
+            return CurrentMP - before;
         }
-
-        void RestoreMana(float amount) => CurrentMP = Mathf.Clamp(CurrentMP + amount, 0f, MaxMP);
 
         void RestoreManaOnBasicHit()
         {

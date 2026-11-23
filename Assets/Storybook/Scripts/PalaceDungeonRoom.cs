@@ -20,18 +20,21 @@ namespace Storybook
         public int LivingEnemies { get; private set; }
         public Bounds EntryBounds => entryArea != null ? entryArea.bounds : default;
         internal PalaceRecovery Recovery => recovery;
+        internal PalaceRewardChest RewardChest { get; private set; }
         public bool IsLinked(int side) => side >= 0 && side < doorways.Length && doorways[side] != null && doorways[side].activeSelf;
         public bool IsSealed(int side) => side >= 0 && side < gates.Length && gates[side] != null && gates[side].activeSelf;
 
         readonly List<MonsterHealth> enemies = new();
         PalaceRoomWaves waves;
         PlayerHealth player;
+        PalaceRewardChest rewardChestPrefab;
 
         internal void Initialize(PalaceDungeonGraph.Room layout, PlayerHealth hero, float healingFraction,
-            PalaceRoomWaves.Settings waveSettings, int seed)
+            PalaceRoomWaves.Settings waveSettings, int seed, PalaceRewardChest chestPrefab = null)
         {
             Layout = layout;
             player = hero;
+            rewardChestPrefab = chestPrefab;
             for (int side = 0; side < gates.Length; side++)
             {
                 Vector2Int direction = PalaceDungeon.Direction(side);
@@ -61,6 +64,72 @@ namespace Storybook
         }
 
         internal Vector3 DoorwayCenter(int side) => doorways[side].transform.position;
+
+        internal bool EnsureRewardChest()
+        {
+            if (Layout?.Type != PalaceRoomType.Combat || !Cleared || rewardChestPrefab == null ||
+                player == null || player.IsDead) return false;
+            if (RewardChest != null) return true;
+            if (!TryChestPosition(out Vector3 position)) return false;
+            RewardChest = Instantiate(rewardChestPrefab, position, rewardChestPrefab.transform.rotation, transform);
+            return true;
+        }
+
+        bool TryChestPosition(out Vector3 position)
+        {
+            Physics.SyncTransforms();
+            Bounds bounds = EntryBounds;
+            Vector3 center = bounds.center;
+            center.y = transform.position.y;
+            if (ChestPositionFree(center, bounds))
+            {
+                position = center;
+                return true;
+            }
+
+            const float step = .5f;
+            float limit = Mathf.Max(bounds.extents.x, bounds.extents.z);
+            for (float distance = step; distance <= limit; distance += step)
+            for (int side = 0; side < 8; side++)
+            {
+                float angle = side * Mathf.PI / 4f;
+                Vector3 candidate = center + new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * distance;
+                if (!ChestPositionFree(candidate, bounds)) continue;
+                position = candidate;
+                return true;
+            }
+            position = default;
+            return false;
+        }
+
+        internal bool TryRewardDropPosition(Vector3 approach, out Vector3 position)
+        {
+            Vector3 center = RewardChest.transform.position;
+            Vector3 direction = Vector3.ProjectOnPlane(approach - center, Vector3.up).normalized;
+            if (direction == Vector3.zero) direction = Vector3.back;
+            for (float distance = .75f; distance <= 2.25f; distance += .5f)
+            for (int side = 0; side < 8; side++)
+            {
+                Vector3 candidate = center + Quaternion.Euler(0f, side * 45f, 0f) * direction * distance;
+                if (!ChestPositionFree(candidate, EntryBounds, .22f, true)) continue;
+                position = candidate;
+                return true;
+            }
+            position = default;
+            return false;
+        }
+
+        static bool ChestPositionFree(Vector3 point, Bounds bounds, float clearance = .45f, bool ignorePlayer = false)
+        {
+            if (point.x - clearance < bounds.min.x || point.x + clearance > bounds.max.x ||
+                point.z - clearance < bounds.min.z || point.z + clearance > bounds.max.z)
+                return false;
+            foreach (var collider in Physics.OverlapBox(point + Vector3.up * .32f,
+                new Vector3(clearance, .29f, clearance), Quaternion.identity, ~0, QueryTriggerInteraction.Ignore))
+                if ((!ignorePlayer || collider.GetComponentInParent<PlayerHealth>() == null) &&
+                    collider.GetComponentInParent<MonsterHealth>() == null) return false;
+            return true;
+        }
 
         internal bool Contains(Vector3 position)
         {
@@ -119,6 +188,8 @@ namespace Storybook
 
             Cleared = true;
             SetGates(false);
+            if (Layout.Type == PalaceRoomType.Combat && player != null && !player.IsDead && !EnsureRewardChest())
+                Debug.LogWarning($"[PalaceDungeonRoom] {name}: reward chest prefab or free placement is unavailable.", this);
         }
 
         void TrackCombatKills(int first)

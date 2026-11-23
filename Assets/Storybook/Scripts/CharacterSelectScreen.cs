@@ -15,12 +15,13 @@ namespace Storybook
         public static string SelectedCharacterId { get; private set; }
 
         [SerializeField] Sprite referenceArtwork;
+        [SerializeField] Sprite hongGildongIdle;
         [SerializeField] Font interfaceFont;
 
         sealed class Character
         {
             internal string Id, Name, Description;
-            internal Sprite[] Preview, SkillIcons;
+            internal Sprite[] SkillIcons;
             internal bool IsPlayable;
         }
 
@@ -39,13 +40,11 @@ namespace Storybook
         const float LayoutScale = 1920f / 1672f;
 
         Character character;
-        Image preview;
         Text detail;
         Image[] sparks;
         Button back, confirm;
         Font font;
         Sprite frame, buttonFrame, glow;
-        int displayedFrame = -1;
         bool leaving;
 
         void Awake()
@@ -61,9 +60,6 @@ namespace Storybook
                 Id = "hong-gildong",
                 Name = "홍길동",
                 Description = "검술과 바람의 힘을 활용해 빠르게 전장을 누비는 근접 전투형 캐릭터.",
-                Preview = Resources.LoadAll<Sprite>("HongGildongIdle/Idle32")
-                    .Where(sprite => sprite.name.StartsWith("Idle_0_", StringComparison.Ordinal))
-                    .OrderBy(sprite => sprite.name).ToArray(),
                 SkillIcons = IconNames.Select(name => Array.Find(hud, sprite => sprite.name == name)).ToArray(),
                 IsPlayable = true
             };
@@ -82,15 +78,6 @@ namespace Storybook
         void Update()
         {
             float time = Time.unscaledTime;
-            if (character.Preview.Length != 0)
-            {
-                int index = Mathf.FloorToInt(time * 5f) % character.Preview.Length;
-                if (displayedFrame != index)
-                {
-                    displayedFrame = index;
-                    preview.sprite = character.Preview[index];
-                }
-            }
             for (int i = 0; i < sparks.Length; i++)
                 sparks[i].color = new Color(1f, .71f, .33f, .18f + .18f * Mathf.Sin(time * 1.6f + i * 2.1f));
         }
@@ -121,12 +108,12 @@ namespace Storybook
             Panel(root, "Character slots", 101, 188, 174, 576, frame);
             Panel(root, "Selected Hong Gildong", 112, 212, 152, 124, buttonFrame);
             Picture(root, "Hong Gildong slot preview", 134, 218, 108, 112,
-                character.Preview.FirstOrDefault(), Color.white, true);
+                hongGildongIdle, Color.white, true);
             for (int i = 0; i < 3; i++)
             {
                 float y = 350 + i * 132;
                 Panel(root, "Locked slot " + (i + 1), 112, y, 152, 121, frame);
-                Picture(root, "Locked silhouette", 145, y + 7, 86, 105, character.Preview.FirstOrDefault(),
+                Picture(root, "Locked silhouette", 145, y + 7, 86, 105, hongGildongIdle,
                     new Color32(15, 12, 24, 245), true);
                 Picture(root, "Lock shackle", 180, y + 49, 16, 15, frame, Gold);
                 Picture(root, "Lock body", 176, y + 58, 24, 19, buttonFrame, Gold);
@@ -135,8 +122,8 @@ namespace Storybook
             Panel(root, "Character stage", 474, 167, 679, 457, frame);
             Picture(root, "Stage light", 516, 190, 586, 380, glow, new Color(.29f, .19f, .61f, .67f));
             Picture(root, "Gold stage light", 534, 495, 541, 88, glow, new Color(1f, .57f, .22f, .7f));
-            preview = Picture(root, "Hong Gildong Idle", 640, 174, 315, 414,
-                character.Preview.FirstOrDefault(), Color.white, true);
+            Picture(root, "Hong Gildong Idle", 640, 174, 315, 414,
+                hongGildongIdle, Color.white, true);
             sparks = new Image[6];
             Vector2[] stars = {new(614,262),new(674,232),new(958,221),new(992,310),new(618,451),new(968,468)};
             for (int i=0; i<stars.Length; i++)

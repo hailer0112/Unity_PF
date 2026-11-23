@@ -12,7 +12,6 @@ namespace Storybook
         [SerializeField] SpriteRenderer body;
         [SerializeField] float artworkGroundOffset = .02f;
         [SerializeField] Sprite idleFront, idleBack;
-        [SerializeField] Sprite[] sheathedRun = new Sprite[32];
         [SerializeField] Sprite[] sheathedRunFrontOverride = new Sprite[4];
         [SerializeField] Sprite[] sheathedRunBackOverride = new Sprite[4];
         [SerializeField] Sprite[] sheathedRunLeftOverride = new Sprite[4];
@@ -196,7 +195,6 @@ namespace Storybook
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (PalaceDeveloperMenu.BlocksGameplay) return;
 #endif
-            RegenerateMana();
             Vector2 cursor = point.ReadValue<Vector2>();
             bool acceptInput = knockbackRemaining <= 0f;
             if (acceptInput && swordTyphoonInput.WasPressedThisFrame()) BeginSwordTyphoon(cursor);
@@ -635,7 +633,7 @@ namespace Storybook
             if (!IsWeaponDrawn) return;
             if (knockbackRemaining > 0f || (idleVisual != null && idleVisual.IsHitPoseActive) ||
                 IsDashing || Attacking ||
-                IsCastingAzureSlash || IsCastingCloneSlash || IsWindstepActive || IsCastingSwordTyphoon ||
+                IsCastingAzureSlash || IsCastingCloneSlash || IsCastingSwordTyphoon ||
                 swordTyphoons.Exists(typhoon => typhoon != null && typhoon.isActiveAndEnabled))
             {
                 InterruptSheathing();
@@ -649,6 +647,8 @@ namespace Storybook
                     weaponStance = WeaponStance.Sheathed;
                 return;
             }
+
+            if (IsWindstepActive) return;
 
             if (now < weaponStanceChangeAt || HasMoveDestination ||
                 Vector3.ProjectOnPlane(controller.velocity, Vector3.up).sqrMagnitude >= .01f)
@@ -701,6 +701,9 @@ namespace Storybook
 
         Sprite TravelPose()
         {
+            Sprite drawnWindstep = DrawnWindstepPose();
+            if (drawnWindstep != null) return drawnWindstep;
+
             Vector3 velocity = Vector3.ProjectOnPlane(controller.velocity, Vector3.up);
             if (velocity.sqrMagnitude < .01f)
             {
@@ -716,7 +719,7 @@ namespace Storybook
                 return back ? idleBack : idleFront;
             }
             bool windstep = IsWindstepActive;
-            bool hasWindstepSheet = windstep && windstepFrames.Length == 20 &&
+            bool hasWindstepSheet = windstep && !IsWeaponDrawn && windstepFrames.Length == 20 &&
                 System.Array.TrueForAll(windstepFrames, frame => frame != null);
             if (hasWindstepSheet)
             {
@@ -727,7 +730,7 @@ namespace Storybook
                     return windstepPose;
                 }
             }
-            if (!windstep && IsWeaponDrawn && drawnRun.Length == 16)
+            if (IsWeaponDrawn && drawnRun.Length == 16)
             {
                 int direction = ArmedSpriteDirection();
                 int frame = (int)(drawnRunTime * DrawnRunFramesPerSecond);
@@ -740,8 +743,7 @@ namespace Storybook
                 }
             }
             drawnRunTime = 0f;
-            if ((!windstep || hasWindstepSheet) && sheathedRun.Length == 32 &&
-                System.Array.TrueForAll(sheathedRun, frame => frame != null))
+            if (!windstep || IsWeaponDrawn || hasWindstepSheet)
             {
                 int direction = Mathf.Abs(facing.x) > Mathf.Abs(facing.z)
                     ? (facing.x > 0f ? 3 : 2) : (facing.z > 0f ? 1 : 0);
@@ -753,16 +755,17 @@ namespace Storybook
                     3 => sheathedRunRightOverride,
                     _ => null
                 };
-                bool useOverride = directionOverride != null && directionOverride.Length == 4 &&
-                    System.Array.TrueForAll(directionOverride, frame => frame != null);
-                int frameCount = useOverride ? directionOverride.Length : 8;
-                sheathedRunTime = Mathf.Repeat(sheathedRunTime + Time.deltaTime,
-                    frameCount / sheathedRunFramesPerSecond);
-                int frameIndex = Mathf.Min(frameCount - 1, Mathf.FloorToInt(
-                    sheathedRunTime * sheathedRunFramesPerSecond));
-                body.flipX = false;
-                return useOverride ? directionOverride[frameIndex]
-                    : sheathedRun[direction * 8 + frameIndex];
+                if (directionOverride != null && directionOverride.Length == 4 &&
+                    System.Array.TrueForAll(directionOverride, frame => frame != null))
+                {
+                    int frameCount = directionOverride.Length;
+                    sheathedRunTime = Mathf.Repeat(sheathedRunTime + Time.deltaTime,
+                        frameCount / sheathedRunFramesPerSecond);
+                    int frameIndex = Mathf.Min(frameCount - 1, Mathf.FloorToInt(
+                        sheathedRunTime * sheathedRunFramesPerSecond));
+                    body.flipX = false;
+                    return directionOverride[frameIndex];
+                }
             }
             Sprite[] frames = back ? walkBack : walkFront;
             float cycleDistance = WalkCycleDistance;
@@ -812,8 +815,9 @@ namespace Storybook
                     continue;
                 Vector3 impact = other.bounds.ClosestPoint(center);
                 if (!DealsBasicDamage(target, attackDamage, transform.position)) continue;
+                if (target is not MonsterHealth monster) continue;
                 RestoreManaOnBasicHit();
-                if (target is MonsterHealth monster && target.TryGetComponent(out MonsterCombatAI enemy) &&
+                if (monster.TryGetComponent(out MonsterCombatAI enemy) &&
                     enemy.ReactToBasicHit(transform.position, out float stopSeconds, out float effectScale))
                     PlayBasicHitFeedback(stopSeconds, effectScale, impact, monster);
             }
