@@ -55,9 +55,18 @@ namespace Storybook
         public int Floor { get; private set; } = 1;
         public bool IsBossFloor => Floor > LastRegularFloor;
         internal string PortalPrompt => CanUsePortal() ? "F - 다음 구역으로 이동" : null;
-        internal string ChestPrompt => !CanUseChest() ? null :
-            Current.RewardChest.CanCollect(player.transform.position) ? Current.RewardChest.PickupPrompt :
-            Current.RewardChest.CanOpen(player.transform.position) ? "F - 보상 상자 열기" : null;
+        internal string ChestPrompt
+        {
+            get
+            {
+                if (!CanUseChest()) return null;
+                var chest = Current.RewardChest;
+                Vector3 position = player.transform.position;
+                var pickup = FindPickup(chest, position);
+                if (pickup != null) return pickup.Prompt(health.Relics);
+                return chest != null && chest.CanOpen(position) ? "F - 보상 상자 열기" : null;
+            }
+        }
         internal string ChestResult => Time.unscaledTimeAsDouble < chestResultUntil ? chestResult : null;
         string chestResult;
         double chestResultUntil;
@@ -72,6 +81,7 @@ namespace Storybook
             runSeed = useFixedSeed ? fixedSeed : Guid.NewGuid().GetHashCode();
             minimap = gameObject.AddComponent<PalaceDungeonMinimap>();
             GenerateFloor();
+            gameObject.AddComponent<RelicInventoryPanel>().Initialize(health);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             gameObject.AddComponent<PalaceDeveloperMenu>().Initialize(this, player, health);
 #endif
@@ -206,6 +216,7 @@ namespace Storybook
 
         void Update()
         {
+            if (RelicInventoryPanel.BlocksGameplay) return;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (PalaceDeveloperMenu.BlocksGameplay) return;
 #endif
@@ -218,10 +229,11 @@ namespace Storybook
 
         bool CanUseChest()
         {
+            if (RelicInventoryPanel.BlocksGameplay) return false;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (PalaceDeveloperMenu.BlocksGameplay) return false;
 #endif
-            return Current?.RewardChest != null && player != null && player.isActiveAndEnabled &&
+            return Current != null && player != null && player.isActiveAndEnabled &&
                 !health.IsDead && !StorybookTransition.IsBusy && !NpcDialogue.BlocksInteraction;
         }
 
@@ -230,21 +242,32 @@ namespace Storybook
             if (!CanUseChest()) return false;
             var chest = Current.RewardChest;
             Vector3 position = player.transform.position;
-            if (chest.TryCollect(position, out var collected))
+            var pickup = FindPickup(chest, position);
+            if (pickup != null)
             {
+                if (!pickup.TryCollect(position, health.Relics, out var collected)) return false;
                 ShowChestReward(chestRewards.GrantLoot(collected, health, player));
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 Debug.Log($"[Palace chest] collected {chestResult}", this);
 #endif
                 return true;
             }
-            if (!chest.CanOpen(position) || !Current.TryRewardDropPosition(position, out var drop)) return false;
+            if (chest == null || !chest.CanOpen(position) || !Current.TryRewardDropPosition(position, out var drop)) return false;
             var reward = chestRewards.Roll(chestRandom);
             chest.BeginOpening(chestRewards.CreateLoot(reward, health, chestRandom), drop);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             Debug.Log($"[Palace chest] {chestRewards.DescribeOdds()}, rolled {reward}", this);
 #endif
             return true;
+        }
+
+        PalaceRewardPickup FindPickup(PalaceRewardChest chest, Vector3 position)
+        {
+            var pickup = chest != null ? chest.PickupInRange(position) : null;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (pickup == null) pickup = FindTestPickup(position);
+#endif
+            return pickup;
         }
 
         void ShowChestReward(string result)
@@ -293,6 +316,7 @@ namespace Storybook
 
         void LateUpdate()
         {
+            if (RelicInventoryPanel.BlocksGameplay) return;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (PalaceDeveloperMenu.BlocksGameplay) return;
 #endif

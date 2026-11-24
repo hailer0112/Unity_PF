@@ -41,7 +41,7 @@ namespace Storybook
             bool held = Keyboard.current?.f1Key.isPressed == true;
             bool toggle = held && !toggleHeld;
             toggleHeld = held;
-            if (!toggle) return;
+            if (!toggle || RelicInventoryPanel.BlocksGameplay) return;
             if (openMenu == this) Close();
             else if (dungeon?.Current != null && player != null && player.isActiveAndEnabled &&
                 health != null && !health.IsDead && !StorybookTransition.IsBusy && !NpcDialogue.BlocksInteraction)
@@ -142,7 +142,7 @@ namespace Storybook
             canvas.sortingOrder = 1000;
             var scaler = menu.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(920, 540);
+            scaler.referenceResolution = new Vector2(920, 697);
             scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
 
             var shade = Rectangle(menu.transform, "Dimmer", 0, 0, 0, 0);
@@ -150,7 +150,7 @@ namespace Storybook
             shade.anchorMax = Vector2.one;
             shade.offsetMin = shade.offsetMax = Vector2.zero;
             Paint(shade, new Color(.015f, .025f, .045f, .76f));
-            var panel = Rectangle(shade, "Developer panel", 0, 0, 760, 565);
+            var panel = Rectangle(shade, "Developer panel", 0, 0, 760, 683);
             panel.anchorMin = panel.anchorMax = panel.pivot = new Vector2(.5f, .5f);
             panel.anchoredPosition = Vector2.zero;
             Paint(panel, new Color(.075f, .105f, .15f));
@@ -202,13 +202,35 @@ namespace Storybook
                 ChestTest(() => dungeon.TestRewardChest() ? "클리어 상자 1개 확인" : "클리어된 일반 전투방이 필요합니다."));
             AddButton(panel, "확률 10,000회 추첨", 194, 451, 162, () => ChestTest(dungeon.TestChestOdds));
             AddButton(panel, "보유 유물 확인", 394, 451, 162, () => ChestTest(() =>
-                "보유 유물: " + (health.Relics.Owned.Count == 0 ? "없음" :
+                $"보유 유물 {health.Relics.Owned.Count}/{FairyTaleRelicInventory.Capacity} · " + (health.Relics.Owned.Count == 0 ? "없음" :
                     string.Join(", ", System.Linq.Enumerable.Select(health.Relics.Owned, relic => relic.DisplayName)))));
             AddButton(panel, "파편", 24, 490, 162, () => ChestTest(() => dungeon.TestChestReward(PalaceChestReward.Fragments)));
             AddButton(panel, "HP", 194, 490, 162, () => ChestTest(() => dungeon.TestChestReward(PalaceChestReward.Health)));
             AddButton(panel, "MP", 394, 490, 162, () => ChestTest(() => dungeon.TestChestReward(PalaceChestReward.Mana)));
             AddButton(panel, "유물", 564, 490, 162, () => ChestTest(() => dungeon.TestChestReward(PalaceChestReward.Relic)));
-            status = Label(panel, "", 24, 530, 704, 28, 15, Accent);
+            AddButton(panel, "황금추 바닥 생성", 24, 529, 162,
+                () => ChestTest(() => dungeon.TestRelic(GreedGoldenWeightRelic.RelicId, true)));
+            AddButton(panel, "황금추 즉시 획득", 194, 529, 162, () => ChestTest(() => dungeon.TestRelic(GreedGoldenWeightRelic.RelicId, false)));
+            AddButton(panel, "황금추 효과 확인", 394, 529, 162, () => ChestTest(() =>
+                $"황금추 {(health.Relics.Contains(GreedGoldenWeightRelic.RelicId) ? "보유" : "미보유")} · " +
+                $"유물 공격력 +{player.RelicAttackBonus:P0} · " +
+                $"공격력 {player.ApplyAttackPower(player.BaseAttackPower):0.##} " +
+                $"(+{player.ApplyAttackPower(player.BaseAttackPower) - player.BaseAttackPower:0.##})"));
+            AddButton(panel, "파편 꾸러미 생성", 24, 568, 162,
+                () => ChestTest(() => dungeon.TestRewardPickup(PalaceChestReward.Fragments)));
+            AddButton(panel, "생명의 구슬 생성", 194, 568, 162,
+                () => ChestTest(() => dungeon.TestRewardPickup(PalaceChestReward.Health)));
+            AddButton(panel, "마력의 구슬 생성", 394, 568, 162,
+                () => ChestTest(() => dungeon.TestRewardPickup(PalaceChestReward.Mana)));
+            AddButton(panel, "유물 한도 검증", 564, 568, 162, () => ChestTest(dungeon.TestRelicLimit));
+            AddButton(panel, "테스트 유물 초기화", 24, 607, 162,
+                () => Run(health.Relics.ClearForTesting, "보유 유물과 효과를 초기화했습니다."));
+            AddButton(panel, "핏빛 유혹 바닥 생성", 194, 607, 162,
+                () => ChestTest(() => dungeon.TestRelic(BloodTemptationRelic.RelicId, true)));
+            AddButton(panel, "핏빛 유혹 즉시 획득", 394, 607, 162,
+                () => ChestTest(() => dungeon.TestRelic(BloodTemptationRelic.RelicId, false)));
+            AddButton(panel, "중독 강제 적용", 564, 607, 162, () => ChestTest(dungeon.TestBloodTemptationPoison));
+            status = Label(panel, "", 24, 648, 704, 28, 15, Accent);
         }
 
         void ChestTest(System.Func<string> test)

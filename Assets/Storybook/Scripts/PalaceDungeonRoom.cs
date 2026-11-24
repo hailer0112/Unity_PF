@@ -103,8 +103,10 @@ namespace Storybook
         }
 
         internal bool TryRewardDropPosition(Vector3 approach, out Vector3 position)
+            => TryRewardDropPosition(RewardChest.transform.position, approach, out position);
+
+        internal bool TryRewardDropPosition(Vector3 center, Vector3 approach, out Vector3 position)
         {
-            Vector3 center = RewardChest.transform.position;
             Vector3 direction = Vector3.ProjectOnPlane(approach - center, Vector3.up).normalized;
             if (direction == Vector3.zero) direction = Vector3.back;
             for (float distance = .75f; distance <= 2.25f; distance += .5f)

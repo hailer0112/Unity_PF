@@ -218,7 +218,7 @@ namespace Storybook
 
                 if (!blocked && cloneSlashHitTargets.Add(target))
                 {
-                    float damage = attackDamage * cloneSlashDamageMultiplier;
+                    float damage = ApplyAttackPower(attackDamage * cloneSlashDamageMultiplier);
                     if (target is MonsterHealth monster) monster.ReceiveSkillDamage(damage, origin, SkillHit.CloneSlash, camera: CombatCamera);
                     else target.ReceiveDamage(damage, origin);
                 }

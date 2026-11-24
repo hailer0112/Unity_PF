@@ -8,6 +8,7 @@ namespace Storybook
     {
         readonly HashSet<AttackTarget> hitTargets = new HashSet<AttackTarget>();
         Transform owner;
+        HongGildong attacker;
         Vector3 castOrigin;
         float remainingDistance;
         float speed;
@@ -30,6 +31,7 @@ namespace Storybook
 
             var projectile = root.AddComponent<AzureSlashProjectile>();
             projectile.owner = owner;
+            owner.TryGetComponent(out projectile.attacker);
             if (camera != null) camera.TryGetComponent(out projectile.hitCamera);
             projectile.castOrigin = owner.position;
             projectile.remainingDistance = range;
@@ -70,14 +72,15 @@ namespace Storybook
                 var target = AttackTarget.FromDamageCollider(hit.collider, out _);
                 if (target == null || !target.CanTakeDamage || !hitTargets.Add(target)) continue;
 
+                float hitDamage = attacker != null ? attacker.ApplyAttackPower(damage) : damage;
                 Vector3 contact = hit.distance > 0f ? hit.point : hit.collider.ClosestPoint(transform.position);
                 if (target is MonsterHealth { HasSkillHitFeedback: true } monster)
                 {
-                    monster.ReceiveSkillDamage(damage, castOrigin, SkillHit.AzureSlash, contact, hitCamera);
+                    monster.ReceiveSkillDamage(hitDamage, castOrigin, SkillHit.AzureSlash, contact, hitCamera);
                     continue;
                 }
 
-                target.ReceiveDamage(damage, castOrigin);
+                target.ReceiveDamage(hitDamage, castOrigin);
                 if (target is not MonsterHealth { HasDefeatPresentation: true })
                     PlayImpact(contact);
             }

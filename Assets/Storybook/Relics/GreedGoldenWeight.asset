@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea64010650d418db93fdc2525a93206, type: 3}
+  m_Name: GreedGoldenWeight
+  m_EditorClassIdentifier:
+  id: greed-golden-weight
+  displayName: 탐욕의 황금추
+  description: 보유한 이야기 파편 100개당 공격력이 5% 증가합니다. (최대 25%)
+  flavorText: 황금의 무게에 취한 자는 그것을 내려놓는 순간 자신의 힘마저 잃게 된다.
+  sourceStory: 금도끼 은도끼
+  icon: {fileID: 21300000, guid: 2555adf845c848748656fefa13c61956, type: 3}

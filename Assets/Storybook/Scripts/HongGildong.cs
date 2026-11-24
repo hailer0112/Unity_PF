@@ -39,6 +39,13 @@ namespace Storybook
         [SerializeField, Min(.1f)] float walkSpeed = 1.8f;
         [SerializeField] float reach = 1.36f;
         [SerializeField, Min(0)] float attackDamage = 25f;
+
+        internal float RelicAttackBonus => manaHealth != null ? manaHealth.Relics?.AttackBonus ?? 0f : 0f;
+        internal float ApplyAttackPower(float baseDamage) => baseDamage * (1f + RelicAttackBonus);
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        internal float BaseAttackPower => attackDamage;
+#endif
         [SerializeField] float halfArc = 68f;
         [SerializeField] LayerMask targetMask;
         [SerializeField] Rect movementBounds = Rect.MinMaxRect(-5.3f, -5.3f, 5.3f, 3.65f);
@@ -192,6 +199,7 @@ namespace Storybook
 
         void Update()
         {
+            if (RelicInventoryPanel.BlocksGameplay) return;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (PalaceDeveloperMenu.BlocksGameplay) return;
 #endif
@@ -814,9 +822,10 @@ namespace Storybook
                 if (offset.sqrMagnitude > reach * reach || angle < start || angle > end || !hitThisSwing.Add(target))
                     continue;
                 Vector3 impact = other.bounds.ClosestPoint(center);
-                if (!DealsBasicDamage(target, attackDamage, transform.position)) continue;
+                if (!DealsBasicDamage(target, ApplyAttackPower(attackDamage), transform.position)) continue;
                 if (target is not MonsterHealth monster) continue;
                 RestoreManaOnBasicHit();
+                manaHealth?.Relics.NotifyBasicAttackHit(monster);
                 if (monster.TryGetComponent(out MonsterCombatAI enemy) &&
                     enemy.ReactToBasicHit(transform.position, out float stopSeconds, out float effectScale))
                     PlayBasicHitFeedback(stopSeconds, effectScale, impact, monster);

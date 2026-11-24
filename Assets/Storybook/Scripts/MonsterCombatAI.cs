@@ -179,7 +179,7 @@ namespace Storybook
 
         protected void Update()
         {
-            if (health.IsDead) return;
+            if (RelicInventoryPanel.BlocksGameplay || health.IsDead) return;
             if (!HasCommittedAction && (target == null || !target.isActiveAndEnabled || target.IsDead))
             {
                 ResetTrackingAndAction(false);

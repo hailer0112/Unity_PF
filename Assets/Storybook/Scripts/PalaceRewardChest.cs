@@ -11,28 +11,20 @@ namespace Storybook
         [SerializeField] Texture2D fragmentIcon;
         [SerializeField] Sprite lifeOrb;
         [SerializeField] Sprite manaOrb;
+        [SerializeField] Texture2D pickupGlow;
+        [SerializeField] ParticleSystem pickupSparks;
         [SerializeField, Min(.1f)] float interactionRange = .95f;
 
         enum ChestState { Closed, Opening, Opened }
         ChestState state;
-        GameObject pickup;
-        Sprite fragmentSprite;
+        PalaceRewardPickup pickup;
         PalaceChestLoot loot;
 
         internal bool CanOpen(Vector3 playerPosition)
-            => state == ChestState.Closed && IsNear(playerPosition, transform.position, interactionRange);
+            => state == ChestState.Closed && PalaceRewardPickup.IsNear(playerPosition, transform.position, interactionRange);
 
-        internal bool CanCollect(Vector3 playerPosition)
-            => pickup != null && IsNear(playerPosition, pickup.transform.position, .8f);
-
-        internal string PickupPrompt => loot.Prompt;
-
-        static bool IsNear(Vector3 playerPosition, Vector3 position, float range)
-        {
-            Vector3 offset = playerPosition - position;
-            offset.y = 0f;
-            return offset.sqrMagnitude <= range * range;
-        }
+        internal PalaceRewardPickup PickupInRange(Vector3 playerPosition)
+            => pickup != null && pickup.CanCollect(playerPosition) ? pickup : null;
 
         internal void BeginOpening(PalaceChestLoot reward, Vector3 dropPosition)
         {
@@ -48,36 +40,24 @@ namespace Storybook
             yield return new WaitForSeconds(.22f);
             state = ChestState.Opened;
             artwork.sprite = openedSprite;
-            pickup = new GameObject("Chest reward pickup", typeof(SpriteRenderer));
-            pickup.transform.SetParent(transform, false);
-            pickup.transform.SetPositionAndRotation(position + Vector3.up * .16f, artwork.transform.rotation);
-            var icon = pickup.GetComponent<SpriteRenderer>();
-            icon.sprite = loot.Kind switch
+            pickup = SpawnReward(transform, position, loot);
+        }
+
+        internal PalaceRewardPickup SpawnReward(Transform parent, Vector3 position, PalaceChestLoot reward)
+        {
+            Sprite sprite = reward.Kind switch
             {
                 PalaceChestReward.Health => lifeOrb,
                 PalaceChestReward.Mana => manaOrb,
-                PalaceChestReward.Relic when loot.Relic.Icon != null => loot.Relic.Icon,
-                _ => fragmentSprite = Sprite.Create(fragmentIcon,
-                    new Rect(0, 0, fragmentIcon.width, fragmentIcon.height), new Vector2(.5f, .5f))
+                PalaceChestReward.Relic => reward.Relic.Icon,
+                _ => null
             };
-            float size = Mathf.Max(icon.sprite.bounds.size.x, icon.sprite.bounds.size.y);
-            pickup.transform.localScale = Vector3.one * (.35f / size);
-            icon.sortingOrder = 2;
+            bool ownsSprite = sprite == null;
+            if (ownsSprite)
+                sprite = Sprite.Create(fragmentIcon,
+                    new Rect(0, 0, fragmentIcon.width, fragmentIcon.height), new Vector2(.5f, .5f));
+            return PalaceRewardPickup.Spawn(parent, position, artwork.transform.rotation, reward, sprite, pickupGlow, pickupSparks, ownsSprite);
         }
 
-        internal bool TryCollect(Vector3 playerPosition, out PalaceChestLoot reward)
-        {
-            reward = loot;
-            if (!CanCollect(playerPosition)) return false;
-            Destroy(pickup);
-            pickup = null;
-            if (fragmentSprite != null) Destroy(fragmentSprite);
-            return true;
-        }
-
-        void OnDestroy()
-        {
-            if (fragmentSprite != null) Destroy(fragmentSprite);
-        }
     }
 }

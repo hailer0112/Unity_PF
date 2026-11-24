@@ -13,6 +13,7 @@ namespace Storybook
         readonly Collider[] overlapHits = new Collider[32];
         readonly HashSet<MonsterHealth> targets = new HashSet<MonsterHealth>();
         Transform owner;
+        HongGildong attacker;
         SwordTyphoonVisual visuals;
         ClearingCamera hitCamera;
         LayerMask targetMask;
@@ -28,6 +29,7 @@ namespace Storybook
             root.transform.position = center;
             var vortex = root.AddComponent<SwordTyphoon>();
             vortex.owner = owner;
+            owner.TryGetComponent(out vortex.attacker);
             vortex.hitCamera = camera;
             vortex.radius = radius;
             vortex.duration = duration;
@@ -45,6 +47,7 @@ namespace Storybook
 
         void LateUpdate()
         {
+            if (RelicInventoryPanel.BlocksGameplay) return;
             double elapsed = Time.timeAsDouble - startedAt;
             double activeElapsed = Math.Min(elapsed, duration);
             CollectTargets();
@@ -103,7 +106,9 @@ namespace Storybook
             foreach (MonsterHealth enemy in targets)
             {
                 if (!isActiveAndEnabled) return;
-                if (enemy != null && enemy.CanTakeDamage) enemy.ReceiveSkillDamage(damage, transform.position, SkillHit.SwordTyphoon, camera: hitCamera);
+                if (enemy == null || !enemy.CanTakeDamage) continue;
+                float hitDamage = attacker != null ? attacker.ApplyAttackPower(damage) : damage;
+                enemy.ReceiveSkillDamage(hitDamage, transform.position, SkillHit.SwordTyphoon, camera: hitCamera);
             }
         }
 

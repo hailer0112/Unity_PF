@@ -22,7 +22,7 @@ namespace Storybook
         {
             PalaceChestReward.Health => "생명의 구슬\n최대 HP의 15% 회복\nF - 사용",
             PalaceChestReward.Mana => "마력의 구슬\n최대 MP의 20% 회복\nF - 사용",
-            PalaceChestReward.Relic => $"동화 유물 · {Relic.DisplayName}\nF - 획득",
+            PalaceChestReward.Relic => $"{Relic.DisplayName}\n{Relic.Description}\nF - 획득",
             _ => $"이야기 파편 꾸러미 · 파편 {Amount}개\nF - 획득"
         };
     }
@@ -90,6 +90,8 @@ namespace Storybook
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
+        internal FairyTaleRelic FindRelic(string id) => Array.Find(relicCatalog, relic => relic != null && relic.Id == id);
+
         internal string DescribeOdds() =>
             $"Weights (Fragments / HP / MP / Relic): {fragmentsWeight}/{healthWeight}/{manaWeight}/{relicWeight}, total {TotalWeight}";
 #endif

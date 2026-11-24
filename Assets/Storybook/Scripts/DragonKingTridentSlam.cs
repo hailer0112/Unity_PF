@@ -138,6 +138,7 @@ namespace Storybook
 
         void LateUpdate()
         {
+            if (RelicInventoryPanel.BlocksGameplay) return;
             animatedPose = ReadPose();
             double now = Time.timeAsDouble;
             if (!CanFight())

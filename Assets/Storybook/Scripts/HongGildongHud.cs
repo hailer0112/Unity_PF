@@ -24,7 +24,9 @@ namespace Storybook
         HongGildong player;
         PlayerHealth health;
         Canvas canvas;
-        RectTransform healthFill, manaFill;
+        RectTransform healthFill, manaFill, skillRow;
+        internal float SkillRowTop => skillRow == null ? 0f :
+            RectTransformUtility.WorldToScreenPoint(null, skillRow.TransformPoint(skillRow.rect.max)).y;
         Text healthLabel, manaLabel, windstepActive;
         Font font, noticeFont;
 
@@ -90,13 +92,13 @@ namespace Storybook
 
         void BuildSkills(Sprite[] icons)
         {
-            var row = MakeRect("Skill row", canvas.transform);
-            Pin(row, new Vector2(.5f, 0f), new Vector2(.5f, 0f), new Vector2(0f, 16f),
+            skillRow = MakeRect("Skill row", canvas.transform);
+            Pin(skillRow, new Vector2(.5f, 0f), new Vector2(.5f, 0f), new Vector2(0f, 16f),
                 new Vector2(SlotSpacing * Keys.Length, 88f));
 
             for (int i = 0; i < icons.Length; i++)
             {
-                var tile = MakeRect(SpriteNames[i] + " slot", row);
+                var tile = MakeRect(SpriteNames[i] + " slot", skillRow);
                 Pin(tile, Vector2.zero, Vector2.zero, new Vector2(SlotSpacing * i + (SlotSpacing - IconSize) * .5f, 0f),
                     new Vector2(IconSize, 88f));
 

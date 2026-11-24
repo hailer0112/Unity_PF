@@ -24,6 +24,7 @@ namespace Storybook
 
         readonly Queue<(int amount, float expires)> fragmentGains = new();
         PlayerHealth fragmentOwner;
+        HongGildongHud playerHud;
         PalaceDungeon dungeon;
         PalaceDungeonRoom currentRoom;
         Font font;
@@ -38,6 +39,7 @@ namespace Storybook
                 if (fragmentOwner != null) fragmentOwner.StoryFragmentsGained -= ShowFragmentGain;
                 fragmentGains.Clear();
                 fragmentOwner = playerHealth;
+                playerHud = playerHealth != null ? playerHealth.GetComponent<HongGildongHud>() : null;
                 if (fragmentOwner != null) fragmentOwner.StoryFragmentsGained += ShowFragmentGain;
             }
             tiles.Clear();
@@ -131,22 +133,25 @@ namespace Storybook
 
             var recovery = currentRoom.Recovery;
             string prompt = dungeon.PortalPrompt ?? (recovery != null ? recovery.Prompt : null) ?? dungeon.ChestPrompt;
-            if (prompt != null)
-                DrawMessage(prompt.Contains('\n')
-                    ? new Rect(width * .5f - 210f, height - 185f, 420f, 68f)
-                    : new Rect(width * .5f - 155f, height - 150f, 310f, 33f), prompt);
-            if (dungeon.ChestResult is string result)
-                DrawMessage(new Rect(width * .5f - 210f, height - 215f, 420f, 33f), result);
+            float hudTop = playerHud != null ? playerHud.SkillRowTop / scale : 104f;
+            float bottom = height - hudTop - 13f;
+            if (prompt != null) bottom = DrawMessage(width, bottom, prompt, prompt.Contains('\n') ? 620f : 390f) - 8f;
+            if (dungeon.ChestResult is string result) DrawMessage(width, bottom, result, 420f);
 
             GUI.color = tint;
             GUI.matrix = matrix;
         }
 
-        void DrawMessage(Rect bounds, string message)
+        float DrawMessage(float screenWidth, float bottom, string message, float preferredWidth)
         {
+            float width = Mathf.Min(preferredWidth, screenWidth - 24f);
+            float height = Mathf.Ceil(promptStyle.CalcHeight(new GUIContent(message), width - 4f)) + 4f;
+            var bounds = new Rect((screenWidth - width) * .5f, bottom - height, width, height);
             Fill(bounds, Trim);
-            Fill(new Rect(bounds.x + 2, bounds.y + 2, bounds.width - 4, bounds.height - 4), Panel);
-            GUI.Label(bounds, message, promptStyle);
+            var inside = new Rect(bounds.x + 2, bounds.y + 2, bounds.width - 4, bounds.height - 4);
+            Fill(inside, Panel);
+            GUI.Label(inside, message, promptStyle);
+            return bounds.yMin;
         }
 
         void InitializeStyles()
@@ -162,7 +167,12 @@ namespace Storybook
             if (font != null) label.font = font;
             roomIcon = new GUIStyle(label) { padding = new RectOffset(), clipping = TextClipping.Clip,
                 fontSize = Mathf.Clamp(Mathf.FloorToInt(tiles[currentRoom].width * .76f), 8, 12) };
-            promptStyle = new GUIStyle(label) { fontSize = 17 };
+            promptStyle = new GUIStyle(label)
+            {
+                fontSize = 17,
+                wordWrap = true,
+                padding = new RectOffset(15, 15, 9, 9)
+            };
             fragmentIcon = Resources.Load<Texture2D>("StoryFragment");
         }
 

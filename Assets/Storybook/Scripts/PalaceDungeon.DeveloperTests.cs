@@ -1,5 +1,6 @@
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storybook
@@ -14,6 +15,98 @@ namespace Storybook
             health == null || health.IsDead ? "살아 있는 플레이어가 필요합니다." :
             chestRewards.Grant(reward, health, player, new System.Random());
 
+        internal string TestRelic(string relicId, bool spawn)
+        {
+            var relic = chestRewards.FindRelic(relicId);
+            if (relic == null) return "보상 목록에 해당 유물이 없습니다.";
+            if (health == null || health.IsDead) return "살아 있는 플레이어가 필요합니다.";
+            if (health.Relics.Contains(relic.Id)) return $"이미 보유한 유물 · {relic.DisplayName}";
+            if (health.Relics.IsFull) return FairyTaleRelicInventory.FullPrompt;
+            if (!spawn) return chestRewards.GrantLoot(new(PalaceChestReward.Relic, relic: relic), health, player);
+            return SpawnTestPickup(new(PalaceChestReward.Relic, relic: relic));
+        }
+
+        internal string TestBloodTemptationPoison()
+        {
+            if (chestRewards.FindRelic(BloodTemptationRelic.RelicId) is not BloodTemptationRelic relic ||
+                !health.Relics.Contains(relic.Id)) return "핏빛 유혹을 먼저 획득하세요.";
+
+            var target = testMonster;
+            if (target == null || !target.CanTakeDamage)
+            {
+                if (Current == null) return "현재 방에 중독시킬 대상이 없습니다.";
+                float closest = float.PositiveInfinity;
+                foreach (var monster in Current.GetComponentsInChildren<MonsterHealth>())
+                {
+                    if (!monster.CanTakeDamage) continue;
+                    float distance = (player.transform.position - monster.transform.position).sqrMagnitude;
+                    if (distance >= closest) continue;
+                    target = monster;
+                    closest = distance;
+                }
+                if (closest == float.PositiveInfinity) return "현재 방에 중독시킬 대상이 없습니다.";
+            }
+
+            relic.ForcePoisonForTesting(health, target);
+            return $"중독 적용 · 현재 HP {target.CurrentHP:0.##} · 틱당 {target.GetComponent<BloodTemptationPoison>().TickDamage:0.##} 피해";
+        }
+
+        internal string TestRewardPickup(PalaceChestReward reward)
+            => SpawnTestPickup(chestRewards.CreateLoot(reward, health, new System.Random()));
+
+        string SpawnTestPickup(PalaceChestLoot loot)
+        {
+            if (Current == null || rewardChestPrefab == null || health.IsDead) return "보상을 생성할 수 없습니다.";
+            testPickups.RemoveAll(pickup => pickup == null);
+            Vector3 center = player.transform.position;
+            center.y = Current.transform.position.y;
+            Vector3 direction = Quaternion.Euler(0f, testPickups.Count * 72f, 0f) * Vector3.back;
+            if (!Current.TryRewardDropPosition(center, center + direction, out var position))
+                return "보상을 놓을 수 있는 위치가 없습니다.";
+
+            testPickups.Add(rewardChestPrefab.SpawnReward(Current.transform, position, loot));
+            return "바닥 보상 생성 · " + loot.Prompt.Split('\n')[0];
+        }
+
+        PalaceRewardPickup FindTestPickup(Vector3 position)
+        {
+            PalaceRewardPickup nearest = null;
+            float distance = float.PositiveInfinity;
+            foreach (var pickup in testPickups)
+            {
+                if (pickup == null || pickup.transform.parent != Current.transform || !pickup.CanCollect(position))
+                    continue;
+                float sqrDistance = (pickup.transform.position - position).sqrMagnitude;
+                if (sqrDistance >= distance) continue;
+                nearest = pickup;
+                distance = sqrDistance;
+            }
+            return nearest;
+        }
+
+        internal string TestRelicLimit()
+        {
+            var inventory = new FairyTaleRelicInventory(health);
+            var probes = new FairyTaleRelic[FairyTaleRelicInventory.Capacity + 1];
+            try
+            {
+                bool passed = true;
+                for (int i = 0; i < probes.Length; i++)
+                {
+                    probes[i] = FairyTaleRelic.CreateForTesting($"test-relic-{i}");
+                    passed &= inventory.TryAcquire(probes[i]) == (i < FairyTaleRelicInventory.Capacity);
+                    passed &= !inventory.TryAcquire(probes[i]);
+                }
+                passed &= inventory.SelectRandom(probes, new System.Random(0)) == null;
+                return passed ? "유물 중복 차단 및 6개 한도 검증 통과" : "유물 보유 한도 검증 실패";
+            }
+            finally
+            {
+                foreach (var probe in probes)
+                    if (probe != null) Destroy(probe);
+            }
+        }
+
         internal string TestChestOdds()
         {
             const int samples = 10000;
@@ -26,6 +119,7 @@ namespace Storybook
         PalaceDungeonRoom testBossTemplate;
         GameObject testMonsterRoot;
         MonsterHealth testMonster;
+        readonly List<PalaceRewardPickup> testPickups = new();
         TestMonsterKind testMonsterKind;
 
         internal bool CanSpawnTestMonster => !IsBossFloor &&

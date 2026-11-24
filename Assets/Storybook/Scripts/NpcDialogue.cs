@@ -37,6 +37,7 @@ namespace Storybook
 
         protected virtual void Update()
         {
+            if (RelicInventoryPanel.BlocksGameplay) return;
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (PalaceDeveloperMenu.BlocksGameplay) return;
 #endif

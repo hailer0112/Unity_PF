@@ -1132,7 +1132,9 @@ MonoBehaviour:
     healthWeight: 20
     manaWeight: 15
     relicWeight: 5
-    relicCatalog: []
+    relicCatalog:
+    - {fileID: 11400000, guid: 7568b3d877874fe3971c8cf43699e94b, type: 2}
+    - {fileID: 11400000, guid: a776d4734b48413e9f7f2b366bd08202, type: 2}
   encounterWaves:
     crab: {fileID: 1609197125568794212, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}
     archer: {fileID: 973324174093090072, guid: 496ba8fe6ac516342acdbe19d0e0c5ae, type: 3}
