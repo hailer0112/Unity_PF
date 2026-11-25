@@ -1141,6 +1141,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 99ffd798957090fcc6c30ed71369f042, type: 2}
     - {fileID: 11400000, guid: 2b65f83395ff4de19de6d8d91d2efa4c, type: 2}
     - {fileID: 11400000, guid: c867c77057a74500b8c49e4636a07f11, type: 2}
+    - {fileID: 11400000, guid: ab2d166324ab496aa583e4d5d5dc5109, type: 2}
   relicSummonRowPrefab: {fileID: 1057951593643956291, guid: 5647a8512c1239746aa05b0c71b530a8, type: 3}
   encounterWaves:
     crab: {fileID: 1609197125568794212, guid: 9444d8c140f26ce4d93f3f0b943f88ec, type: 3}

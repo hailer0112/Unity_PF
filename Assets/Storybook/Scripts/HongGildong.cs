@@ -99,6 +99,7 @@ namespace Storybook
         Vector3? destination;
         LineRenderer moveMarker;
         Vector3 dashDirection;
+        CursedFootstepsTrail cursedFootsteps;
         float dashTimeLeft;
         double invulnerableUntil, dashReadyAt;
         float attackTime = RecoveryEnd, gaitPhase;
@@ -115,6 +116,11 @@ namespace Storybook
 
         internal void PlaceInDungeon(Vector3 position, Rect bounds)
         {
+            if (curseDashActive)
+            {
+                dashTimeLeft = 0f;
+                EndCurseDash(false);
+            }
             dungeonMovementBounds = bounds;
             PrepareForAction();
             controller.enabled = false;
@@ -182,6 +188,8 @@ namespace Storybook
             CancelCloneSlash();
             IsCastingAzureSlash = false;
             PrepareForAction();
+            EndCurseDash(false);
+            cursedFootsteps?.Clear();
             dashTimeLeft = gaitPhase = knockbackRemaining = 0f;
             invulnerableUntil = 0;
             attackTime = RecoveryEnd;
@@ -440,9 +448,10 @@ namespace Storybook
         {
             direction = Vector3.ProjectOnPlane(direction, Vector3.up);
             if (!isActiveAndEnabled || distance <= 0f || direction.sqrMagnitude < .0001f) return;
+            dashTimeLeft = 0f;
+            EndCurseDash(true);
             knockbackDirection = direction.normalized;
             knockbackRemaining = distance;
-            dashTimeLeft = 0f;
             PrepareForAction();
         }
 
@@ -475,6 +484,7 @@ namespace Storybook
             dashTimeLeft = dashDuration;
             invulnerableUntil = Time.timeAsDouble + invulnerabilityDuration;
             dashReadyAt = Time.timeAsDouble + dashCooldown;
+            BeginCurseDash();
             PrepareForAction();
         }
 
@@ -500,28 +510,30 @@ namespace Storybook
         {
             float dt = Mathf.Min(Time.deltaTime, dashTimeLeft);
             float step = dashDistance * (dt / dashDuration);
-            float allowedStep = DashDistanceBeforeMonster(step);
+            float allowedStep = curseDashActive ? step : DashDistanceBeforeMonster(step);
+            if (curseDashActive && step > 0f) IgnoreDashBodies(step);
             Vector3 before = transform.position;
             CollisionFlags flags = MoveOnGround(dashDirection * allowedStep);
             float travelled = Vector3.Dot(transform.position - before, dashDirection);
             bool blocked = allowedStep < step || (flags & CollisionFlags.Sides) != 0 || travelled + .001f < step;
             dashTimeLeft = blocked ? 0f : Mathf.Max(0f, dashTimeLeft - dt);
+            if (!curseDashActive) return;
+
+            cursedFootsteps.RecordStep(before, transform.position);
+            if (!IsDashing) EndCurseDash(true);
+            else if (!OverlapsDashBody(Vector3.zero)) lastClearDashPosition = transform.position;
         }
 
         float DashDistanceBeforeMonster(float step)
         {
             if (step <= 0f) return step;
-            Vector3 scale = transform.lossyScale;
-            float radius = controller.radius * Mathf.Max(Mathf.Abs(scale.x), Mathf.Abs(scale.z));
-            float axis = Mathf.Max(0f, controller.height * Mathf.Abs(scale.y) * .5f - radius);
-            Vector3 center = transform.TransformPoint(controller.center);
-            Vector3 end = transform.up * axis;
+            GetDashCapsule(out var bottom, out var top, out float radius);
             RaycastHit[] hits = dashBodyHits;
-            int count = Physics.CapsuleCastNonAlloc(center - end, center + end, radius, dashDirection,
+            int count = Physics.CapsuleCastNonAlloc(bottom, top, radius, dashDirection,
                 hits, step, ~0, QueryTriggerInteraction.Ignore);
             if (count == hits.Length)
             {
-                hits = Physics.CapsuleCastAll(center - end, center + end, radius, dashDirection,
+                hits = Physics.CapsuleCastAll(bottom, top, radius, dashDirection,
                     step, ~0, QueryTriggerInteraction.Ignore);
                 count = hits.Length;
             }

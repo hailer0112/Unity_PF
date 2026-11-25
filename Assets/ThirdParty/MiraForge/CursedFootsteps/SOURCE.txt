@@ -1,0 +1,6 @@
+Free Pixel Fire & Elemental Effects v1.0.1 by Mira Forge
+https://miraforge.itch.io/free-pixel-fire-and-elemental-effects
+
+AcidPuddle_Curse_64.png uses only the twelve 64x64 Acid Puddle frames.
+The original frames were recolored in violet and packed left to right at 12 FPS.
+See LICENSE.txt for the terms covering use, modification, and distribution within the game.

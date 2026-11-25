@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80a56b9667014f59a9742d171cd9a812, type: 3}
+  m_Name: CursedFootsteps
+  m_EditorClassIdentifier:
+  id: cursed-footsteps
+  displayName: 저주받은 발걸음
+  description: 대시 중 적을 관통할 수 있습니다. 대시 이동 경로에 {duration}초간 저주 장판을 생성합니다. 장판에 닿은 적은 즉시 {damage}의 피해를 받으며, 이후 {interval} {damage}의 피해를 받고 이동속도가 {slow} 감소합니다.
+  flavorText: 멈추고 싶다는 간절한 바람에도 저주받은 발걸음은 멈추지 않았다.
+  sourceStory: 빨간 구두
+  icon: {fileID: 21300000, guid: c44917d693594805aa6127788067c53b, type: 3}
+  effectName: 저주의 흔적
+  duration: 3
+  width: 0.8
+  tickDamage: 10
+  tickInterval: 1
+  slowFraction: 0.3
+  puddleFrames: {fileID: 2800000, guid: fd445d765b3e470bbca6416234c8c776, type: 3}
+  motes: {fileID: 21300000, guid: bde17548d3634a2d94216bf4533f83e2, type: 3}
+  puddlePatternSize: 0.52
+  animationFps: 12
+  footprintSpacing: 0.34
+  moteSize: 0.22
+  moteOpacity: 0.6

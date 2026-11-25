@@ -227,10 +227,15 @@ namespace Storybook
             return tracking;
         }
 
+        float cursedFootstepsSlow;
+
+        internal void SetCursedFootstepsSlow(float fraction) => cursedFootstepsSlow = Mathf.Clamp01(fraction);
+
         protected bool MoveOnGround(Vector3 direction, float distance = float.PositiveInfinity, bool stayInRoom = false)
         {
             Vector3 before = transform.position;
-            Vector3 offset = SteerAroundMonsters(direction) * Mathf.Min(distance, moveSpeed * Time.deltaTime);
+            float moveStep = moveSpeed * (1f - cursedFootstepsSlow) * Time.deltaTime;
+            Vector3 offset = SteerAroundMonsters(direction) * Mathf.Min(distance, moveStep);
             if (stayInRoom) offset = KeepInRoom(offset);
             controller.Move(offset + Vector3.down * (2f * Time.deltaTime));
             return Vector3.Dot(transform.position - before, direction) > .0001f;

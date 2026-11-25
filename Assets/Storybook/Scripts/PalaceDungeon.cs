@@ -291,6 +291,7 @@ namespace Storybook
 
         void ReplaceFloor(int floor, float? recoveryChanceOverride = null, bool requireMerchant = false)
         {
+            player.CancelCurseDashForRoomChange();
             Current = null;
             portalRoom = null;
             portalRange = null;
@@ -335,9 +336,13 @@ namespace Storybook
 
         void Enter(PalaceDungeonRoom room, bool snapCamera = false)
         {
+            if (Current != room)
+            {
+                player.CancelCurseDashForRoomChange();
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-            if (Current != room) RemoveTestMonster();
+                RemoveTestMonster();
 #endif
+            }
             Current = room;
             room.Enter();
             if (room == bossRoom) bossHud.gameObject.SetActive(true);
