@@ -14,7 +14,7 @@ namespace Storybook
 
         public string Id => id?.Trim();
         public string DisplayName => string.IsNullOrWhiteSpace(displayName) ? name : displayName;
-        public string Description => description;
+        public virtual string Description => description;
         public string FlavorText => flavorText;
         public string SourceStory => sourceStory;
         public Sprite Icon => icon;
@@ -31,6 +31,8 @@ namespace Storybook
             return relic;
         }
 #endif
+
+        internal virtual decimal ManaCostReduction => 0m;
 
         protected internal virtual float GetAttackBonus(PlayerHealth player) => 0f;
 

@@ -107,8 +107,8 @@ namespace Storybook
             {
                 if (!isActiveAndEnabled) return;
                 if (enemy == null || !enemy.CanTakeDamage) continue;
-                float hitDamage = attacker != null ? attacker.ApplyAttackPower(damage) : damage;
-                enemy.ReceiveSkillDamage(hitDamage, transform.position, SkillHit.SwordTyphoon, camera: hitCamera);
+                enemy.ReceiveSkillDamage(damage, transform.position, SkillHit.SwordTyphoon, camera: hitCamera,
+                    relics: attacker != null ? attacker.AttackRelics : null);
             }
         }
 

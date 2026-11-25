@@ -56,11 +56,14 @@ namespace Storybook
             float ratio = health.MaxHP > 0 ? Mathf.Clamp01(health.CurrentHP / health.MaxHP) : 0;
             fill.anchorMax = new Vector2(ratio,1);
         }
+        internal Vector3 PositionAboveHead(Vector3 up)
+            => health.transform.position + up * ((heightOverride > 0 ? heightOverride : displayHeight) + headGap);
+
         void PositionBar()
         {
             if (viewCamera == null || health == null) { barCanvas.enabled = false; return; }
             var rect = (RectTransform)barCanvas.transform;
-            rect.position = health.transform.position + viewCamera.transform.up * ((heightOverride > 0 ? heightOverride : displayHeight) + headGap);
+            rect.position = PositionAboveHead(viewCamera.transform.up);
             rect.rotation = viewCamera.transform.rotation;
             rect.localScale = Vector3.one * .01f;
             rect.sizeDelta = new Vector2(Mathf.Max(.1f,size.x),Mathf.Max(.02f,size.y)) * 100f;

@@ -19,7 +19,7 @@ namespace Storybook
 
         InputAction windstepInput;
         double windstepEndsAt, windstepReadyAt;
-        bool windstepVisualActive;
+        bool windstepVisualActive, windstepWishRefreshAvailable;
         WindstepVisual windstepVisual;
 
         public bool IsWindstepActive => isActiveAndEnabled && Time.timeAsDouble < windstepEndsAt;
@@ -32,18 +32,7 @@ namespace Storybook
 
         void UpdateWindstep(bool acceptInput)
         {
-            if (acceptInput && !IsCastingSwordTyphoon && windstepInput.WasPressedThisFrame() && !IsWindstepActive &&
-                WindstepCooldownRemaining <= 0f && TrySpendSkillMana(HudSkill.Windstep, windstepManaCost))
-            {
-                double now = Time.timeAsDouble;
-                drawnWindstepStartedAt = weaponStance == WeaponStance.Drawn ? now : double.NegativeInfinity;
-                if (weaponStance == WeaponStance.Drawn)
-                    weaponStanceChangeAt = now + CombatStanceDuration;
-                windstepMotionTime = 0f;
-                windstepEndsAt = now + windstepDuration;
-                windstepReadyAt = now + windstepCooldown;
-                BeginWindstepVisual();
-            }
+            if (acceptInput && windstepInput.WasPressedThisFrame()) BeginWindstep();
 
             if (IsWindstepActive) return;
 
@@ -53,6 +42,25 @@ namespace Storybook
                 windstepVisualActive = false;
             }
 
+        }
+
+        bool BeginWindstep()
+        {
+            if (IsCastingSwordTyphoon || (IsWindstepActive && !windstepWishRefreshAvailable) ||
+                WindstepCooldownRemaining > 0f || !TrySpendSkillMana(HudSkill.Windstep, out float spentMana)) return false;
+
+            windstepWishRefreshAvailable = false;
+
+            double now = Time.timeAsDouble;
+            drawnWindstepStartedAt = weaponStance == WeaponStance.Drawn ? now : double.NegativeInfinity;
+            if (weaponStance == WeaponStance.Drawn)
+                weaponStanceChangeAt = now + CombatStanceDuration;
+            windstepMotionTime = 0f;
+            windstepEndsAt = now + windstepDuration;
+            windstepReadyAt = now + windstepCooldown;
+            BeginWindstepVisual();
+            NotifySkillCast(HudSkill.Windstep, spentMana);
+            return true;
         }
 
         Sprite DrawnWindstepPose()

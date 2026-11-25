@@ -40,7 +40,8 @@ namespace Storybook
         [SerializeField] float reach = 1.36f;
         [SerializeField, Min(0)] float attackDamage = 25f;
 
-        internal float RelicAttackBonus => manaHealth != null ? manaHealth.Relics?.AttackBonus ?? 0f : 0f;
+        internal FairyTaleRelicInventory AttackRelics => manaHealth != null ? manaHealth.Relics : null;
+        internal float RelicAttackBonus => AttackRelics?.AttackBonus ?? 0f;
         internal float ApplyAttackPower(float baseDamage) => baseDamage * (1f + RelicAttackBonus);
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -176,6 +177,7 @@ namespace Storybook
             windstepInput.Disable();
             swordTyphoonInput.Disable();
             CancelSwordTyphoon();
+            ClearWishVisual();
             ClearWindstep();
             CancelCloneSlash();
             IsCastingAzureSlash = false;
@@ -541,7 +543,7 @@ namespace Storybook
                 !TryGroundPoint(cursor, out Vector3 ground))
                 return false;
 
-            if (!TrySpendSkillMana(HudSkill.AzureSlash, azureSlashManaCost)) return false;
+            if (!TrySpendSkillMana(HudSkill.AzureSlash, out float spentMana)) return false;
             EnterCombatStance();
 
             Vector3 direction = Vector3.ProjectOnPlane(ground - transform.position, Vector3.up);
@@ -552,6 +554,7 @@ namespace Storybook
             azureSlashReadyAt = azureSlashStartedAt + azureSlashCooldown;
             IsCastingAzureSlash = true;
             bladeTrail.enabled = false;
+            NotifySkillCast(HudSkill.AzureSlash, spentMana);
             return true;
         }
 
@@ -822,8 +825,12 @@ namespace Storybook
                 if (offset.sqrMagnitude > reach * reach || angle < start || angle > end || !hitThisSwing.Add(target))
                     continue;
                 Vector3 impact = other.bounds.ClosestPoint(center);
-                if (!DealsBasicDamage(target, ApplyAttackPower(attackDamage), transform.position)) continue;
-                if (target is not MonsterHealth monster) continue;
+                if (target is not MonsterHealth monster)
+                {
+                    target.ReceiveDamage(ApplyAttackPower(attackDamage), transform.position);
+                    continue;
+                }
+                if (!monster.ReceivePlayerAttack(attackDamage, transform.position, AttackRelics)) continue;
                 RestoreManaOnBasicHit();
                 manaHealth?.Relics.NotifyBasicAttackHit(monster);
                 if (monster.TryGetComponent(out MonsterCombatAI enemy) &&

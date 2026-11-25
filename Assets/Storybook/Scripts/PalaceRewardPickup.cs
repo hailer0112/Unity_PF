@@ -10,10 +10,22 @@ namespace Storybook
         ParticleSystem pickupSparks;
         bool collected;
 
-        internal string Prompt(FairyTaleRelicInventory relics) =>
-            IsBlocked(relics) ? FairyTaleRelicInventory.FullPrompt : loot.Prompt;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        bool rejectOwnedRelic;
+        internal void PreventDuplicateRelicForTesting() => rejectOwnedRelic = true;
+#endif
 
-        internal bool IsBlocked(FairyTaleRelicInventory relics) => loot.Kind == PalaceChestReward.Relic && relics.IsFull;
+        internal string Prompt(FairyTaleRelicInventory relics) => BlockReason(relics) ?? loot.Prompt;
+
+        string BlockReason(FairyTaleRelicInventory relics)
+        {
+            if (loot.Kind != PalaceChestReward.Relic) return null;
+            if (relics.IsFull) return FairyTaleRelicInventory.FullPrompt;
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (rejectOwnedRelic && relics.Contains(loot.Relic.Id)) return "이미 보유한 유물입니다.";
+#endif
+            return null;
+        }
 
         internal static PalaceRewardPickup Spawn(Transform parent, Vector3 position, Quaternion rotation,
             PalaceChestLoot loot, Sprite sprite, Texture2D glow, ParticleSystem pickupSparks, bool ownsSprite)
@@ -40,11 +52,18 @@ namespace Storybook
         internal bool CanCollect(Vector3 playerPosition)
             => !collected && IsNear(playerPosition, transform.position, .8f);
 
-        internal bool TryCollect(Vector3 playerPosition, FairyTaleRelicInventory relics, out PalaceChestLoot reward)
+        internal bool TryCollect(Vector3 playerPosition, PlayerHealth health, HongGildong player,
+            PalaceChestRewards rewards, out string result)
         {
-            reward = loot;
-            if (!CanCollect(playerPosition) || IsBlocked(relics)) return false;
+            result = null;
+            if (!CanCollect(playerPosition) || BlockReason(health.Relics) != null) return false;
             collected = true;
+            if (!rewards.TryGrantLoot(loot, health, player, out result))
+            {
+                collected = false;
+                return false;
+            }
+
             effects.PlayCollection(pickupSparks);
             Destroy(gameObject);
             return true;

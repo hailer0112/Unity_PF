@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83598d07909cb7f488136140ef441262, type: 3}
+  m_Name: UndyingEmber
+  m_EditorClassIdentifier:
+  id: undying-ember
+  displayName: 꺼지지 않는 불씨
+  description: 기본 공격 적중 시 {chance} 확률로 적에게 {duration}초간 화상을 부여합니다. 화상에 걸린 적은 {interval} {damage}의 피해를 받으며, 반경 {radius}유닛 내의 다른 적에게 {splash}의 화염 피해를 입힙니다.
+  flavorText: 모든 희망이 사라진 순간에도, 작은 불씨만은 끝내 꺼지지 않았다.
+  sourceStory: 성냥팔이 소녀
+  icon: {fileID: 21300000, guid: c6c4a7d0938ee9d35c7b464a4965395d, type: 3}
+  procChance: 0.25
+  duration: 5
+  tickInterval: 1
+  targetDamage: 3
+  splashDamage: 6
+  splashRadius: 1.5
+  emberParticles: {fileID: 2100000, guid: 32cc483f9636edd4bbb82e26419fd290, type: 2}

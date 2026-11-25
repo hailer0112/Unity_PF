@@ -30,13 +30,16 @@ namespace Storybook
         public float SwordTyphoonCooldownRemaining =>
             (float)System.Math.Max(0d, swordTyphoonReadyAt - Time.timeAsDouble);
 
+        internal bool SwordTyphoonInProgress => IsCastingSwordTyphoon ||
+            swordTyphoons.Exists(typhoon => typhoon != null && typhoon.isActiveAndEnabled);
+
         bool BeginSwordTyphoon(Vector2 cursor)
         {
-            if (IsCastingSwordTyphoon || IsCastingAzureSlash || IsCastingCloneSlash || IsDashing ||
+            if (SwordTyphoonInProgress || IsCastingAzureSlash || IsCastingCloneSlash || IsDashing ||
                 Attacking || SwordTyphoonCooldownRemaining > 0f || !TryGroundPoint(cursor, out Vector3 ground))
                 return false;
 
-            if (!TrySpendSkillMana(HudSkill.SwordTyphoon, swordTyphoonManaCost)) return false;
+            if (!TrySpendSkillMana(HudSkill.SwordTyphoon, out float spentMana)) return false;
             EnterCombatStance();
 
             Vector3 origin = transform.position;
@@ -51,6 +54,7 @@ namespace Storybook
             swordTyphoonStartedAt = Time.timeAsDouble;
             swordTyphoonReadyAt = swordTyphoonStartedAt + swordTyphoonCooldown;
             IsCastingSwordTyphoon = true;
+            NotifySkillCast(HudSkill.SwordTyphoon, spentMana);
             return true;
         }
 

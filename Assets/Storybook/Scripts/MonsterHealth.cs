@@ -34,6 +34,7 @@ namespace Storybook
         public MonsterDeathCause? DeathCause { get; private set; }
         internal bool HasDefeatPresentation { get; private set; }
         internal bool HasSkillHitFeedback => combatAI != null;
+        bool crownTriggered;
         TurtleGuardAI guard;
         MonsterCombatAI combatAI;
 
@@ -46,16 +47,24 @@ namespace Storybook
 
         public override void ReceiveDamage(float damage, Vector3 source)
         {
-            ApplyDamage(guard != null ? guard.GuardDamage(damage, source) : damage, source);
+            ApplyDamage(DirectedDamage(damage, source), source);
         }
         public override void ReceiveDamage(float damage) => ApplyDamage(damage, null);
 
-        internal void ReceiveSkillDamage(float damage, Vector3 source, SkillHit skill, Vector3? contact = null,
-            ClearingCamera camera = null)
+        float DirectedDamage(float damage, Vector3 source) => guard != null ? guard.GuardDamage(damage, source) : damage;
+
+        internal bool ReceivePlayerAttack(float damage, Vector3 source, FairyTaleRelicInventory relics)
         {
-            float before = currentHP;
-            ReceiveDamage(damage, source);
-            if (currentHP >= before || (combatAI == null && skill != SkillHit.CloneSlash)) return;
+            var crown = !crownTriggered && Mathf.Approximately(currentHP, maxHP) ? relics?.Find<BrokenCrownRelic>() : null;
+            float crownBonus = crown != null ? crown.DamageBonus : 0f;
+            float total = damage * (1f + (relics?.AttackBonus ?? 0f) + crownBonus);
+            return ApplyDamage(DirectedDamage(total, source), source, crownBonus > 0f ? crown : null);
+        }
+
+        internal void ReceiveSkillDamage(float damage, Vector3 source, SkillHit skill, Vector3? contact = null,
+            ClearingCamera camera = null, FairyTaleRelicInventory relics = null)
+        {
+            if (!ReceivePlayerAttack(damage, source, relics) || (combatAI == null && skill != SkillHit.CloneSlash)) return;
             if (!IsDead) combatAI?.ReactToSkillHit(source, skill, contact);
             ShowCombatShake(camera, skill);
         }
@@ -69,13 +78,23 @@ namespace Storybook
                 camera.RequestCloneSlashShake();
         }
 
-        void ApplyDamage(float damage, Vector3? source)
+        bool ApplyDamage(float damage, Vector3? source, BrokenCrownRelic crown = null)
         {
-            if (!CanTakeDamage || damage <= 0 || float.IsNaN(damage) || float.IsInfinity(damage)) return;
+            if (!CanTakeDamage || damage <= 0 || float.IsNaN(damage) || float.IsInfinity(damage)) return false;
+            float remaining = Mathf.Max(0, currentHP - damage);
+            if (remaining >= currentHP) return false;
+
             if (source.HasValue && combatAI != null) combatAI.TrackDamageDirection(source.Value);
-            currentHP = Mathf.Max(0, currentHP - damage);
-            if (!IsDead) { Damaged?.Invoke(); return; }
-            FinishDeath(MonsterDeathCause.PlayerKilled);
+            currentHP = remaining;
+            if (crown != null)
+            {
+                crownTriggered = true;
+                crown.ShowImpact(this);
+            }
+
+            if (!IsDead) Damaged?.Invoke();
+            else FinishDeath(MonsterDeathCause.PlayerKilled);
+            return true;
         }
 
         internal bool TrySelfDestruct()
@@ -88,6 +107,7 @@ namespace Storybook
         void FinishDeath(MonsterDeathCause cause)
         {
             currentHP = 0f;
+            crownTriggered = false;
             DeathCause = cause;
             var recipient = fragmentRecipient;
             fragmentRecipient = null;

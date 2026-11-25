@@ -9,6 +9,11 @@ namespace Storybook
 
     public sealed partial class PalaceDungeon
     {
+        [SerializeField] RelicSummonRow relicSummonRowPrefab;
+
+        internal RelicSummonRow RelicSummonRowPrefab => relicSummonRowPrefab;
+        internal IEnumerable<FairyTaleRelic> TestRelicCatalog => chestRewards.RegisteredRelics();
+
         internal bool TestRewardChest() => Current != null && Current.EnsureRewardChest();
 
         internal string TestChestReward(PalaceChestReward reward) =>
@@ -20,10 +25,17 @@ namespace Storybook
             var relic = chestRewards.FindRelic(relicId);
             if (relic == null) return "보상 목록에 해당 유물이 없습니다.";
             if (health == null || health.IsDead) return "살아 있는 플레이어가 필요합니다.";
-            if (health.Relics.Contains(relic.Id)) return $"이미 보유한 유물 · {relic.DisplayName}";
-            if (health.Relics.IsFull) return FairyTaleRelicInventory.FullPrompt;
-            if (!spawn) return chestRewards.GrantLoot(new(PalaceChestReward.Relic, relic: relic), health, player);
-            return SpawnTestPickup(new(PalaceChestReward.Relic, relic: relic));
+            if (spawn) return SpawnTestPickup(new(PalaceChestReward.Relic, relic: relic));
+            string blocked = RelicAcquireBlockReason(relic);
+            if (blocked != null) return blocked;
+            return health.Relics.TryAcquire(relic) ? $"동화 유물 획득: {relic.DisplayName}" : "유물을 획득할 수 없습니다.";
+        }
+
+        internal string RelicAcquireBlockReason(FairyTaleRelic relic)
+        {
+            if (health == null || health.IsDead) return "살아 있는 플레이어가 필요합니다.";
+            if (health.Relics.Contains(relic.Id)) return "이미 보유한 유물입니다.";
+            return health.Relics.IsFull ? FairyTaleRelicInventory.FullPrompt : null;
         }
 
         internal string TestBloodTemptationPoison()
@@ -61,11 +73,34 @@ namespace Storybook
             Vector3 center = player.transform.position;
             center.y = Current.transform.position.y;
             Vector3 direction = Quaternion.Euler(0f, testPickups.Count * 72f, 0f) * Vector3.back;
-            if (!Current.TryRewardDropPosition(center, center + direction, out var position))
+            Predicate<Vector3> canPlace = null;
+            if (loot.Kind == PalaceChestReward.Relic)
+            {
+                Physics.SyncTransforms();
+                canPlace = candidate => CanPlaceTestPickup(center, candidate);
+            }
+            if (!Current.TryRewardDropPosition(center, center + direction, out var position, canPlace))
                 return "보상을 놓을 수 있는 위치가 없습니다.";
 
-            testPickups.Add(rewardChestPrefab.SpawnReward(Current.transform, position, loot));
+            var pickup = rewardChestPrefab.SpawnReward(Current.transform, position, loot);
+            pickup.PreventDuplicateRelicForTesting();
+            testPickups.Add(pickup);
             return "바닥 보상 생성 · " + loot.Prompt.Split('\n')[0];
+        }
+
+        bool CanPlaceTestPickup(Vector3 center, Vector3 candidate)
+        {
+            foreach (var pickup in testPickups)
+                if (pickup.transform.parent == Current.transform &&
+                    PalaceRewardPickup.IsNear(candidate, pickup.transform.position, .4f))
+                    return false;
+
+            Vector3 offset = candidate - center;
+            foreach (var hit in Physics.SphereCastAll(center + Vector3.up * .32f, .20f, offset.normalized,
+                offset.magnitude, ~0, QueryTriggerInteraction.Ignore))
+                if (hit.collider.GetComponentInParent<PlayerHealth>() != health)
+                    return false;
+            return true;
         }
 
         PalaceRewardPickup FindTestPickup(Vector3 position)

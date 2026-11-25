@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36464bb07b0843ed965d043ceb5dd5ab, type: 3}
+  m_Name: WishDevouringEye
+  m_EditorClassIdentifier:
+  id: wish-devouring-eye
+  displayName: 소원을 삼킨 눈동자
+  description: |-
+    스킬 사용 시 {chance} 확률로 다음 세 가지 효과 중 하나가 발동합니다.
+    생명의 소원 · 최대 HP의 {heal} 회복
+    마력의 소원 · 실제 소모한 MP {refund} 반환
+    시간의 소원 · 사용한 스킬의 쿨타임 초기화
+  flavorText: 소원을 이루어 주는 눈동자는 언제나 그 이상의 대가를 갈망한다.
+  sourceStory: 알라딘
+  icon: {fileID: 21300000, guid: 4ecb57b2e41f46a7990b55843ea89be9, type: 3}
+  effectName: 변덕스러운 소원
+  triggerChance: 0.2
+  lifeWeight: 1
+  manaWeight: 1
+  timeWeight: 1
+  healFraction: 0.1
+  refundFraction: 1
+  lifeEye: {fileID: 21300000, guid: cb24d15a7448410fa3ad5d409fee5cfd, type: 3}
+  manaEye: {fileID: 21300000, guid: 5338552d026a4dff8eaacba65a985b9b, type: 3}
+  timeEye: {fileID: 21300000, guid: 0c15485d627e4dc3aa92e0135c197187, type: 3}
+  recoverySparks: {fileID: 7732118040377713024, guid: c9affdb8ed09d594a9449fc9bb0336d6, type: 3}
+  visualDuration: 0.5
+  visualHeightRatio: 0.58
+  headGap: 0.1

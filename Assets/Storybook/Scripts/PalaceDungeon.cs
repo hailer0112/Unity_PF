@@ -245,12 +245,12 @@ namespace Storybook
             var pickup = FindPickup(chest, position);
             if (pickup != null)
             {
-                if (!pickup.TryCollect(position, health.Relics, out var collected)) return false;
-                ShowChestReward(chestRewards.GrantLoot(collected, health, player));
+                bool collected = pickup.TryCollect(position, health, player, chestRewards, out string result);
+                if (result != null) ShowChestReward(result);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-                Debug.Log($"[Palace chest] collected {chestResult}", this);
+                if (collected) Debug.Log($"[Palace chest] collected {result}", this);
 #endif
-                return true;
+                return collected;
             }
             if (chest == null || !chest.CanOpen(position) || !Current.TryRewardDropPosition(position, out var drop)) return false;
             var reward = chestRewards.Roll(chestRandom);

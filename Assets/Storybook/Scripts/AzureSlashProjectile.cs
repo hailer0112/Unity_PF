@@ -72,15 +72,18 @@ namespace Storybook
                 var target = AttackTarget.FromDamageCollider(hit.collider, out _);
                 if (target == null || !target.CanTakeDamage || !hitTargets.Add(target)) continue;
 
-                float hitDamage = attacker != null ? attacker.ApplyAttackPower(damage) : damage;
+                var relics = attacker != null ? attacker.AttackRelics : null;
                 Vector3 contact = hit.distance > 0f ? hit.point : hit.collider.ClosestPoint(transform.position);
-                if (target is MonsterHealth { HasSkillHitFeedback: true } monster)
+                if (target is MonsterHealth monster)
                 {
-                    monster.ReceiveSkillDamage(hitDamage, castOrigin, SkillHit.AzureSlash, contact, hitCamera);
-                    continue;
+                    if (monster.HasSkillHitFeedback)
+                    {
+                        monster.ReceiveSkillDamage(damage, castOrigin, SkillHit.AzureSlash, contact, hitCamera, relics);
+                        continue;
+                    }
+                    monster.ReceivePlayerAttack(damage, castOrigin, relics);
                 }
-
-                target.ReceiveDamage(hitDamage, castOrigin);
+                else target.ReceiveDamage(attacker != null ? attacker.ApplyAttackPower(damage) : damage, castOrigin);
                 if (target is not MonsterHealth { HasDefeatPresentation: true })
                     PlayImpact(contact);
             }

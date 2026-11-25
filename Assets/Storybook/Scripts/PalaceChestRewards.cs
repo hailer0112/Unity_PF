@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Storybook
@@ -50,7 +51,10 @@ namespace Storybook
         }
 
         internal string Grant(PalaceChestReward reward, PlayerHealth health, HongGildong player, System.Random random)
-            => GrantLoot(CreateLoot(reward, health, random), health, player);
+        {
+            TryGrantLoot(CreateLoot(reward, health, random), health, player, out string result);
+            return result;
+        }
 
         internal PalaceChestLoot CreateLoot(PalaceChestReward reward, PlayerHealth health, System.Random random)
         {
@@ -60,27 +64,45 @@ namespace Storybook
             return relic != null ? new(reward, relic: relic) : new(PalaceChestReward.Fragments, SubstituteFragments);
         }
 
-        internal string GrantLoot(PalaceChestLoot loot, PlayerHealth health, HongGildong player)
+        internal bool TryGrantLoot(PalaceChestLoot loot, PlayerHealth health, HongGildong player, out string result)
         {
             switch (loot.Kind)
             {
                 case PalaceChestReward.Fragments:
-                    return GrantFragments(health, loot.Amount);
+                    result = GrantFragments(health, loot.Amount);
+                    return true;
                 case PalaceChestReward.Health:
                     float beforeHP = health.CurrentHP;
-                    if (health.TryHeal((float)Math.Ceiling(health.MaxHP * 15d / 100d)))
-                        return $"HP +{health.CurrentHP - beforeHP:0.##}";
-                    break;
+                    if (beforeHP >= health.MaxHP)
+                    {
+                        result = "이미 체력이 가득 찼습니다.";
+                        return false;
+                    }
+                    if (!health.TryHeal((float)Math.Ceiling(health.MaxHP * 15d / 100d)))
+                    {
+                        result = "현재 생명의 구슬을 사용할 수 없습니다.";
+                        return false;
+                    }
+                    result = $"HP +{health.CurrentHP - beforeHP:0.##}";
+                    return true;
                 case PalaceChestReward.Mana:
+                    if (player.CurrentMP >= player.MaxMP)
+                    {
+                        result = "이미 마나가 가득 찼습니다.";
+                        return false;
+                    }
                     float recovered = player.RestoreMana((float)Math.Ceiling(player.MaxMP * 20d / 100d));
-                    if (recovered > 0f) return $"MP +{recovered:0.##}";
-                    break;
+                    result = $"MP +{recovered:0.##}";
+                    return true;
                 case PalaceChestReward.Relic:
-                    if (health.Relics.TryAcquire(loot.Relic)) return $"동화 유물 획득: {loot.Relic.DisplayName}";
-                    break;
+                    result = health.Relics.TryAcquire(loot.Relic)
+                        ? $"동화 유물 획득: {loot.Relic.DisplayName}"
+                        : GrantFragments(health, SubstituteFragments);
+                    return true;
+                default:
+                    result = null;
+                    return false;
             }
-
-            return GrantFragments(health, SubstituteFragments);
         }
 
         static string GrantFragments(PlayerHealth health, int amount)
@@ -90,6 +112,14 @@ namespace Storybook
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
+        internal IEnumerable<FairyTaleRelic> RegisteredRelics()
+        {
+            var ids = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var relic in relicCatalog)
+                if (relic != null && !string.IsNullOrEmpty(relic.Id) && ids.Add(relic.Id))
+                    yield return relic;
+        }
+
         internal FairyTaleRelic FindRelic(string id) => Array.Find(relicCatalog, relic => relic != null && relic.Id == id);
 
         internal string DescribeOdds() =>

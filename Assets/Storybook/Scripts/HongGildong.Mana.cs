@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Storybook
@@ -12,6 +13,8 @@ namespace Storybook
         [SerializeField, Min(0f)] float cloneSlashManaCost = 25f;
         [SerializeField, Min(0f)] float windstepManaCost = 20f;
         [SerializeField, Min(0f)] float swordTyphoonManaCost = 40f;
+
+        [SerializeField, Range(0f, 1f)] float manaCostReductionCap = .50f;
 
         const float ManaFeedbackDuration = .65f;
         readonly double[] insufficientManaUntil = new double[(int)HudSkill.Dash];
@@ -43,32 +46,49 @@ namespace Storybook
             RestoreMana(manaPerBasicAttack);
         }
 
-        bool TrySpendSkillMana(HudSkill skill, float cost)
+        internal decimal SkillManaCostReduction =>
+            Math.Min((decimal)Mathf.Clamp01(manaCostReductionCap), AttackRelics?.ManaCostReduction ?? 0m);
+
+        internal float GetSkillManaCost(HudSkill skill)
         {
+            float baseCost = Mathf.Max(0f, skill switch
+            {
+                HudSkill.AzureSlash => azureSlashManaCost,
+                HudSkill.CloneSlash => cloneSlashManaCost,
+                HudSkill.Windstep => windstepManaCost,
+                HudSkill.SwordTyphoon => swordTyphoonManaCost,
+                _ => 0f
+            });
+            decimal reduction = SkillManaCostReduction;
+            if (reduction <= 0m || baseCost == 0f) return baseCost;
+            if (reduction == 1m) return 0f;
+
+            // Decimal arithmetic keeps exact integer results such as 40 × 0.8 at 32.
+            if ((double)baseCost >= (double)decimal.MaxValue) return Mathf.Ceil(baseCost * (float)(1m - reduction));
+            return (float)Math.Ceiling((decimal)baseCost * (1m - reduction));
+        }
+
+        bool TrySpendSkillMana(HudSkill skill, out float spentMana)
+        {
+            spentMana = 0f;
             if (manaHealth != null && manaHealth.IsDead) return false;
-            cost = Mathf.Max(0f, cost);
+            float cost = GetSkillManaCost(skill);
             if (CurrentMP < cost)
             {
                 insufficientManaUntil[(int)skill] = Time.unscaledTimeAsDouble + ManaFeedbackDuration;
                 return false;
             }
 
+            float before = CurrentMP;
             CurrentMP -= cost;
+            spentMana = before - CurrentMP;
             insufficientManaUntil[(int)skill] = 0d;
             return true;
         }
 
         internal bool HasInsufficientManaFeedback(HudSkill skill) =>
             (int)skill < insufficientManaUntil.Length &&
-            Time.unscaledTimeAsDouble < insufficientManaUntil[(int)skill];
+            Time.unscaledTimeAsDouble < insufficientManaUntil[(int)skill] && CurrentMP < GetSkillManaCost(skill);
 
-        static bool DealsBasicDamage(AttackTarget target, float damage, Vector3 source)
-        {
-            var monster = target as MonsterHealth;
-            float before = monster != null ? monster.CurrentHP : 0f;
-            target.ReceiveDamage(damage, source);
-            return damage > 0f && !float.IsNaN(damage) && !float.IsInfinity(damage) &&
-                (monster == null || monster.CurrentHP < before);
-        }
     }
 }

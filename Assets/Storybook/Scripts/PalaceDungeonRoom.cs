@@ -105,7 +105,8 @@ namespace Storybook
         internal bool TryRewardDropPosition(Vector3 approach, out Vector3 position)
             => TryRewardDropPosition(RewardChest.transform.position, approach, out position);
 
-        internal bool TryRewardDropPosition(Vector3 center, Vector3 approach, out Vector3 position)
+        internal bool TryRewardDropPosition(Vector3 center, Vector3 approach, out Vector3 position,
+            System.Predicate<Vector3> canPlace = null)
         {
             Vector3 direction = Vector3.ProjectOnPlane(approach - center, Vector3.up).normalized;
             if (direction == Vector3.zero) direction = Vector3.back;
@@ -113,7 +114,8 @@ namespace Storybook
             for (int side = 0; side < 8; side++)
             {
                 Vector3 candidate = center + Quaternion.Euler(0f, side * 45f, 0f) * direction * distance;
-                if (!ChestPositionFree(candidate, EntryBounds, .22f, true)) continue;
+                if (!ChestPositionFree(candidate, EntryBounds, .22f, canPlace == null) ||
+                    (canPlace != null && !canPlace(candidate))) continue;
                 position = candidate;
                 return true;
             }

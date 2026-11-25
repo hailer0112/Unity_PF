@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbbd83fc11e596f8dbd6dad86f34effc, type: 3}
+  m_Name: SilentPearl
+  m_EditorClassIdentifier:
+  id: silent-pearl
+  displayName: 침묵의 진주
+  description: 모든 스킬의 MP 소모량이 {reduction} 감소합니다.
+  flavorText: 잃어버린 목소리는 바다 깊은 곳에서 마력이 되어 잠들었다.
+  sourceStory: 인어공주
+  icon: {fileID: 21300000, guid: 5fd8a6366bc3efbca8f6c69925e3f585, type: 3}
+  effectName: 잃어버린 목소리
+  manaCostReduction: 0.2
+  acquisitionSparks: {fileID: 7732118040377713024, guid: c9affdb8ed09d594a9449fc9bb0336d6, type: 3}

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 725faf9b0ee90102d05c470ebc09290b, type: 3}
+  m_Name: BrokenCrown
+  m_EditorClassIdentifier:
+  id: broken-crown
+  displayName: 부서진 왕관
+  description: HP가 최대치인 적에게 가하는 첫 공격의 피해량이 {bonus} 증가합니다. 동일한 대상에게 한 번만 발동합니다.
+  flavorText: 왕좌는 무너졌으나, 군주의 위압은 사라지지 않았다.
+  sourceStory: 별주부전
+  icon: {fileID: 21300000, guid: cfa426d07f50435d6f856b622c3ce9f2, type: 3}
+  effectName: 군주의 위압
+  damageBonus: 0.5
+  impactSparks: {fileID: 7732118040377713024, guid: c9affdb8ed09d594a9449fc9bb0336d6, type: 3}

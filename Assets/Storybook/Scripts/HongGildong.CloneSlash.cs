@@ -51,7 +51,7 @@ namespace Storybook
                 return false;
             }
 
-            if (!TrySpendSkillMana(HudSkill.CloneSlash, cloneSlashManaCost)) return false;
+            if (!TrySpendSkillMana(HudSkill.CloneSlash, out float spentMana)) return false;
             cloneCastDrawsWeapon = EnterCombatStance();
 
             Vector3 direction = Vector3.ProjectOnPlane(ground - transform.position, Vector3.up);
@@ -68,6 +68,7 @@ namespace Storybook
             cloneSlashStartedAt = Time.timeAsDouble;
             cloneSlashReadyAt = cloneSlashStartedAt + cloneSlashCooldown;
             IsCastingCloneSlash = true;
+            NotifySkillCast(HudSkill.CloneSlash, spentMana);
             return true;
         }
 
@@ -218,9 +219,10 @@ namespace Storybook
 
                 if (!blocked && cloneSlashHitTargets.Add(target))
                 {
-                    float damage = ApplyAttackPower(attackDamage * cloneSlashDamageMultiplier);
-                    if (target is MonsterHealth monster) monster.ReceiveSkillDamage(damage, origin, SkillHit.CloneSlash, camera: CombatCamera);
-                    else target.ReceiveDamage(damage, origin);
+                    float damage = attackDamage * cloneSlashDamageMultiplier;
+                    if (target is MonsterHealth monster)
+                        monster.ReceiveSkillDamage(damage, origin, SkillHit.CloneSlash, camera: CombatCamera, relics: AttackRelics);
+                    else target.ReceiveDamage(ApplyAttackPower(damage), origin);
                 }
                 if (!IsCastingCloneSlash) return;
             }

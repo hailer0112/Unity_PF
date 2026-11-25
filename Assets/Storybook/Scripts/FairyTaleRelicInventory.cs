@@ -29,6 +29,23 @@ namespace Storybook
             }
         }
 
+        internal decimal ManaCostReduction
+        {
+            get
+            {
+                decimal reduction = 0m;
+                foreach (var relic in owned) reduction += relic.ManaCostReduction;
+                return reduction;
+            }
+        }
+
+        internal T Find<T>() where T : FairyTaleRelic
+        {
+            foreach (var relic in owned)
+                if (relic is T found) return found;
+            return null;
+        }
+
         public bool Contains(string id)
         {
             foreach (var relic in owned)

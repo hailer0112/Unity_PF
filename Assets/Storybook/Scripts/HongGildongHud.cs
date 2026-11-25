@@ -18,6 +18,9 @@ namespace Storybook
         const float BarGap = 6f;
         static readonly Color ManaWarningColor = new Color(1f, .62f, .49f);
 
+        const float CooldownFlashDuration = .30f;
+        readonly CanvasGroup[] cooldownFlashes = new CanvasGroup[(int)HudSkill.Dash];
+        readonly double[] cooldownFlashEnds = new double[(int)HudSkill.Dash];
         readonly Image[] cooldownMasks = new Image[Keys.Length];
         readonly Text[] cooldownLabels = new Text[Keys.Length];
         readonly Text[] keyLabels = new Text[Keys.Length];
@@ -63,7 +66,7 @@ namespace Storybook
                 new Color(.065f, .37f, .75f), new Color(.30f, .80f, 1f, .68f),
                 Resources.Load<Sprite>("ManaEmblem"));
             BuildSkills(icons);
-            Update();
+            LateUpdate();
         }
 
         (RectTransform fill, Text label) BuildResourceBar(string resource, Sprite frame, float y,
@@ -123,6 +126,8 @@ namespace Storybook
                 key.text = Keys[i];
                 keyLabels[i] = key;
 
+                if (i < cooldownFlashes.Length) cooldownFlashes[i] = BuildCooldownFlash(art.transform);
+
                 if (i != (int)HudSkill.Windstep) continue;
                 windstepActive = MakeLabel("Windstep duration", art.transform, 11, new Color(.48f, 1f, .87f));
                 Pin(windstepActive.rectTransform, new Vector2(.5f, 0f), new Vector2(.5f, 0f),
@@ -130,7 +135,35 @@ namespace Storybook
             }
         }
 
-        void Update()
+        static CanvasGroup BuildCooldownFlash(Transform parent)
+        {
+            var border = MakeRect("Cooldown reduction border", parent);
+            Stretch(border);
+            var group = border.gameObject.AddComponent<CanvasGroup>();
+            group.alpha = 0f;
+            group.blocksRaycasts = false;
+            group.interactable = false;
+            var color = new Color(.78f, 1f, .38f);
+
+            for (int i = 0; i < 4; i++)
+            {
+                bool vertical = i < 2;
+                float edge = i % 2;
+                var line = MakeImage("Edge", border, null, color).rectTransform;
+                line.anchorMin = vertical ? new Vector2(edge, 0f) : new Vector2(0f, edge);
+                line.anchorMax = vertical ? new Vector2(edge, 1f) : new Vector2(1f, edge);
+                line.pivot = vertical ? new Vector2(edge, .5f) : new Vector2(.5f, edge);
+                line.anchoredPosition = Vector2.zero;
+                line.sizeDelta = vertical ? new Vector2(2f, 0f) : new Vector2(0f, 2f);
+            }
+
+            return group;
+        }
+
+        internal void FlashReducedCooldown(HudSkill skill) =>
+            cooldownFlashEnds[(int)skill] = Time.unscaledTimeAsDouble + CooldownFlashDuration;
+
+        void LateUpdate()
         {
             if (canvas == null) return;
 
@@ -142,9 +175,25 @@ namespace Storybook
                 var (remaining, duration) = player.GetHudCooldown((HudSkill)i);
                 cooldownMasks[i].enabled = remaining > 0f;
                 cooldownMasks[i].fillAmount = duration > 0f ? Mathf.Clamp01(remaining / duration) : 0f;
-                cooldownLabels[i].text = remaining > 0f ? Seconds(remaining) : string.Empty;
+                var cooldownLabel = cooldownLabels[i];
+                if (i == (int)HudSkill.SwordTyphoon && remaining <= 0f && player.SwordTyphoonInProgress)
+                {
+                    cooldownMasks[i].enabled = true;
+                    cooldownMasks[i].fillAmount = 1f;
+                    cooldownLabel.font = noticeFont != null ? noticeFont : font;
+                    cooldownLabel.fontSize = 14;
+                    cooldownLabel.text = noticeFont != null ? "진행 중" : "ACTIVE";
+                }
+                else
+                {
+                    cooldownLabel.font = font;
+                    cooldownLabel.fontSize = 23;
+                    cooldownLabel.text = remaining > 0f ? Seconds(remaining) : string.Empty;
+                }
 
                 if (i == (int)HudSkill.Dash) continue;
+                cooldownFlashes[i].alpha = Mathf.Clamp01(
+                    (float)(cooldownFlashEnds[i] - Time.unscaledTimeAsDouble) / CooldownFlashDuration);
                 bool lowMana = player.HasInsufficientManaFeedback((HudSkill)i);
                 var key = keyLabels[i];
                 key.font = lowMana && noticeFont != null ? noticeFont : font;
