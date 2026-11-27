@@ -45,7 +45,7 @@ namespace Storybook
             output = AnimationPlayableOutput.Create(graph, "Pufferfish sprite", GetComponent<Animator>());
             graph.Play();
             previousPosition = ai.transform.position;
-            motionStarted = Time.time;
+            motionStarted = (float)health.ActionTime;
             health.Damaged += ShowHit;
             health.Defeated += ShowDeath;
         }
@@ -58,11 +58,11 @@ namespace Storybook
             activeClip = null;
         }
 
-        void ShowHit() => hitAt = Time.time;
+        void ShowHit() => hitAt = (float)health.ActionTime;
 
         void ShowDeath(MonsterDeathCause cause)
         {
-            deathAt = Time.time;
+            deathAt = (float)health.ActionTime;
             if (cause == MonsterDeathCause.SelfDestruct)
             {
                 body.sortingOrder = baseSortingOrder + 2;
@@ -73,10 +73,11 @@ namespace Storybook
 
         void LateUpdate()
         {
+            if (health.IsTimeStopped) return;
             Vector3 position = ai.transform.position;
             Vector3 delta = position - previousPosition;
             previousPosition = position;
-            float now = Time.time;
+            float now = (float)health.ActionTime;
 
             if (health.IsDead)
             {

@@ -59,11 +59,11 @@ namespace Storybook
             health.Died -= Die;
         }
 
-        void Hit() => hitAt = Time.time;
+        void Hit() => hitAt = (float)health.ActionTime;
 
         void Die()
         {
-            diedAt = Time.time;
+            diedAt = (float)health.ActionTime;
             if (HasDirectionalAnimator) Sample(Motion.Idle, 0f);
         }
 
@@ -94,20 +94,21 @@ namespace Storybook
 
         void LateUpdate()
         {
+            if (health.IsTimeStopped) return;
             Vector3 position = transform.position;
             Vector3 displacement = Vector3.ProjectOnPlane(position - previousPosition, Vector3.up);
             previousPosition = position;
 
             if (health.IsDead)
             {
-                float progress = Mathf.Clamp01((Time.time - diedAt) / .5f);
+                float progress = Mathf.Clamp01(((float)health.ActionTime - diedAt) / .5f);
                 if (!HasDirectionalAnimator) body.sprite = deathFrame;
                 body.transform.localRotation = restRotation * Quaternion.Euler(0, 0, (FacesLeft ? 1 : -1) * 19f * progress);
                 body.color = new Color(1f, 1f, 1f, 1f - Mathf.SmoothStep(0f, 1f, progress));
                 return;
             }
 
-            float hit = 1f - Mathf.Clamp01((Time.time - hitAt) / .16f);
+            float hit = 1f - Mathf.Clamp01(((float)health.ActionTime - hitAt) / .16f);
             body.transform.localRotation = restRotation * Quaternion.Euler(0, 0, (FacesLeft ? -1 : 1) * 12f * hit);
 
             if (HasDirectionalAnimator)

@@ -120,7 +120,7 @@ namespace Storybook
                     selected = i;
                     scroll = Vector2.zero;
                 }
-                DrawIcon(relics[i].Icon, new Rect(slot.x + 12, slot.y + 13, 60, 65));
+                DrawIcon(relics[i].GetOwnedIcon(owner), new Rect(slot.x + 12, slot.y + 13, 60, 65));
             }
 
             var detail = new Rect(327, 88, width - 355, 319);
@@ -138,10 +138,10 @@ namespace Storybook
         {
             var picture = new Rect(bounds.x + 16, bounds.y + 16, 92, 88);
             Frame(picture, Gold, Panel);
-            DrawIcon(relic.Icon, new Rect(picture.x + 10, picture.y + 10, 72, 68));
+            DrawIcon(relic.GetOwnedIcon(owner), new Rect(picture.x + 10, picture.y + 10, 72, 68));
             var name = new Rect(picture.xMax + 14, picture.y + 2, bounds.width - 140, 56);
             GUI.Label(name, relic.DisplayName, heading);
-            GUI.Label(new Rect(name.x, name.y + 60, name.width, 23), "패시브 유물", body);
+            GUI.Label(new Rect(name.x, name.y + 60, name.width, 23), relic.CategoryLabel, body);
 
             var view = new Rect(bounds.x + 16, picture.yMax + 15, bounds.width - 32, bounds.height - 130);
             string activeEffect = relic.DescribeActiveEffect(owner);

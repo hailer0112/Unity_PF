@@ -15,9 +15,11 @@ namespace Storybook
         public string Id => id?.Trim();
         public string DisplayName => string.IsNullOrWhiteSpace(displayName) ? name : displayName;
         public virtual string Description => description;
+        internal virtual string CategoryLabel => "패시브 유물";
         public string FlavorText => flavorText;
         public string SourceStory => sourceStory;
         public Sprite Icon => icon;
+        internal virtual Sprite GetOwnedIcon(PlayerHealth player) => Icon;
 
         internal virtual void OnBasicAttackHit(PlayerHealth player, MonsterHealth target) { }
 

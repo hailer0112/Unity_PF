@@ -30,7 +30,9 @@ namespace Storybook
         RectTransform healthFill, manaFill, skillRow;
         internal float SkillRowTop => skillRow == null ? 0f :
             RectTransformUtility.WorldToScreenPoint(null, skillRow.TransformPoint(skillRow.rect.max)).y;
-        Text healthLabel, manaLabel, windstepActive;
+        Text healthLabel, manaLabel, windstepActive, deathDeceptionNotice;
+        double deathDeceptionNoticeUntil, seedGrowthNoticeUntil;
+        Text seedGrowthNotice;
         Font font, noticeFont;
 
         void Start()
@@ -65,6 +67,16 @@ namespace Storybook
             (manaFill, manaLabel) = BuildResourceBar("MP", healthFrame, -18f - BarHeight - BarGap,
                 new Color(.065f, .37f, .75f), new Color(.30f, .80f, 1f, .68f),
                 Resources.Load<Sprite>("ManaEmblem"));
+            deathDeceptionNotice = MakeLabel("Death deception notice", canvas.transform, 20, new Color(1f, .53f, .61f));
+            if (noticeFont != null) deathDeceptionNotice.font = noticeFont;
+            Pin(deathDeceptionNotice.rectTransform, Vector2.up, Vector2.up,
+                new Vector2(20f, -18f - (BarHeight + BarGap) * 2f), new Vector2(232f, 32f));
+            deathDeceptionNotice.enabled = false;
+            seedGrowthNotice = MakeLabel("Seed growth notice", canvas.transform, 18, new Color(.83f, 1f, .48f));
+            if (noticeFont != null) seedGrowthNotice.font = noticeFont;
+            Pin(seedGrowthNotice.rectTransform, Vector2.up, Vector2.up,
+                new Vector2(20f, -50f - (BarHeight + BarGap) * 2f), new Vector2(265f, 34f));
+            seedGrowthNotice.enabled = false;
             BuildSkills(icons);
             LateUpdate();
         }
@@ -163,10 +175,28 @@ namespace Storybook
         internal void FlashReducedCooldown(HudSkill skill) =>
             cooldownFlashEnds[(int)skill] = Time.unscaledTimeAsDouble + CooldownFlashDuration;
 
+        internal void ShowDeathDeception(string message)
+        {
+            if (deathDeceptionNotice == null) return;
+            deathDeceptionNotice.text = message;
+            deathDeceptionNoticeUntil = Time.timeAsDouble + 1.15d;
+            deathDeceptionNotice.enabled = true;
+        }
+
+        internal void ShowSeedGrowth(string message, float duration)
+        {
+            if (seedGrowthNotice == null) return;
+            seedGrowthNotice.text = message;
+            seedGrowthNoticeUntil = Time.timeAsDouble + duration;
+            seedGrowthNotice.enabled = duration > 0f;
+        }
+
         void LateUpdate()
         {
             if (canvas == null) return;
 
+            deathDeceptionNotice.enabled = !health.IsDead && Time.timeAsDouble < deathDeceptionNoticeUntil;
+            seedGrowthNotice.enabled = !health.IsDead && Time.timeAsDouble < seedGrowthNoticeUntil;
             SetResourceBar(healthFill, healthLabel, health.CurrentHP, health.MaxHP, true);
             SetResourceBar(manaFill, manaLabel, player.CurrentMP, player.MaxMP, false);
 

@@ -16,8 +16,6 @@ namespace Storybook
         {
             Relic = relic;
             gameObject.name = relic.DisplayName;
-            icon.sprite = relic.Icon;
-            icon.enabled = relic.Icon != null;
             title.font = description.font = availability.font = spawnLabel.font = acquireLabel.font = font;
             title.text = relic.DisplayName;
             description.text = relic.Description;
@@ -31,8 +29,11 @@ namespace Storybook
             acquire.onClick.AddListener(() => grant());
         }
 
-        internal void Refresh(bool owned, string blocked)
+        internal void Refresh(bool owned, string blocked, Sprite displayIcon)
         {
+            icon.preserveAspect = true;
+            icon.sprite = displayIcon;
+            icon.enabled = displayIcon != null;
             availability.resizeTextForBestFit = true;
             availability.resizeTextMinSize = 9;
             availability.resizeTextMaxSize = 12;

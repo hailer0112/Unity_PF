@@ -53,7 +53,7 @@ namespace Storybook
             view = Camera.main;
         }
 
-        void ShowHit() => hitAt = Time.time;
+        void ShowHit() => hitAt = (float)ActionTime;
 
         internal float GuardDamage(float amount, Vector3 source)
         {
@@ -65,7 +65,7 @@ namespace Storybook
 
         protected override void ResetBehavior(bool dead)
         {
-            if (dead && CurrentState != State.Dead) deathAt = Time.time;
+            if (dead && CurrentState != State.Dead) deathAt = (float)ActionTime;
             if (!dead && CurrentState == State.Dead) return;
             CurrentState = dead ? State.Dead : State.Idle;
             impactFrame = -1;
@@ -170,13 +170,14 @@ namespace Storybook
 
         void LateUpdate()
         {
+            if (health.IsTimeStopped) return;
             Vector3 right = view != null ? view.transform.right : Vector3.right;
             Vector3 forward = view != null ? Vector3.ProjectOnPlane(view.transform.forward, Vector3.up).normalized : Vector3.forward;
             float x = Vector3.Dot(Facing, right), z = Vector3.Dot(Facing, forward);
             int row = Mathf.Abs(x) > Mathf.Abs(z) ? (x < 0f ? 2 : 3) : (z < 0f ? 0 : 1);
             visualClock += Time.deltaTime;
-            float death = CurrentState == State.Dead ? Mathf.Clamp01((Time.time - deathAt) / .55f) : 0f;
-            float hit = 1f - Mathf.Clamp01((Time.time - hitAt) / .16f);
+            float death = CurrentState == State.Dead ? Mathf.Clamp01(((float)ActionTime - deathAt) / .55f) : 0f;
+            float hit = 1f - Mathf.Clamp01(((float)ActionTime - hitAt) / .16f);
             int frame = impactFrame == Time.frameCount ? 3 : CurrentState switch
             {
                 State.Move => Mathf.FloorToInt(gait * 5f) % 2,

@@ -102,6 +102,8 @@ namespace Storybook
         CursedFootstepsTrail cursedFootsteps;
         float dashTimeLeft;
         double invulnerableUntil, dashReadyAt;
+        DeathDeceptionVisual deathDeceptionVisual;
+        PrimordialSeedVisual seedGrowthVisual;
         float attackTime = RecoveryEnd, gaitPhase;
         double azureSlashStartedAt, azureSlashReadyAt;
         Vector3 azureSlashDirection;
@@ -128,7 +130,8 @@ namespace Storybook
             controller.enabled = true;
         }
         public bool IsDashing => dashTimeLeft > 0f;
-        public bool IsInvulnerable => isActiveAndEnabled && Time.timeAsDouble < invulnerableUntil;
+        public bool IsInvulnerable => (isActiveAndEnabled && Time.timeAsDouble < invulnerableUntil) ||
+            (manaHealth != null && manaHealth.HasDeathDeceptionProtection);
 
         internal (float remaining, float duration) GetHudCooldown(HudSkill skill) => skill switch
         {
@@ -184,6 +187,7 @@ namespace Storybook
             swordTyphoonInput.Disable();
             CancelSwordTyphoon();
             ClearWishVisual();
+            ClearSeedGrowthVisual();
             ClearWindstep();
             CancelCloneSlash();
             IsCastingAzureSlash = false;
@@ -196,6 +200,28 @@ namespace Storybook
             bladeTrail.enabled = false;
             if (whiteSweepRenderer != null) whiteSweepRenderer.enabled = false;
         }
+        internal void PlaySeedGrowth(PrimordialSeedRelic seed, bool evolved)
+        {
+            ClearSeedGrowthVisual();
+            seedGrowthVisual = PrimordialSeedVisual.Show(transform, body, fieldCamera, seed, evolved);
+            if (TryGetComponent(out HongGildongHud hud))
+                hud.ShowSeedGrowth(seed.GrowthNotice(evolved), evolved ? seed.EvolutionDuration : seed.GrowthDuration);
+        }
+
+        internal void ClearSeedGrowthVisual()
+        {
+            if (seedGrowthVisual != null) seedGrowthVisual.Remove();
+            seedGrowthVisual = null;
+            if (TryGetComponent(out HongGildongHud hud)) hud.ShowSeedGrowth(null, 0f);
+        }
+
+        internal void PlayDeathDeception(DeceiversHeartRelic heart)
+        {
+            if (deathDeceptionVisual != null) deathDeceptionVisual.Remove();
+            deathDeceptionVisual = DeathDeceptionVisual.Show(transform, body, fieldCamera, manaHealth, heart);
+            if (TryGetComponent(out HongGildongHud hud)) hud.ShowDeathDeception(heart.EffectName);
+        }
+
         void OnDestroy()
         {
             move.Dispose(); point.Dispose(); strike.Dispose(); dash.Dispose(); azureSlash.Dispose();

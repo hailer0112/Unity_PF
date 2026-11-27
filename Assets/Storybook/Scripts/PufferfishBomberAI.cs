@@ -38,7 +38,7 @@ namespace Storybook
         {
             if (CurrentState == State.Inflate)
             {
-                InflateProgress = Mathf.Clamp01((float)((Time.timeAsDouble - inflateStarted) / inflateSeconds));
+                InflateProgress = Mathf.Clamp01((float)((ActionTime - inflateStarted) / inflateSeconds));
                 warning.SetCharge(InflateProgress);
                 if (InflateProgress >= 1f) Detonate();
                 return;
@@ -58,7 +58,7 @@ namespace Storybook
             if (distance <= triggerRange)
             {
                 CurrentState = State.Inflate;
-                inflateStarted = Time.timeAsDouble;
+                inflateStarted = ActionTime;
                 InflateProgress = 0f;
                 blastCenter = transform.position;
                 warning = PufferfishHazard.Create("Pufferfish blast warning", transform, blastCenter,

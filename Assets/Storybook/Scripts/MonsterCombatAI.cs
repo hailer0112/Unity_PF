@@ -81,7 +81,7 @@ namespace Storybook
             pose.Play(away, seconds, tilt, canRecoil ? stop : 0f, skill);
             if (distance <= 0f || !canRecoil || !controller.enabled) return pose;
 
-            double now = Time.timeAsDouble;
+            double now = ActionTime;
             if (now >= nextRecoilAt)
             {
                 recoilStartedAt = now;
@@ -148,8 +148,9 @@ namespace Storybook
             _ => false
         };
 
-        protected bool AttackReady => Time.time >= nextAttack;
-        protected float AttackElapsed => Time.time - attackStarted;
+        protected double ActionTime => health.ActionTime;
+        protected bool AttackReady => (float)ActionTime >= nextAttack;
+        protected float AttackElapsed => (float)ActionTime - attackStarted;
         protected virtual bool HasCommittedAction => false;
 
         protected virtual void Awake()
@@ -179,14 +180,14 @@ namespace Storybook
 
         protected void Update()
         {
-            if (RelicInventoryPanel.BlocksGameplay || health.IsDead) return;
+            if (RelicInventoryPanel.BlocksGameplay || health.IsDead || health.IsTimeStopped) return;
             if (!HasCommittedAction && (target == null || !target.isActiveAndEnabled || target.IsDead))
             {
                 ResetTrackingAndAction(false);
                 return;
             }
 
-            double now = Time.timeAsDouble;
+            double now = ActionTime;
             double remaining = System.Math.Min(now, recoilUntil) - System.Math.Max(recoilStartedAt, now - Time.deltaTime);
             if (remaining > 0d && CanRecoil() && controller.enabled)
             {
@@ -202,7 +203,7 @@ namespace Storybook
             recoilUntil = nextRecoilAt = 0d;
             roomBounds = bounds;
             ResetTrackingAndAction(false);
-            roomReadyAt = Time.timeAsDouble + combatStartDelay;
+            roomReadyAt = ActionTime + combatStartDelay;
             enabled = true;
         }
 
@@ -282,7 +283,7 @@ namespace Storybook
 
         protected void BeginAttackTiming()
         {
-            attackStarted = Time.time;
+            attackStarted = (float)ActionTime;
             nextAttack = attackStarted + attackInterval;
         }
 

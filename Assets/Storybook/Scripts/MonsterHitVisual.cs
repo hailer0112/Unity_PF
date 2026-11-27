@@ -25,6 +25,7 @@ namespace Storybook
         void Die() { dying = true; deathTime = 0; }
         void Update()
         {
+            if (health.IsTimeStopped) return;
             if (dying)
             {
                 deathTime += Time.deltaTime;

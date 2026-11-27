@@ -54,6 +54,7 @@ namespace Storybook
 
         void LateUpdate()
         {
+            if (health != null && health.IsTimeStopped) return;
             Vector3 position = movementRoot.position;
             Vector3 displacement = Vector3.ProjectOnPlane(position - previousPosition, Vector3.up);
             float distance = displacement.magnitude;

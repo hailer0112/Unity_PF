@@ -46,6 +46,12 @@ namespace Storybook
             return null;
         }
 
+        internal T Consume<T>() where T : FairyTaleRelic
+        {
+            var relic = Find<T>();
+            return relic != null && owned.Remove(relic) ? relic : null;
+        }
+
         public bool Contains(string id)
         {
             foreach (var relic in owned)
@@ -54,7 +60,12 @@ namespace Storybook
         }
 
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
-        internal void ClearForTesting() => owned.Clear();
+        internal void ClearForTesting()
+        {
+            bool hadSeed = Find<PrimordialSeedRelic>() != null;
+            owned.Clear();
+            if (hadSeed) owner.ClearSeedGrowthForTesting();
+        }
 #endif
 
         public bool TryAcquire(FairyTaleRelic relic)

@@ -32,7 +32,7 @@ namespace Storybook
 
         internal void Play(Vector3 away, float seconds, float degrees, float stop, SkillHit? skill)
         {
-            double now = Time.unscaledTimeAsDouble;
+            double now = health.UnscaledActionTime;
             if (sprite == null || (now < startedAt + duration && PosePriority(skill) <= PosePriority(activeSkill))) return;
             activeSkill = skill;
             startedAt = now;
@@ -51,6 +51,7 @@ namespace Storybook
 
         void LateUpdate()
         {
+            if (health.IsTimeStopped) return;
             RestoreRotation();
             if (sprite == null) return;
             if (pendingTyphoonImpact)
@@ -65,7 +66,7 @@ namespace Storybook
                 return;
             }
             if (health.IsDead || duration <= 0f) return;
-            double now = Time.unscaledTimeAsDouble;
+            double now = health.UnscaledActionTime;
             float progress = (float)((now - startedAt) / duration);
             if (progress >= 1f) return;
             if (now < freezeUntil && heldSprite != null) sprite.sprite = heldSprite;
@@ -83,8 +84,8 @@ namespace Storybook
             RestoreRotation();
             defeated = true;
             heldSprite = sprite.sprite;
-            defeatHoldUntil = Time.unscaledTimeAsDouble + DefeatHitStop;
-            defeatAt = Time.time;
+            defeatHoldUntil = health.UnscaledActionTime + DefeatHitStop;
+            defeatAt = (float)health.ActionTime;
             fallTime = reaction;
             fadeTime = fade;
             defeatTilt = degrees;
@@ -102,8 +103,8 @@ namespace Storybook
 
         void DrawDefeat()
         {
-            float elapsed = Time.time - defeatAt;
-            bool holding = Time.unscaledTimeAsDouble < defeatHoldUntil;
+            float elapsed = (float)health.ActionTime - defeatAt;
+            bool holding = health.UnscaledActionTime < defeatHoldUntil;
             if (holding && defeatTilt != 0f && heldSprite != null) sprite.sprite = heldSprite;
             float motionProgress = holding ? 0f : DefeatMotionProgress(elapsed, fallTime);
             float fall = Mathf.SmoothStep(0f, 1f, motionProgress);

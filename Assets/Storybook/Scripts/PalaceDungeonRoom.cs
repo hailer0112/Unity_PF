@@ -35,6 +35,8 @@ namespace Storybook
             Layout = layout;
             player = hero;
             rewardChestPrefab = chestPrefab;
+            if (layout.Type == PalaceRoomType.Merchant && TryGetComponent(out ShopPedestalRow shop))
+                shop.Initialize(seed, layout.Id);
             for (int side = 0; side < gates.Length; side++)
             {
                 Vector2Int direction = PalaceDungeon.Direction(side);
@@ -191,6 +193,8 @@ namespace Storybook
             }
 
             Cleared = true;
+            foreach (var stoppedEnemy in GetComponentsInChildren<EnemyTimeStopController>())
+                stoppedEnemy.Cancel();
             SetGates(false);
             if (Layout.Type == PalaceRoomType.Combat && player != null && !player.IsDead && !EnsureRewardChest())
                 Debug.LogWarning($"[PalaceDungeonRoom] {name}: reward chest prefab or free placement is unavailable.", this);
@@ -200,15 +204,7 @@ namespace Storybook
         {
             if (Layout.Type != PalaceRoomType.Combat) return;
             for (int i = first; i < enemies.Count; i++)
-            {
                 enemies[i].SetFragmentRecipient(player);
-                enemies[i].Defeated += OnCombatMonsterDefeated;
-            }
-        }
-
-        void OnCombatMonsterDefeated(MonsterDeathCause cause)
-        {
-            if (cause == MonsterDeathCause.PlayerKilled && player != null) player.RecordMonsterKill();
         }
 
         void SetGates(bool closed)
@@ -223,7 +219,6 @@ namespace Storybook
             foreach (MonsterHealth enemy in enemies)
             {
                 if (enemy == null) continue;
-                enemy.Defeated -= OnCombatMonsterDefeated;
                 if (waves == null) enemy.Died -= RefreshClear;
             }
         }

@@ -255,7 +255,6 @@ namespace Storybook
             testMonster = Instantiate(prefab, site + Vector3.up * .025f, Quaternion.identity, testMonsterRoot.transform);
             testMonsterKind = kind;
             testMonster.SetFragmentRecipient(health);
-            testMonster.Defeated += RecordTestMonsterKill;
             testMonster.GetComponent<MonsterCombatAI>().ActivateInRoom(bounds);
             return true;
         }
@@ -279,15 +278,9 @@ namespace Storybook
             return false;
         }
 
-        void RecordTestMonsterKill(MonsterDeathCause cause)
-        {
-            if (cause == MonsterDeathCause.PlayerKilled) health.RecordMonsterKill();
-        }
-
         internal void RemoveTestMonster()
         {
             if (testMonsterRoot == null) return;
-            if (testMonster != null) testMonster.Defeated -= RecordTestMonsterKill;
             testMonsterRoot.SetActive(false);
             Destroy(testMonsterRoot);
             testMonsterRoot = null;

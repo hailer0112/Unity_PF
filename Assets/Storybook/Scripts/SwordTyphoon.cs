@@ -116,7 +116,7 @@ namespace Storybook
         {
             foreach (MonsterHealth enemy in targets)
             {
-                if (enemy == null || !enemy.CanTakeDamage ||
+                if (enemy == null || !enemy.CanTakeDamage || enemy.IsTimeStopped ||
                     !enemy.TryGetComponent(out CharacterController body) || !body.enabled) continue;
 
                 // The crab's warning and contact footprint are fixed once its claw attack starts.

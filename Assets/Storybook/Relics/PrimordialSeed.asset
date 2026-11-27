@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 950a06f66b074ed49b506e366804a65c, type: 3}
+  m_Name: PrimordialSeed
+  m_EditorClassIdentifier:
+  id: primordial-seed
+  displayName: 태초의 씨앗
+  description: 적을 {kills}마리 처치할 때마다 최대 HP가 {maxHP}, 현재 HP가 {currentHP} 증가하며, 공격력이 {attack} 증가합니다. 최대 {cap}회까지 성장합니다.
+  flavorText: 작은 씨앗 하나가 하늘에 닿았듯, 생명의 가능성에는 끝이 없었다.
+  sourceStory: 잭과 콩나무
+  icon: {fileID: 21300000, guid: ce20e16e2b2d41fdaa7647a1833de77e, type: 3}
+  killsPerGrowth: 10
+  maxGrowth: 10
+  maxHealthPerGrowth: 3
+  currentHealthPerGrowth: 3
+  attackBonusPerGrowth: 0.03
+  evolvedIcon: {fileID: 21300000, guid: be3e952e637449158bdf48d7c347e6d7, type: 3}
+  sprout: {fileID: 21300156, guid: c3a40e1c46727b94e959990527f8e7fa, type: 3}
+  lifeParticleMaterial: {fileID: 2100000, guid: e546d2d7171981b468cf29388d902e99, type: 2}
+  growthDuration: 0.7
+  evolutionDuration: 1.2
+  growthSize: 0.37
+  evolutionSize: 0.51

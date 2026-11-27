@@ -14,7 +14,26 @@ namespace Storybook
         [Header("Story Fragments")]
         [SerializeField, Min(0)] int minimumFragments;
         [SerializeField, Min(0)] int maximumFragments;
-        PlayerHealth fragmentRecipient;
+        PlayerHealth fragmentRecipient, killRecipient;
+        EnemyTimeStopController timeStop;
+
+        internal bool IsTimeStopped => timeStop != null && timeStop.IsStopped;
+        internal double ActionTime => timeStop != null ? timeStop.ActionTime : Time.timeAsDouble;
+        internal double UnscaledActionTime => timeStop != null ? timeStop.UnscaledActionTime : Time.unscaledTimeAsDouble;
+        internal bool CanTimeStop => CanTakeDamage && (timeStop == null || timeStop.CanStart);
+
+        internal bool TryTimeStop(float duration, float immunity, Sprite icon)
+        {
+            if (!CanTimeStop || duration <= 0f) return false;
+            if (timeStop == null) timeStop = gameObject.AddComponent<EnemyTimeStopController>();
+            timeStop.Begin(duration, immunity, icon);
+            return true;
+        }
+
+        void OnDisable()
+        {
+            if (timeStop != null) timeStop.Cancel();
+        }
 
         void OnValidate()
         {
@@ -23,6 +42,7 @@ namespace Storybook
         }
 
         internal void SetFragmentRecipient(PlayerHealth recipient) => fragmentRecipient = recipient;
+        internal void SetKillRecipient(PlayerHealth recipient) => killRecipient = recipient;
 
         public float MaxHP => maxHP;
         public float CurrentHP => currentHP;
@@ -107,12 +127,17 @@ namespace Storybook
         void FinishDeath(MonsterDeathCause cause)
         {
             currentHP = 0f;
+            if (timeStop != null) timeStop.Cancel();
             crownTriggered = false;
             DeathCause = cause;
             var recipient = fragmentRecipient;
             fragmentRecipient = null;
-            if (cause == MonsterDeathCause.PlayerKilled && recipient != null)
-                recipient.AwardStoryFragments(minimumFragments, maximumFragments);
+            if (cause == MonsterDeathCause.PlayerKilled)
+            {
+                recipient?.AwardStoryFragments(minimumFragments, maximumFragments);
+                (killRecipient != null ? killRecipient : recipient)?.RecordMonsterKill();
+            }
+            killRecipient = null;
             float visualDuration = 0f;
             if (cause == MonsterDeathCause.PlayerKilled && combatAI != null)
                 visualDuration = combatAI.ShowDefeat();

@@ -80,7 +80,9 @@ namespace Storybook
         Quaternion impactFreeArm;
         Pose windupPose, impactPose, animatedPose;
         Pose defeatStart, bowedPose;
-        Transform defeatHead;
+        Transform defeatHead, timeStopHead;
+        internal Vector3 TimeStopAnchor(Vector3 up) => timeStopHead != null
+            ? timeStopHead.position + up * .52f : transform.position + up * 2.6f;
         Quaternion headStart, headBowed;
         Quaternion impactShoulder, impactGrip;
         Vector3 center;
@@ -105,7 +107,9 @@ namespace Storybook
                 return;
             }
 
+            health.SetKillRecipient(player);
             upperBody = shoulder.parent;
+            timeStopHead = upperBody.Find("Head and Beard");
             playerMovement = player.GetComponent<HongGildong>();
             effects = new GameObject("Dragon King Attack Effects");
             SceneManager.MoveGameObjectToScene(effects, gameObject.scene);
@@ -138,9 +142,9 @@ namespace Storybook
 
         void LateUpdate()
         {
-            if (RelicInventoryPanel.BlocksGameplay) return;
+            if (RelicInventoryPanel.BlocksGameplay || health.IsTimeStopped) return;
             animatedPose = ReadPose();
-            double now = Time.timeAsDouble;
+            double now = health.ActionTime;
             if (!CanFight())
             {
                 if (arenaActive) Cancel();

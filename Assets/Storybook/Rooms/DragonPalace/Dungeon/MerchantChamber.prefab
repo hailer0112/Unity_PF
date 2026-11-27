@@ -120,10 +120,41 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3218842987458375490, guid: 1615f5699babb8a4d81e18ee84552961, type: 3}
       insertIndex: -1
       addedObject: {fileID: 49238398677880256}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 734605423834421598, guid: 1615f5699babb8a4d81e18ee84552961, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7437099381963398044}
   m_SourcePrefab: {fileID: 100100000, guid: 1615f5699babb8a4d81e18ee84552961, type: 3}
 --- !u!4 &5846081655011811309 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3218842987458375490, guid: 1615f5699babb8a4d81e18ee84552961, type: 3}
   m_PrefabInstance: {fileID: 9046276920225738927}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8627493169000835569 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 734605423834421598, guid: 1615f5699babb8a4d81e18ee84552961, type: 3}
+  m_PrefabInstance: {fileID: 9046276920225738927}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7437099381963398044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8627493169000835569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d135e600a445b59e08e1d410456d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Storybook.ShopPedestalRow
+  pedestalPrefab: {fileID: 4983728078081040634, guid: 2105d5b447f8a74408386082b17a8649, type: 3}
+  merchant: {fileID: 49238398677880256}
+  offsetFromMerchant: {x: 0, y: 0, z: -1.25}
+  spacing: 1
+  products:
+  - {fileID: 11400000, guid: d24d82629ca0444a900d484c99048ca4, type: 2}
+  - {fileID: 11400000, guid: 4c1e3a6f76e64aca841ed256943ed540, type: 2}
+  - {fileID: 11400000, guid: c472547d7341484aafc7f361fbfdc470, type: 2}
+  floatAmplitude: 0.05
+  minimumClearance: 0.03
+  floatPeriod: 2

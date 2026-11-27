@@ -69,7 +69,11 @@ namespace Storybook
         void RefreshRelicRows()
         {
             foreach (var row in relicRows)
-                row.Refresh(health.Relics.Contains(row.Relic.Id), dungeon.RelicAcquireBlockReason(row.Relic));
+            {
+                bool owned = health.Relics.Contains(row.Relic.Id);
+                row.Refresh(owned, dungeon.RelicAcquireBlockReason(row.Relic),
+                    owned ? row.Relic.GetOwnedIcon(health) : row.Relic.Icon);
+            }
         }
 
         void RelicTest(Func<string> test)

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f52fba33c9042d3bc6055e0820904b0, type: 3}
+  m_Name: DeceiversHeart
+  m_EditorClassIdentifier:
+  id: deceivers-heart
+  displayName: 기만자의 심장
+  description: 사망에 이르는 피해를 받으면 사망을 방지하고 최대 HP의 {health}를 회복합니다. 이후 {duration}초간 무적 상태가 되며, 해당 유물은 소멸합니다.
+  flavorText: 죽음조차 속일 수 있다면, 심장이 뛰는 이유가 진실일 필요는 없다.
+  sourceStory: 별주부전
+  icon: {fileID: 21300000, guid: 73fe8d578c564b408eeecf65099ef7bf, type: 3}
+  effectName: 죽음의 기만
+  healthFraction: 0.25
+  invulnerabilityDuration: 2
+  visualDuration: 0.8
+  visualHeight: 0.46
+  headHeight: 1.13
+  recoverySparks: {fileID: 7732118040377713024, guid: c9affdb8ed09d594a9449fc9bb0336d6, type: 3}
+  shardMaterial: {fileID: 2100000, guid: e546d2d7171981b468cf29388d902e99, type: 2}
