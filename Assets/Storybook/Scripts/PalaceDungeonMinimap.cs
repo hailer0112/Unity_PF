@@ -111,20 +111,34 @@ namespace Storybook
 
         static (int, int) LinkKey(int a, int b) => a < b ? (a, b) : (b, a);
 
+        static float HudScale => Mathf.Clamp(Mathf.Min(Screen.width / 1280f, Screen.height / 720f), .50f, 2f);
+        static float MapScale => Mathf.Min(HudScale, Screen.width * .21f / (MapWidth + 18f));
+
+        internal Rect ScreenBounds
+        {
+            get
+            {
+                float scale = MapScale;
+                float bottom = 18f + MapHeight + (fragmentOwner == null ? 0f : 42f + 19f * fragmentGains.Count);
+                return Rect.MinMaxRect(Screen.width - (MapWidth + 18f) * scale, Screen.height - bottom * scale,
+                    Screen.width - 18f * scale, Screen.height - 18f * scale);
+            }
+        }
+
         void OnGUI()
         {
             if (Event.current.type != EventType.Repaint || currentRoom == null || StorybookTransition.IsBusy ||
                 (currentRoom.Layout.Type == PalaceRoomType.Boss && currentRoom.Cleared))
                 return;
             if (label == null) InitializeStyles();
-            float scale = Mathf.Clamp(Mathf.Min(Screen.width / 1280f, Screen.height / 720f), .50f, 2f);
+            float scale = HudScale;
             Matrix4x4 matrix = GUI.matrix;
             Color tint = GUI.color;
             float width = Screen.width / scale;
             float height = Screen.height / scale;
 
             // Keep the same top-right anchor through room changes, including the boss room.
-            float mapScale = Mathf.Min(scale, Screen.width * .21f / (MapWidth + 18f));
+            float mapScale = MapScale;
             GUI.matrix = Matrix4x4.Scale(new Vector3(mapScale, mapScale, 1f));
             Rect map = new(Screen.width / mapScale - MapWidth - 18f, 18f, MapWidth, MapHeight);
             DrawMap(map);

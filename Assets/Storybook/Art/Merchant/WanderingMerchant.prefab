@@ -55,6 +55,10 @@ MonoBehaviour:
   indicatorAnchor: {fileID: 2247458907169856144}
   depthSorting: {fileID: 1343455165015743128}
   interactionRange: 1.35
+  groundShadow:
+    size: {x: 0.94, y: 0.64}
+    offset: {x: 0, y: 0.012, z: 0.015}
+    opacity: 0.46
 --- !u!136 &5919137763879514152
 CapsuleCollider:
   m_ObjectHideFlags: 0

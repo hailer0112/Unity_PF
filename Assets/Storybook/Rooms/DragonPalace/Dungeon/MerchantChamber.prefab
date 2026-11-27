@@ -155,6 +155,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d24d82629ca0444a900d484c99048ca4, type: 2}
   - {fileID: 11400000, guid: 4c1e3a6f76e64aca841ed256943ed540, type: 2}
   - {fileID: 11400000, guid: c472547d7341484aafc7f361fbfdc470, type: 2}
+  - {fileID: 11400000, guid: 3143ef9fb05b4b0f8ecf282b9ea268f5, type: 2}
+  - {fileID: 11400000, guid: ba8a11fba1844a5194063e4f608f5942, type: 2}
+  - {fileID: 11400000, guid: 3874acc4132640ad988e0120d4b4681d, type: 2}
   floatAmplitude: 0.05
   minimumClearance: 0.03
   floatPeriod: 2
+  relicPrice: 150
+  relicDisplayHeight: 0.32
+  relicDisplayMaxWidth: 0.36
+  interactionRange: 0.8
+  priceOffset: {x: 0, y: 0, z: -0.15}
+  detailWidth: 350
+  purchaseFeedbackDuration: 1.6
+  purchaseSound: {fileID: 0}

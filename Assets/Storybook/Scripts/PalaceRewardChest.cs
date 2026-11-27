@@ -20,6 +20,8 @@ namespace Storybook
         PalaceRewardPickup pickup;
         PalaceChestLoot loot;
 
+        internal ParticleSystem PickupSparks => pickupSparks;
+
         internal bool CanOpen(Vector3 playerPosition)
             => state == ChestState.Closed && PalaceRewardPickup.IsNear(playerPosition, transform.position, interactionRange);
 

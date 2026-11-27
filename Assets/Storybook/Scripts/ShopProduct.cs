@@ -18,14 +18,33 @@ namespace Storybook
         [SerializeField, Min(0)] int slotIndex;
 
         public string Id => id;
-        public string DisplayName => displayName;
+        public string DisplayName => Relic != null ? Relic.DisplayName : displayName;
+        public FairyTaleRelic Relic { get; private set; }
+        public string RelicId => Relic?.Id;
+        public string Description => Relic?.Description;
         public ShopProductKind Kind => kind;
         public ShopProductGrade Grade => grade;
-        public Sprite Icon => icon;
-        public int Price => price;
+        public Sprite Icon => Relic != null ? Relic.Icon : icon;
+        ShopPedestalRow priceSource;
+        public int Price => priceSource != null ? priceSource.RelicPrice : price;
         public int Weight => Mathf.Max(0, weight);
         public float RecoveryFraction => recoveryFraction;
         public float DisplayHeight => Mathf.Max(.01f, displayHeight);
         public int SlotIndex => slotIndex;
+        internal float DisplayMaxWidth { get; private set; } = float.PositiveInfinity;
+
+        internal static ShopProduct ForRelic(FairyTaleRelic relic, int slot, ShopPedestalRow priceSource, float height, float maxWidth)
+        {
+            var product = CreateInstance<ShopProduct>();
+            product.hideFlags = HideFlags.DontSave;
+            product.id = $"shop-relic-{relic.Id}";
+            product.kind = ShopProductKind.Relic;
+            product.Relic = relic;
+            product.priceSource = priceSource;
+            product.slotIndex = slot;
+            product.displayHeight = height;
+            product.DisplayMaxWidth = Mathf.Max(.01f, maxWidth);
+            return product;
+        }
     }
 }

@@ -75,6 +75,10 @@ MonoBehaviour:
   minimumFragments: 2
   maximumFragments: 6
   maxHP: 20
+  groundShadow:
+    size: {x: 0.67, y: 0.49}
+    offset: {x: 0, y: 0.012, z: 0.015}
+    opacity: 0.44
   currentHP: 0
   deathDelay: 0.55
   despawnOnDeath: 1

@@ -67,6 +67,22 @@ namespace Storybook
             StoryFragmentsGained?.Invoke(amount);
         }
 
+        internal bool TrySpendStoryFragments(int amount, Func<bool> apply)
+        {
+            if (amount < 0 || StoryFragments < amount) return false;
+            StoryFragments -= amount;
+            bool committed = false;
+            try
+            {
+                committed = apply();
+                return committed;
+            }
+            finally
+            {
+                if (!committed) StoryFragments += amount;
+            }
+        }
+
         public bool TryHeal(float amount)
         {
             float limit = MaxHP;

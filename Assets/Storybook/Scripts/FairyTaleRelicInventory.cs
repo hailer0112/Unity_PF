@@ -74,9 +74,16 @@ namespace Storybook
                 IsFull || Contains(relic.Id)) return false;
 
             owned.Add(relic);
-
-            relic.OnAcquired(owner);
-            return true;
+            try
+            {
+                relic.OnAcquired(owner);
+                return true;
+            }
+            catch
+            {
+                owned.Remove(relic);
+                throw;
+            }
         }
 
         internal void NotifyBasicAttackHit(MonsterHealth target)

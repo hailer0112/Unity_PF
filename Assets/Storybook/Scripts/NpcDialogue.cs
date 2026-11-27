@@ -14,11 +14,13 @@ namespace Storybook
         [SerializeField] Transform indicatorAnchor;
         [SerializeField] SortingGroup depthSorting;
         [SerializeField, Min(.1f)] float interactionRange = 1.35f;
+        [SerializeField] GroundShadow.Style groundShadow = GroundShadow.Style.Character;
 
         static NpcDialogue active;
         static int closedFrame = -1;
         HongGildong player;
         PlayerHealth health;
+        PalaceDungeon dungeon;
         int line;
         Texture2D pixel;
         Font font;
@@ -31,6 +33,8 @@ namespace Storybook
 
         protected virtual void Awake()
         {
+            dungeon = GetComponentInParent<PalaceDungeon>();
+            GroundShadow.Attach(transform, groundShadow, -2, depthSorting != null ? depthSorting.sortingLayerID : 0);
             player = FindFirstObjectByType<HongGildong>();
             if (player != null) health = player.GetComponent<PlayerHealth>();
         }
@@ -63,7 +67,8 @@ namespace Storybook
         {
             offset = default;
             return !BlocksInteraction && !StorybookTransition.IsBusy && player != null && player.enabled &&
-                health != null && !health.IsDead && PlayerInRange(out offset) && CanStart(player);
+                health != null && !health.IsDead && PlayerInRange(out offset) &&
+                (dungeon == null || !dungeon.ShopClaimsInteraction) && CanStart(player);
         }
 
         bool PlayerInRange(out Vector3 offset)

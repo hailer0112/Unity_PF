@@ -847,6 +847,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Storybook.MonsterHealth
   maxHP: 100
+  groundShadow:
+    size: {x: 2.95, y: 1.58}
+    offset: {x: 0, y: 0.018, z: 0.52}
+    opacity: 0.43
   currentHP: 0
   deathDelay: 0.55
 --- !u!95 &6324440691993899727

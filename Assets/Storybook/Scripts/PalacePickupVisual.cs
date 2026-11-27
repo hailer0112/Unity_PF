@@ -10,7 +10,8 @@ namespace Storybook
 
         Transform icon;
         Sprite glowSprite;
-        SpriteRenderer shadow, aura, beam;
+        GroundShadow shadow;
+        SpriteRenderer aura, beam;
         SpriteRenderer[] sparks;
         Color tint;
         float startedAt, collectedAt;
@@ -22,19 +23,12 @@ namespace Storybook
             visual.transform.SetParent(anchor, false);
             visual.icon = icon;
             visual.startedAt = Time.time;
-            visual.tint = kind switch
-            {
-                PalaceChestReward.Health => new Color(1f, .28f, .32f),
-                PalaceChestReward.Mana => new Color(.27f, .64f, 1f),
-                PalaceChestReward.Relic => new Color(1f, .76f, .31f),
-                _ => new Color(.77f, .61f, 1f)
-            };
+            visual.tint = Tint(kind);
+            visual.shadow = GroundShadow.Attach(visual.transform, GroundShadow.Style.Pickup, worldAligned: true);
             if (glow != null)
             {
                 visual.glowSprite = Sprite.Create(glow, new Rect(0, 0, glow.width, glow.height),
                     new Vector2(.5f, .5f), glow.width, 0, SpriteMeshType.FullRect);
-                visual.shadow = visual.MakeGlow("Ground shadow", FloorRotation, Vector3.up * .018f,
-                    new Vector2(.47f, .38f), 0, new Color(0f, 0f, 0f, .55f));
                 visual.aura = visual.MakeGlow("Ground glow", FloorRotation, Vector3.up * .024f,
                     new Vector2(.52f, .46f), 1, visual.tint);
                 bool relic = kind == PalaceChestReward.Relic;
@@ -99,21 +93,36 @@ namespace Storybook
 
         internal void PlayCollection(ParticleSystem prefab)
         {
+            if (shadow != null) shadow.gameObject.SetActive(false);
             if (prefab != null)
             {
-                var burst = Instantiate(prefab, icon.position, Quaternion.identity, transform.parent.parent);
-                var main = burst.main;
-                main.startColor = Color.Lerp(tint, Color.white, .3f);
-                burst.Play();
+                PlaySparkBurst(prefab, icon.position, transform.parent.parent, tint);
                 return;
             }
             if (glowSprite == null) return;
             transform.SetParent(transform.parent.parent, true);
             collecting = true;
             collectedAt = Time.time;
-            shadow.enabled = aura.enabled = false;
+            aura.enabled = false;
             if (beam != null) beam.enabled = false;
             Update();
+        }
+
+        internal static Color Tint(PalaceChestReward kind) => kind switch
+        {
+            PalaceChestReward.Health => new Color(1f, .28f, .32f),
+            PalaceChestReward.Mana => new Color(.27f, .64f, 1f),
+            PalaceChestReward.Relic => new Color(1f, .76f, .31f),
+            _ => new Color(.77f, .61f, 1f)
+        };
+
+        internal static void PlaySparkBurst(ParticleSystem prefab, Vector3 position, Transform parent, Color tint)
+        {
+            if (prefab == null) return;
+            var burst = Instantiate(prefab, position, Quaternion.identity, parent);
+            var main = burst.main;
+            main.startColor = Color.Lerp(tint, Color.white, .3f);
+            burst.Play();
         }
 
         static Color Alpha(Color color, float alpha)

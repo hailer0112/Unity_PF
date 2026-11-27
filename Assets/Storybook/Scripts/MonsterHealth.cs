@@ -11,6 +11,7 @@ namespace Storybook
         [SerializeField] float currentHP;
         [SerializeField, Min(0)] float deathDelay = .55f;
         [SerializeField] bool despawnOnDeath = true;
+        [SerializeField] GroundShadow.Style groundShadow = GroundShadow.Style.Character;
         [Header("Story Fragments")]
         [SerializeField, Min(0)] int minimumFragments;
         [SerializeField, Min(0)] int maximumFragments;
@@ -63,6 +64,7 @@ namespace Storybook
             currentHP = maxHP;
             TryGetComponent(out guard);
             TryGetComponent(out combatAI);
+            GroundShadow.Attach(transform, groundShadow);
         }
 
         public override void ReceiveDamage(float damage, Vector3 source)

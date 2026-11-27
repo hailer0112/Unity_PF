@@ -30,6 +30,21 @@ namespace Storybook
         RectTransform healthFill, manaFill, skillRow;
         internal float SkillRowTop => skillRow == null ? 0f :
             RectTransformUtility.WorldToScreenPoint(null, skillRow.TransformPoint(skillRow.rect.max)).y;
+        internal Rect ResourceScreenBounds
+        {
+            get
+            {
+                if (canvas == null) return default;
+                float scale = canvas.scaleFactor;
+                float width = seedGrowthNotice != null && seedGrowthNotice.enabled ? 265f : 232f;
+                float bottom = 18f + BarHeight * 2f + BarGap;
+                if (seedGrowthNotice != null && seedGrowthNotice.enabled) bottom = 50f + (BarHeight + BarGap) * 2f + 34f;
+                else if (deathDeceptionNotice != null && deathDeceptionNotice.enabled)
+                    bottom = 18f + (BarHeight + BarGap) * 2f + 32f;
+                return Rect.MinMaxRect(20f * scale, Screen.height - bottom * scale,
+                    (20f + width) * scale, Screen.height - 18f * scale);
+            }
+        }
         Text healthLabel, manaLabel, windstepActive, deathDeceptionNotice;
         double deathDeceptionNoticeUntil, seedGrowthNoticeUntil;
         Text seedGrowthNotice;

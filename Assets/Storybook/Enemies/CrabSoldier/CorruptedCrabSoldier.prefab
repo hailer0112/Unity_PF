@@ -1134,6 +1134,10 @@ MonoBehaviour:
   minimumFragments: 3
   maximumFragments: 7
   maxHP: 100
+  groundShadow:
+    size: {x: 0.88, y: 0.64}
+    offset: {x: 0, y: 0.012, z: 0.015}
+    opacity: 0.46
   currentHP: 0
   deathDelay: 0.55
 --- !u!114 &8184104006895153553

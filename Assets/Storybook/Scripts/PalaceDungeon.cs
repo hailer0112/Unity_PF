@@ -41,6 +41,7 @@ namespace Storybook
         readonly HashSet<string> floorLayouts = new();
         readonly System.Random chestRandom = new();
         PalaceDungeonMinimap minimap;
+        ShopPresentation shopPresentation;
         PlayerHealth health;
         Transform floorRoot;
         PalaceDungeonRoom portalRoom;
@@ -68,6 +69,7 @@ namespace Storybook
             }
         }
         internal string ChestResult => Time.unscaledTimeAsDouble < chestResultUntil ? chestResult : null;
+        internal bool ShopClaimsInteraction => shopPresentation != null && shopPresentation.HasOfferInRange;
         string chestResult;
         double chestResultUntil;
 
@@ -80,6 +82,8 @@ namespace Storybook
             health = player.GetComponent<PlayerHealth>();
             runSeed = useFixedSeed ? fixedSeed : Guid.NewGuid().GetHashCode();
             minimap = gameObject.AddComponent<PalaceDungeonMinimap>();
+            shopPresentation = gameObject.AddComponent<ShopPresentation>();
+            shopPresentation.Initialize(health, followCamera.GetComponent<Camera>(), minimap);
             GenerateFloor();
             gameObject.AddComponent<RelicInventoryPanel>().Initialize(health);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
@@ -221,6 +225,27 @@ namespace Storybook
             if (PalaceDeveloperMenu.BlocksGameplay) return;
 #endif
             if (Keyboard.current?.fKey.wasPressedThisFrame != true || NpcDialogue.BlocksInteraction) return;
+            if (shopPresentation.TryInteract(player, out var message, out var purchased))
+            {
+                if (message != null && (purchased != null || message != ChestResult))
+                    ShowChestReward(message, shopPresentation.PurchaseFeedbackDuration);
+                if (purchased != null)
+                {
+                    var kind = purchased.Kind switch
+                    {
+                        ShopProductKind.HealthOrb => PalaceChestReward.Health,
+                        ShopProductKind.ManaOrb => PalaceChestReward.Mana,
+                        _ => PalaceChestReward.Relic
+                    };
+                    var position = player.transform.position + Vector3.up * .45f;
+                    if (rewardChestPrefab != null)
+                        PalacePickupVisual.PlaySparkBurst(rewardChestPrefab.PickupSparks, position, player.transform,
+                            PalacePickupVisual.Tint(kind));
+                    var sound = shopPresentation.PurchaseSound;
+                    if (sound != null) AudioSource.PlayClipAtPoint(sound, position);
+                }
+                return;
+            }
             if (CanUsePortal())
                 StorybookTransition.TryBeginFloor(player, IntensifyPortal, AdvanceFloor);
             else
@@ -270,10 +295,10 @@ namespace Storybook
             return pickup;
         }
 
-        void ShowChestReward(string result)
+        void ShowChestReward(string result, float duration = 2.4f)
         {
             chestResult = result;
-            chestResultUntil = Time.unscaledTimeAsDouble + 2.4d;
+            chestResultUntil = Time.unscaledTimeAsDouble + duration;
         }
 
         void IntensifyPortal()
@@ -292,6 +317,8 @@ namespace Storybook
         void ReplaceFloor(int floor, float? recoveryChanceOverride = null, bool requireMerchant = false)
         {
             player.CancelCurseDashForRoomChange();
+            shopPresentation.SetShop(null);
+            chestResultUntil = 0d;
             Current = null;
             portalRoom = null;
             portalRange = null;
@@ -338,6 +365,7 @@ namespace Storybook
         {
             if (Current != room)
             {
+                if (Current?.Layout.Type == PalaceRoomType.Merchant) chestResultUntil = 0d;
                 player.CancelCurseDashForRoomChange();
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 RemoveTestMonster();
@@ -345,6 +373,10 @@ namespace Storybook
             }
             Current = room;
             room.Enter();
+            ShopPedestalRow shop = null;
+            if (room.Layout.Type == PalaceRoomType.Merchant && room.TryGetComponent(out shop))
+                shop.InitializeRelics(Seed, room.Layout.Id, chestRewards.RegisteredRelics(), health.Relics);
+            shopPresentation.SetShop(shop);
             if (room == bossRoom) bossHud.gameObject.SetActive(true);
             followCamera.SetDungeonRoom(room == bossRoom, snapCamera);
         }

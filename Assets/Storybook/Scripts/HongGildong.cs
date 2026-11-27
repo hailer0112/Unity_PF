@@ -130,6 +130,8 @@ namespace Storybook
             controller.enabled = true;
         }
         public bool IsDashing => dashTimeLeft > 0f;
+        internal bool CanPurchaseFromShop => isActiveAndEnabled && knockbackRemaining <= 0f &&
+            !IsDashing && !Attacking && !IsCastingAzureSlash && !IsCastingCloneSlash && !IsCastingSwordTyphoon;
         public bool IsInvulnerable => (isActiveAndEnabled && Time.timeAsDouble < invulnerableUntil) ||
             (manaHealth != null && manaHealth.HasDeathDeceptionProtection);
 

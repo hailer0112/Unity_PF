@@ -57,6 +57,10 @@ MonoBehaviour:
   back: {fileID: 6286397221291726603, guid: 2e17b9d59c2740f09ac58e3c7104a933, type: 3}
   left: {fileID: 6286397221291726604, guid: 2e17b9d59c2740f09ac58e3c7104a933, type: 3}
   interactionRange: 1.35
+  groundShadow:
+    size: {x: 0.73, y: 0.55}
+    offset: {x: 0, y: 0.012, z: 0.015}
+    opacity: 0.45
 --- !u!136 &4161700000000000013
 CapsuleCollider:
   m_ObjectHideFlags: 0

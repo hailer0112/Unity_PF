@@ -44,7 +44,7 @@ namespace Storybook
             float height = .8f;
             foreach (var sprite in target.GetComponentsInChildren<SpriteRenderer>())
             {
-                if (!sprite.enabled || sprite.sprite == null) continue;
+                if (!sprite.enabled || sprite.sprite == null || sprite.TryGetComponent<GroundShadow>(out _)) continue;
                 Bounds bounds = sprite.bounds;
                 Vector3 extents = bounds.extents;
                 float extent = Mathf.Abs(up.x) * extents.x + Mathf.Abs(up.y) * extents.y + Mathf.Abs(up.z) * extents.z;

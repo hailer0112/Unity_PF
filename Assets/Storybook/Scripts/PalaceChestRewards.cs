@@ -111,7 +111,6 @@ namespace Storybook
             return $"이야기 파편 +{amount}";
         }
 
-#if UNITY_EDITOR || DEVELOPMENT_BUILD
         internal IEnumerable<FairyTaleRelic> RegisteredRelics()
         {
             var ids = new HashSet<string>(StringComparer.Ordinal);
@@ -120,6 +119,7 @@ namespace Storybook
                     yield return relic;
         }
 
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
         internal FairyTaleRelic FindRelic(string id) => Array.Find(relicCatalog, relic => relic != null && relic.Id == id);
 
         internal string DescribeOdds() =>
